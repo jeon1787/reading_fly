@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+  <style>
+  div#container{
+    width: 800px;
+    border: 1px solid #ebecef;
+    border-radius: 6px;
+    padding: 29px 29px 0;
+  }
+  hr{
+    border: 1px solid #ebecef;
+  }
+  table{
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  tr{
+    border-bottom: 1px solid #ebecef;
+    height: 36.5px;
+  }
+  td.bnum{width: 50px; text-align: center;}
+  td.btitle{width: 500px;}
+  td.bnickname{width: 100px; text-align: center;}
+  td.bdate{width: 100px; text-align: center;}
+  td.bhit{width: 50px; text-align: center;}
+  a{margin-left: 50px}
+  button{
+    margin-bottom: 10px;
+  }
+  button{
+    cursor: pointer;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 6px;
+    font-weight: bolder;
+    font-size: medium;
+  }
+  </style>
+</head>
+<body>
+<h3>게시판</h3>
+<div id="container">
+  <table>
+    <thead>
+      <tr>
+        <th>no</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+    </thead>
+    <tbody>
+    <block th:each="item : ${items}">
+      <tr>
+        <td th:text="${itemStat.size - itemStat.index}" class="bnum">NO</td>
+        <td class="btitle"><a th:href="@{|/board/${item.num}/detail|}" th:text="${item.title}">제목</a></td>
+        <td th:text="${item.nickname}" class="bnickname">작성자</td>
+        <td th:text="${item.date}" class="bdate">작성일</td>
+        <td th:text="${item.hit}" class="bhit">조회수</td>
+      </tr>
+    </block>
+    </tbody>
+  </table>
+  <button type="button" onclick="location.href='/board/add'">작성하기</button>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+a{color: black;}
+
+div.boardList_allContainer{
+  display: grid;
+  grid-template-columns: 150px 800px;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+div.Board_menu{
+  text-align: center;
+}
+div.boardTitle{
+	display: flex;
+	gap: 10px;
+}
+i.far{
+	color: gray;
+}
+div.Board_menu h3{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+div.Board_menu a:hover{
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+th#freeBoardTitle{
+  width:300px;
+}
+button#freeBoardWriteBtn{
+  width:100px;
+}
+.wrap-freeBoard-btns{
+  width: 1000px;
+  text-align: right;
+}
+
+nav#pasingBox{
+  width: 1000px;
+  display:flex;
+  justify-content: center;
+}
