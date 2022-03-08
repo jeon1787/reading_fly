@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API 연습</title>
+  <style>
+    body{
+      display: flex;
+      justify-content: center;
+    }
+    .container{
+      width: 1280px;
+      background-color: beige;
+      height: 2000px;
+    }
+
+  </style>
+  
+</head>
+
+<body>
+  <div class="container">
+    <h1>내 사이트</h1>
+    <input id="bookName" value="" type="text">
+    <button id="search">검색</button>
+    <p></p>
+  </div>
+  <!--jquery CDN-->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $("#search").click(function () {
+        //jquery ajax() : JSON 형식({키:값, 키:값})
+        $.ajax({                                      //요청(request)
+          method: "GET",                             //전송방식
+          url: "https://dapi.kakao.com/v3/search/book?target=title",  //전송주소
+          data: { query: $("#bookName").val() },  //전송할 데이터
+          headers: { Authorization: "KakaoAK 13b5b0a4632c553ca14ebfc026cb7e25" }//API키
+        })
+          .done(function (msg) {                      //응답(response)
+            console.log(msg);              //응답시 실행할 코드
+            console.log(msg.documents[0].title);
+            console.log(msg.documents[0].thumbnail);
+            $("p").append("<img src='" + msg.documents[0].thumbnail + "'/>");
+            $("p").append("<strong>" + msg.documents[0].title + "</strong>");
+          });
+
+      })//click
+    })//ready
+
+
+  </script>
+</body>
+
+</html>
