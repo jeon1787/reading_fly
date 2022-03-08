@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 상세</title>
+  <style>
+  #content{
+    height: 400px;
+    width: 100%;
+  }
+  #buttonContainer{
+    width: 840px;
+    padding-left: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  button{
+    cursor: pointer;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 6px;
+    font-weight: bolder;
+    font-size: medium;
+  }
+  #editBtn{
+    margin-right: 10px;
+  }
+  #container{
+    width: 800px;
+    border: 1px solid #ebecef;
+    border-radius: 6px;
+    padding: 29px 29px 0;
+  }
+  hr{
+    border: 1px solid #ebecef;
+  }
+</style>
+</head>
+<body>
+<h3>게시글</h3>
+<div id="buttonContainer">
+  <span>
+    <button id="editBtn" type="button" th:data-bnum="${detailForm.num}" th:if="${session.loginMember.id}==${detailForm.id}">수정</button>
+    <button id="delBtn" th:if="${session.loginMember.id}==${detailForm.id}">삭제</button>
+  </span>
+  <span>
+    <div><button onclick="location.href='/board'">목록</button></div>
+  </span>
+</div>
+<div id="container">
+  <div>
+    <div th:text="${detailForm.title}">제목</div>
+    <div>
+      <span th:text="${detailForm.nickname}">작성자</span>
+      <span th:text="${detailForm.date}">날짜</span>
+      <span th:text="${detailForm.hit}">조회수</span>
+    </div>
+  </div>
+  <hr>
+  <div id="content" th:text="${detailForm.content}">내용</div>
+</div>
+<script>
+  //수정 버튼
+  editBtn.addEventListener('click', e=>{
+    const bnum = e.target.dataset.bnum;
+    const url = `/board/${bnum}/edit`;
+    location.href = url;
+  });
+</script>
+</body>
+</html>

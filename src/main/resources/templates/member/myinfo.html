@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+<title>회원정보 </title>
+</head>
+
+<body>
+<main>
+  <form class="infopw" th:action="@{/member/myinfo}" th:method="patch" th:object="${myinfoPw}">
+
+    <div th:if="${errors?.containsKey('global')}">
+      <p th:text="${errors['global']}" class="field-msg">글로벌 오류 메시지</p>
+    </div>
+    <div>
+      <div><label class="pw" for="pw" > 비밀번호를 입력하세요</label></div>
+      <div><input id="pwinput" class="form-control" type="password" th:field="*{pw}" ></div>
+      <div><p style="margin-top: 0px;margin-bottom: 16px;" th:errors="*{pw}" th:errorclass="field-msg"></div>
+      <div class="Btn_container">
+        <button type="submit" class="btn btn-success">내 정보 확인</button>
+      </div>
+    </div>
+  </form>
+</main>
+
+</body>
+</html>
