@@ -24,11 +24,11 @@
     border-bottom: 1px solid #ebecef;
     height: 36.5px;
   }
-  td.bnum{width: 50px; text-align: center;}
-  td.btitle{width: 500px;}
-  td.bnickname{width: 100px; text-align: center;}
-  td.bdate{width: 100px; text-align: center;}
-  td.bhit{width: 50px; text-align: center;}
+  td.num{width: 50px; text-align: center;}
+  td.title{width: 500px;}
+  td.nickname{width: 100px; text-align: center;}
+  td.date{width: 100px; text-align: center;}
+  td.hit{width: 50px; text-align: center;}
   a{margin-left: 50px}
   button{
     margin-bottom: 10px;
@@ -59,11 +59,11 @@
     <tbody>
     <block th:each="item : ${items}">
       <tr>
-        <td th:text="${itemStat.size - itemStat.index}" class="bnum">NO</td>
-        <td class="btitle"><a th:href="@{|/board/${item.num}/detail|}" th:text="${item.title}">제목</a></td>
-        <td th:text="${item.nickname}" class="bnickname">작성자</td>
-        <td th:text="${item.date}" class="bdate">작성일</td>
-        <td th:text="${item.hit}" class="bhit">조회수</td>
+        <td th:text="${itemStat.size - itemStat.index}" class="num">NO</td>
+        <td class="title"><a th:href="@{|/board/${item.bnum}/detail|}" th:text="${item.btitle}">제목</a></td>
+        <td th:text="${item.nickname}" class="nickname">작성자</td>
+        <td th:text="${item.budate}" class="date">작성일</td>
+        <td th:text="${item.bhit}" class="hit">조회수</td>
       </tr>
     </block>
     </tbody>

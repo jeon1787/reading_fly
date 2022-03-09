@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemForm {
-  private Long num;            //게시글번호
-  private String title;        //제목
-  private String date;         //날짜
-  private Long hit;            //조회수
+  private Long bnum;            //게시글번호
+  private String btitle;        //제목
+  private String budate;         //날짜
+  private Long bhit;            //조회수
   private String nickname;           //작성자
 }

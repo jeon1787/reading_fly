@@ -38,9 +38,9 @@ public class BoardController {
 
     for(BoardDTO boardDTO : list){
       ItemForm item = new ItemForm();
-      item.setNum(boardDTO.getBnum());
-      item.setTitle(boardDTO.getBtitle());
-      item.setHit(boardDTO.getBhit());
+      item.setBnum(boardDTO.getBnum());
+      item.setBtitle(boardDTO.getBtitle());
+      item.setBhit(boardDTO.getBhit());
       item.setNickname(boardDTO.getNickname());
 
       LocalDate boardDate = boardDTO.getBcdate().toLocalDate();
@@ -48,16 +48,16 @@ public class BoardController {
 
       if(boardDate == today){//오늘 작성된 글이면
         if(boardDTO.getBudate() == null){//수정무
-          item.setDate(boardDTO.getBcdate().toLocalTime().toString());
+          item.setBudate(boardDTO.getBcdate().toLocalTime().toString());
         }else{//수정유
-          item.setDate(boardDTO.getBcdate().toLocalTime().toString());
+          item.setBudate(boardDTO.getBcdate().toLocalTime().toString());
         }
 
       }else{//오늘 이전에 작성된 글이면
         if(boardDTO.getBudate() == null){//수정무
-          item.setDate(boardDTO.getBcdate().toLocalDate().toString());
+          item.setBudate(boardDTO.getBcdate().toLocalDate().toString());
         }else{//수정유
-          item.setDate(boardDTO.getBcdate().toLocalDate().toString());
+          item.setBudate(boardDTO.getBcdate().toLocalDate().toString());
         }
       }
 
@@ -77,11 +77,11 @@ public class BoardController {
     BoardDTO boardDTO = boardSVC.findByBnum(bnum);
     DetailForm detailForm = new DetailForm();
 
-    detailForm.setNum(boardDTO.getBnum());
-    detailForm.setTitle(boardDTO.getBtitle());
-    detailForm.setContent(boardDTO.getBcontent());
-    detailForm.setHit(boardDTO.getBhit());
-    detailForm.setId(boardDTO.getBid());
+    detailForm.setBnum(boardDTO.getBnum());
+    detailForm.setBtitle(boardDTO.getBtitle());
+    detailForm.setBcontent(boardDTO.getBcontent());
+    detailForm.setBhit(boardDTO.getBhit());
+    detailForm.setBid(boardDTO.getBid());
     detailForm.setNickname(boardDTO.getNickname());
 
     LocalDate boardDate = boardDTO.getBcdate().toLocalDate();
@@ -89,16 +89,16 @@ public class BoardController {
 
     if(boardDate == today){//오늘 작성된 글이면
       if(boardDTO.getBudate() == null){//수정무
-        detailForm.setDate(boardDTO.getBcdate().toLocalTime().toString());
+        detailForm.setBudate(boardDTO.getBcdate().toLocalTime().toString());
       }else{//수정유
-        detailForm.setDate(boardDTO.getBcdate().toLocalTime().toString());
+        detailForm.setBudate(boardDTO.getBcdate().toLocalTime().toString());
       }
 
     }else{//오늘 이전에 작성된 글이면
       if(boardDTO.getBudate() == null){//수정무
-        detailForm.setDate(boardDTO.getBcdate().toLocalDate().toString());
+        detailForm.setBudate(boardDTO.getBcdate().toLocalDate().toString());
       }else{//수정유
-        detailForm.setDate(boardDTO.getBcdate().toLocalDate().toString());
+        detailForm.setBudate(boardDTO.getBcdate().toLocalDate().toString());
       }
     }
 
