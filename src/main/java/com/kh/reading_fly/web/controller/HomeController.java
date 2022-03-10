@@ -1,6 +1,7 @@
 package com.kh.reading_fly.web.controller;
 
 
+import com.kh.reading_fly.web.form.login.LoginMember;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,8 @@ public class HomeController {
 
     String view = null;
     HttpSession session = request.getSession(false);
-    view = (session == null) ? "main/main" : "main/mainDetail" ;
+
+    view = (session == null || session.getAttribute("loginMember") == null || session.getAttribute("loginMember").equals("")) ? "main/main" : "main/mainDetail" ;
 
     return view;
   }

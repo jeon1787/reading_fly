@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetailForm {
-  private Long num;
-  private String title;
-  private String date;
-  private String content;
-  private Long hit;
-  private String id;
+  private Long bnum;
+  private String btitle;
+  private String budate;
+  private String bcontent;
+  private Long bhit;
+  private String bid;
   private String nickname;
 }
