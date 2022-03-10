@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -109,9 +110,18 @@ public class BoardController {
 
   //작성모드
   @GetMapping("/add")
-  public String add(@ModelAttribute AddForm addForm){
+  public String add(@ModelAttribute AddForm addForm,
+                    HttpServletRequest request
+  ){
     log.info("add() 호출됨!");
-    log.info("addForm={}", addForm);
+
+    HttpSession session = request.getSession(false);
+    log.info("referer={}", request.getHeader("referer"));
+
+    //비로그인 상태인 경우 => 로그인 페이지로 이동
+    if (session == null || session.getAttribute("loginMember") == null || session.getAttribute("loginMember").equals("")){
+      return "redirect:/login";
+    }
 
     return "board/addForm";
   }
@@ -177,5 +187,18 @@ public class BoardController {
     redirectAttributes.addAttribute("bnum", modifiedBoardDTO.getBnum());
 
     return "redirect:/board/{bnum}/detail";
+  }
+
+  //삭제처리
+  @GetMapping("/{bnum}/del")
+  public String delete(@PathVariable Long bnum,
+                       HttpSession session
+  ){
+    log.info("del() 호출됨!");
+
+    LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+    boardSVC.remove(bnum, loginMember.getId());
+
+    return "redirect:/board";
   }
 }

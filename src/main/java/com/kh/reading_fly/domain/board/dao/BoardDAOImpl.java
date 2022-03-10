@@ -151,9 +151,9 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append(" delete from board ");
     sql.append(" where bnum = ? and bid = ? ");
 
-    int cnt = jdbcTemplate.update(sql.toString(), bnum, bid);//성공시 1 실패시 0
+    int count = jdbcTemplate.update(sql.toString(), bnum, bid);//성공시 1 실패시 0(update 의 반환 타입은 int)
 
-    return 0;
+    return count;
   }
 
   /**
@@ -163,6 +163,14 @@ public class BoardDAOImpl implements BoardDAO{
    */
   @Override
   public int updateHit(Long bnum) {
-    return 0;
+
+    StringBuffer sql = new StringBuffer();
+    sql.append(" update board ");
+    sql.append(" set bhit = bhit + 1 ");
+    sql.append(" where bnum = ? ");
+
+    int cnt = jdbcTemplate.update(sql.toString(), bnum);//성공시 1 실패시 0(update 의 반환 타입은 int)
+
+    return cnt;
   }
 }
