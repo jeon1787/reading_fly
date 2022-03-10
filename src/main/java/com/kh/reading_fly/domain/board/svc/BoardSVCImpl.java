@@ -6,7 +6,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,7 +36,13 @@ public class BoardSVCImpl implements BoardSVC{
    */
   @Override
   public BoardDTO findByBnum(Long bnum) {
-    return boardDAO.selectOne(bnum);
+    //상세조회한 DTO
+    BoardDTO boardDTO = boardDAO.selectOne(bnum);
+
+    //조회수 증가
+    boardDAO.updateHit(bnum);
+
+    return boardDTO;
   }
 
   /**

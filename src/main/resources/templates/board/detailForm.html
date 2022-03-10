@@ -44,8 +44,8 @@
 <h3>게시글</h3>
 <div id="buttonContainer">
   <span>
-    <button id="editBtn" type="button" th:data-bnum="${detailForm.num}" th:if="${session.loginMember.id}==${detailForm.id}">수정</button>
-    <button id="delBtn" th:if="${session.loginMember.id}==${detailForm.id}">삭제</button>
+    <button id="editBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">수정</button>
+    <button id="delBtn" th:if="${session.loginMember.id}==${detailForm.bid}">삭제</button>
   </span>
   <span>
     <div><button onclick="location.href='/board'">목록</button></div>
@@ -53,15 +53,15 @@
 </div>
 <div id="container">
   <div>
-    <div th:text="${detailForm.title}">제목</div>
+    <div th:text="${detailForm.btitle}">제목</div>
     <div>
       <span th:text="${detailForm.nickname}">작성자</span>
-      <span th:text="${detailForm.date}">날짜</span>
-      <span th:text="${detailForm.hit}">조회수</span>
+      <span th:text="${detailForm.budate}">날짜</span>
+      <span th:text="${detailForm.bhit}">조회수</span>
     </div>
   </div>
   <hr>
-  <div id="content" th:text="${detailForm.content}">내용</div>
+  <div id="content" th:text="${detailForm.bcontent}">내용</div>
 </div>
 <script>
   //수정 버튼

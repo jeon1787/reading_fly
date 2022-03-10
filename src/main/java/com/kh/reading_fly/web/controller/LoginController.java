@@ -38,7 +38,6 @@ public class LoginController {
   public String login(@Valid @ModelAttribute LoginForm loginForm,
                       BindingResult bindingResult, HttpServletRequest request,HttpServletResponse response
   ){
-
     if(bindingResult.hasErrors()){
       log.info("loginError={}", bindingResult);
       return "login/loginForm";
