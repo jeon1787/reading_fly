@@ -25,7 +25,7 @@ public class CommentDAOImpl implements CommentDAO{
 
     //sql 작성
     StringBuffer sql = new StringBuffer();
-    sql.append(" select cnum, ccontent, ccdate, cudate, cid, nickname ");
+    sql.append(" select row_number() over (order by ccdate) as num, cnum, ccontent, ccdate, cudate, cid, nickname ");
     sql.append(" from comments, member ");
     sql.append(" where comments.cid = member.id ");
     sql.append(" order by ccdate desc ");
