@@ -1,5 +1,6 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.comment.svc.CommentSVC;
 import com.kh.reading_fly.web.form.board.EditForm;
 import com.kh.reading_fly.web.form.login.LoginMember;
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,6 @@ public class BoardController {
     log.info("list() 호출됨!");
 
     List<BoardDTO> list = boardSVC.findAll();
-
     List<ItemForm> items =new ArrayList<>();
 
     for(BoardDTO boardDTO : list){
@@ -47,24 +48,14 @@ public class BoardController {
       LocalDate boardDate = boardDTO.getBcdate().toLocalDate();
       LocalDate today = LocalDate.now();
 
-      if(boardDate == today){//오늘 작성된 글이면
-        if(boardDTO.getBudate() == null){//수정무
-          item.setBudate(boardDTO.getBcdate().toLocalTime().toString());
-        }else{//수정유
-          item.setBudate(boardDTO.getBcdate().toLocalTime().toString());
-        }
-
+      if(boardDate.equals(today)){//오늘 작성된 글이면
+        item.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
       }else{//오늘 이전에 작성된 글이면
-        if(boardDTO.getBudate() == null){//수정무
-          item.setBudate(boardDTO.getBcdate().toLocalDate().toString());
-        }else{//수정유
-          item.setBudate(boardDTO.getBcdate().toLocalDate().toString());
-        }
+        item.setBudate(boardDTO.getBudate().toLocalDate().toString());
       }
 
       items.add(item);
     }
-
     model.addAttribute("items", items);
 
     return "board/listForm";
@@ -197,7 +188,7 @@ public class BoardController {
     log.info("del() 호출됨!");
 
     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-    boardSVC.remove(bnum, loginMember.getId());
+    boardSVC.remove2(bnum, loginMember.getId());
 
     return "redirect:/board";
   }

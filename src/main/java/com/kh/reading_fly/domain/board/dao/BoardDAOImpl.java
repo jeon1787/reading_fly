@@ -140,20 +140,38 @@ public class BoardDAOImpl implements BoardDAO{
   }
 
   /**
-   * 삭제
+   * 댓글 없는 게시글 삭제
    * @param bnum
    * @return
    */
   @Override
-  public int delete(Long bnum, String bid) {
+  public int delete1(Long bnum, String bid){
 
     StringBuffer sql = new StringBuffer();
     sql.append(" delete from board ");
+    sql.append("  where bnum = ? and bid = ? ");
+
+    int result = jdbcTemplate.update(sql.toString(), bnum, bid);//성공시 1 실패시 0
+
+    return result;
+  }
+
+  /**
+   * 댓글 있는 게시글 삭제
+   * @param bnum
+   * @return
+   */
+  @Override
+  public int delete2(Long bnum, String bid) {
+
+    StringBuffer sql = new StringBuffer();
+    sql.append(" update board ");
+    sql.append(" set bstatus = 'D', bcontent = '삭제된 게시글입니다.' ");
     sql.append(" where bnum = ? and bid = ? ");
 
-    int count = jdbcTemplate.update(sql.toString(), bnum, bid);//성공시 1 실패시 0(update 의 반환 타입은 int)
+    int result = jdbcTemplate.update(sql.toString(), bnum, bid);//성공시 1 실패시 0(update 의 반환 타입은 int)
 
-    return count;
+    return result;
   }
 
   /**
@@ -169,8 +187,8 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append(" set bhit = bhit + 1 ");
     sql.append(" where bnum = ? ");
 
-    int cnt = jdbcTemplate.update(sql.toString(), bnum);//성공시 1 실패시 0(update 의 반환 타입은 int)
+    int result = jdbcTemplate.update(sql.toString(), bnum);//성공시 1 실패시 0(update 의 반환 타입은 int)
 
-    return cnt;
+    return result;
   }
 }
