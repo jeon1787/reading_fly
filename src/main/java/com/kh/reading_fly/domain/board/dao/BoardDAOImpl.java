@@ -139,6 +139,7 @@ public class BoardDAOImpl implements BoardDAO{
     return selectOne(bnum);
   }
 
+
   /**
    * 댓글 없는 게시글 삭제
    * @param bnum
