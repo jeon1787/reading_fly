@@ -1,8 +1,0 @@
-.wrap{
-  display: flex;
-  justify-content: center;
-}
-.wrap .content{
-  margin-top: 100px;
-  width:800px;
-}
