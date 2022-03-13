@@ -1,0 +1,28 @@
+@import url("common.css");
+
+.col{ border: 1px solid #ddd; }
+    .cont{
+      display: grid;
+      grid-template-columns: 50px 1fr 90px 110px 70px;
+      grid-auto-rows: 2em;
+    }
+    .btn-grp{
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .ct {
+        text-align:center;
+         line-height: 30px;
+
+    }
+
+    .le {
+      padding-left:10px;
+      line-height: 30px;
+    }
+
+    a {
+      text-decoration: none;
+       color: inherit;
+    }
