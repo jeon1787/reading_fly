@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CommentDAO {
   //게시글번호로 댓글 목록 조회
-  List<CommentDTO> selectAll();
+  List<CommentDTO> selectAll(Long cbnum);
 }

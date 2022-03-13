@@ -21,18 +21,18 @@ public class CommentDAOImpl implements CommentDAO{
    * @return
    */
   @Override
-  public List<CommentDTO> selectAll() {
+  public List<CommentDTO> selectAll(Long cbnum) {
 
     //sql 작성
     StringBuffer sql = new StringBuffer();
-    sql.append(" select row_number() over (order by ccdate) as num, cnum, ccontent, ccdate, cudate, cid, nickname ");
+    sql.append(" select row_number() over (order by ccdate) as num, cnum, cbnum, ccontent, ccdate, cudate, cid, nickname ");
     sql.append(" from comments, member ");
-    sql.append(" where comments.cid = member.id ");
+    sql.append(" where comments.cid = member.id and cbnum = ? ");
     sql.append(" order by ccdate desc ");
 
     //sql 실행
-    List<CommentDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(CommentDTO.class));
+    List<CommentDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(CommentDTO.class), cbnum);
 
-    return null;
+    return list;
   }
 }

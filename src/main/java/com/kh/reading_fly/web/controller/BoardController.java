@@ -45,8 +45,10 @@ public class BoardController {
       item.setBhit(boardDTO.getBhit());
       item.setNickname(boardDTO.getNickname());
 
-      LocalDate boardDate = boardDTO.getBcdate().toLocalDate();
+      LocalDate boardDate = boardDTO.getBudate().toLocalDate();
+      log.info("boardDate={}", boardDate);
       LocalDate today = LocalDate.now();
+      log.info("today={}", today);
 
       if(boardDate.equals(today)){//오늘 작성된 글이면
         item.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
@@ -56,6 +58,7 @@ public class BoardController {
 
       items.add(item);
     }
+
     model.addAttribute("items", items);
 
     return "board/listForm";
@@ -76,22 +79,15 @@ public class BoardController {
     detailForm.setBid(boardDTO.getBid());
     detailForm.setNickname(boardDTO.getNickname());
 
-    LocalDate boardDate = boardDTO.getBcdate().toLocalDate();
+    LocalDate boardDate = boardDTO.getBudate().toLocalDate();
+    log.info("boardDate={}", boardDate);
     LocalDate today = LocalDate.now();
+    log.info("today={}", today);
 
-    if(boardDate == today){//오늘 작성된 글이면
-      if(boardDTO.getBudate() == null){//수정무
-        detailForm.setBudate(boardDTO.getBcdate().toLocalTime().toString());
-      }else{//수정유
-        detailForm.setBudate(boardDTO.getBcdate().toLocalTime().toString());
-      }
-
+    if(boardDate.equals(today)){//오늘 작성된 글이면
+      detailForm.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
     }else{//오늘 이전에 작성된 글이면
-      if(boardDTO.getBudate() == null){//수정무
-        detailForm.setBudate(boardDTO.getBcdate().toLocalDate().toString());
-      }else{//수정유
-        detailForm.setBudate(boardDTO.getBcdate().toLocalDate().toString());
-      }
+      detailForm.setBudate(boardDTO.getBudate().toLocalDate().toString());
     }
 
     model.addAttribute("detailForm", detailForm);
