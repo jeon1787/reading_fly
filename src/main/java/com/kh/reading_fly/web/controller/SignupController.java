@@ -2,7 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
-import com.kh.reading_fly.web.form.singup.SignupForm;
+import com.kh.reading_fly.web.form.signup.SignupForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

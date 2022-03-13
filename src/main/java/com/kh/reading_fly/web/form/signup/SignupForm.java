@@ -1,4 +1,4 @@
-package com.kh.reading_fly.web.form.singup;
+package com.kh.reading_fly.web.form.signup;
 
 import lombok.Data;
 
