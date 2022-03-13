@@ -22,7 +22,7 @@
     }
 
     if($nContent.value.length > 1000) {
-      alert($nContent.value.length +'글자수 제한을 초과해서 입력 불가');
+      alert('글자수 제한을 초과해서 입력 불가');
       return;
     }
 
