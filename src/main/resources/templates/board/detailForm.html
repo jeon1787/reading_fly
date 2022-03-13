@@ -84,15 +84,17 @@
 <body>
 <h3>게시글</h3>
 <div id="button-container">
-  <span>
+  <span id="eventHandler" th:unless="${session.isEmpty()}">
     <button id="editBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">수정</button>
     <button id="delBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">삭제</button>
   </span>
+  <span th:if="${session.isEmpty()}"></span>
   <span>
     <div><button onclick="location.href='/board'">목록</button></div>
   </span>
 </div>
 <div class="container board-container">
+
   <div>
     <div th:text="${detailForm.btitle}">제목</div>
     <div>
@@ -101,44 +103,88 @@
       <span th:text="${detailForm.bhit}">조회수</span>
     </div>
   </div>
+
   <hr>
+
   <div id="content" th:text="${detailForm.bcontent}">본문</div>
-<!--  <hr>-->
-<!--  <div id="comment-container">-->
-<!--    <div class="comment-upper">댓글</div>-->
-<!--    <block th:each="">-->
-<!--      <div>-->
-<!--        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>-->
-<!--        <div>댓글</div>-->
-<!--        <div><span>날짜</span><a href="">대댓글쓰기</a></div>-->
-<!--      </div>-->
-<!--    </block>-->
-<!--  </div>-->
-<!--  <div class="container comment-container">-->
-<!--    <form action="">-->
-<!--      <div>닉네임</div>-->
-<!--      <textarea name="" cols="104" rows="10" placeholder="댓글을 입력하세요" autofocus></textarea>-->
-<!--      <button type="submit" id="addBtn">등록</button>-->
-<!--    </form>-->
-<!--  </div>-->
+
+  <hr>
+
+  <div id="comment-container">
+
+    <div class="comment-upper">댓글</div>
+    <div id="commentList">
+      <div class="comment-content">
+        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>
+        <div>댓글</div>
+        <div><span>날짜</span><a href="">대댓글쓰기</a></div>
+      </div>
+    </div>
+
+    <div class="container comment-container">
+      <form action="">
+        <div>닉네임</div>
+        <textarea name="" cols="104" rows="10" placeholder="댓글을 입력하세요" autofocus></textarea>
+        <button type="submit" id="addBtn">등록</button>
+      </form>
+    </div>
+
+  </div>
+
 </div>
-<script>
-  //수정 버튼
-  editBtn.addEventListener('click', e=>{
-    const bnum = e.target.dataset.bnum;
-    const url = `/board/${bnum}/edit`;
-    location.href = url;
+<script th:inline="javascript">
+  //dom 이벤트
+  document.addEventListener('DOMContentLoaded', e=>{
+    console.log('DOM 생성');
+    list_f();
   });
 
-  //삭제 버튼
-  delBtn.addEventListener('click', e=>{
-  //댓글이 달린경우 삭제가 안된다 알려야함
-    if(window.confirm('댓글이 있는 게시글은 본문 삭제만 가능합니다.<br> 정말 삭제하시겠습니까?')){
+
+  const bnum = /*[[ ${detailForm.bnum} ]]*/;
+
+  console.log(bnum);
+
+  function list_f(){
+    fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})
+    .then(res => res.json())
+    .then(res => {
+    console.log(res);
+    displayComments_f(res.data);
+    })
+    .catch(err => console.error('Err:',err))
+  }
+
+  function displayComments_f(comments){
+    let content = ``;
+    comments.forEach(comment => {
+      content +=
+        `<div class="comment-content">
+        <div class="comment-header"><span>${comment.nickname}</span><span><a href="">수정</a><a href="">삭제</a></span></div>
+        <div>${comment.ccontent}</div>
+        <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>
+        </div>`;
+    });
+
+    commentList.innerHTML = content;
+  }
+
+  eventHandler.addEventListener('click', e=>{
+    //수정 버튼 클릭시
+    if(e.target.textContent == '수정'){
       const bnum = e.target.dataset.bnum;
-      const url = `/board/${bnum}/del`;
+      const url = `/board/${bnum}/edit`;
       location.href = url;
+    //삭제 버튼 클릭시
+    }else if(e.target.textContent == '삭제'){
+      //댓글이 달린경우 삭제가 안된다 알려야함
+      if(window.confirm('댓글이 있는 게시글은 본문 삭제만 가능합니다.<br> 정말 삭제하시겠습니까?')){
+        const bnum = e.target.dataset.bnum;
+        const url = `/board/${bnum}/del`;
+        location.href = url;
+      }
     }
-  });
+  })
+
 </script>
 </body>
 </html>

@@ -16,7 +16,7 @@ public class CommentSVCImpl implements CommentSVC{
   private final CommentDAO commentDAO;
 
   @Override
-  public List<CommentDTO> findAll() {
-    return commentDAO.selectAll();
+  public List<CommentDTO> findAll(Long cbnum) {
+    return commentDAO.selectAll(cbnum);
   }
 }
