@@ -1,6 +1,7 @@
 'use strict';
 
   const $writeBtn = document.getElementById('writeBtn');
+  const $cancelBtn = document.getElementById('cancelBtn');
   const $listBtn = document.getElementById('listBtn');
   const $nTitle = document.getElementById('nTitle');
   const $nContent = document.getElementById('nContent');
