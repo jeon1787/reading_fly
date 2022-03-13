@@ -20,14 +20,14 @@
       <ul>
         <li>
           <span>제목</span>
-          <input type="text" th:field="*{nTitle}">
+          <input type="text" id="nEditTitle" th:field="*{nTitle}">
         </li>
         <li>
           <span>내용</span>
-          <textarea cols="30" rows="10" th:field="*{nContent}"></textarea>
+          <textarea id="nEditContent" cols="30" rows="10" th:field="*{nContent}"></textarea>
         </li>
         <li>
-          <button type="button" id="modifyBtn">수정</button>
+          <button type="button" id="modifyBtn">저장</button>
           <button type="button" id="cancelBtn">취소</button>
         </li>
       </ul>
