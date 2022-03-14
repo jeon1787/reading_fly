@@ -4,8 +4,9 @@ import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
 import com.kh.reading_fly.web.form.login.LoginMember;
 import com.kh.reading_fly.web.form.member.EditForm;
-import com.kh.reading_fly.web.form.member.MyinfoPw;
+import com.kh.reading_fly.web.form.member.MemberPwForm;
 import com.kh.reading_fly.web.form.member.OutForm;
+import com.kh.reading_fly.web.form.member.PwEditForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,37 +28,23 @@ public class MemberController {
 
   private final MemberSVC memberSVC;
 
-  @GetMapping("/myinfo")
-  public String mypage(Model model) {
-    model.addAttribute("myinfoPw", new MyinfoPw());
-    return "member/myinfo";
-  }
+//  @GetMapping("/memberinfo")
+//  public String memberpage(Model model) {
+//    return "member/memberForm";
+//  }
 
-  @PatchMapping("/myinfo")
-  public String mypagePw(
-          @Valid @ModelAttribute MyinfoPw myinfoPw,
-          BindingResult bindingResult,
-          HttpServletRequest request) {
-    log.info("회원수정처리 호출됨");
-    HttpSession session = request.getSession(false);
-    LoginMember loginMember =
-            (LoginMember)session.getAttribute("loginMember");
-    log.info("회원 수정 처리:{}"+loginMember.toString());
-    //세션이 없으면 로그인 페이지로 이동
-    if(loginMember == null) return "redirect:/";
 
-    //비밀번호를 잘못입력했을경우
-    if(!memberSVC.isMember(loginMember.getId(), myinfoPw.getPw())) {
-      bindingResult.rejectValue("pw", "pw", "비밀번호가 잘못입력되었습니다.");
-      return "member/myinfo";
+  @GetMapping("/memberinfo")
+  public String memberpage(HttpSession session,
+                           RedirectAttributes redirectAttributes) {
+
+//    MemberDTO memberDTO = new MemberDTO();
+    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
+    int code =  Integer.parseInt(memberSVC.admin(loginMember.getId()));
+    if(code == 2) {
+      return "redirect:/admin";
     }
-
-    if(bindingResult.hasErrors()) {
-      log.info("errors={}",bindingResult);
-      return "member/myinfo";
-    }
-
-    return "redirect:/member/edit";
+    return "member/memberForm";
   }
 
   @GetMapping("/edit")
@@ -98,23 +86,16 @@ public class MemberController {
     //세션이 없으면 로그인 페이지로 이동
     if(loginMember == null) return "redirect:/";
 
-    //비밀번호 확인 체크
-    if(!editForm.getPw().equals(editForm.getPwChk())) {
-      //bindingResult.reject("error.mypage.editForm", "비밀번호가 다릅니다.");
-      bindingResult.rejectValue("pwChk", "pwChk", "비밀번호가 일치하지 않습니다.");
-      return "redirect:/";
-    }
-
     //닉네임 존재유무
     if(memberSVC.isExistNickname(editForm.getNickname()) && !(editForm.getNickname().equals(loginMember.getNickname()))) {
       bindingResult.rejectValue("nickname", "nickname", "동일한 닉네임이 존재합니다");
-      return "redirect:/";
+
     }
 
     //이메일 존재유무
     if(memberSVC.isExistEmail(editForm.getEmail()) && !(editForm.getEmail().equals(loginMember.getNickname()))) {
       bindingResult.rejectValue("email", "email", "동일한 email이 존재합니다");
-      return "redirect:/";
+
     }
 
 
@@ -124,8 +105,99 @@ public class MemberController {
     MemberDTO memberDTO = new MemberDTO();
     BeanUtils.copyProperties(editForm, memberDTO);
     memberSVC.modifyMember(loginMember.getId(), memberDTO);
+    return "redirect:/member/edit";
+  }
+
+  @GetMapping("/memberpw")
+  public String mypage(Model model) {
+    model.addAttribute("memberPwForm", new MemberPwForm());
+    return "member/memberPwForm";
+  }
+
+  @PatchMapping("/memberpw")
+  public String mypagePw(
+      @Valid @ModelAttribute MemberPwForm memberPwForm,
+      BindingResult bindingResult,
+      HttpServletRequest request) {
+    log.info("회원수정처리 호출됨");
+    HttpSession session = request.getSession(false);
+    LoginMember loginMember =
+        (LoginMember)session.getAttribute("loginMember");
+    log.info("회원 수정 처리:{}"+loginMember.toString());
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //비밀번호를 잘못입력했을경우
+    if(!memberSVC.isMember(loginMember.getId(), memberPwForm.getPw())) {
+      bindingResult.rejectValue("pw", "pw", "비밀번호가 잘못입력되었습니다.");
+      return "member/memberPwForm";
+    }
+
+    if(bindingResult.hasErrors()) {
+      log.info("errors={}",bindingResult);
+      return "member/memberpw";
+    }
+
+    return "redirect:/member/pwedit";
+  }
+
+  @GetMapping("/pwedit")
+  public String pwEditForm(
+      HttpServletRequest request,
+      Model model) {
+    HttpSession session = request.getSession(false);
+    LoginMember loginMember
+        = (LoginMember)session.getAttribute("loginMember");
+
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //회원정보 가져오기
+    MemberDTO memberDTO =  memberSVC.findByID(loginMember.getId());
+    PwEditForm pwEditForm = new PwEditForm();
+    BeanUtils.copyProperties(memberDTO, pwEditForm);
+    model.addAttribute("pwEditForm", pwEditForm);
+    return "member/memberPwEditForm";
+  }
+
+  @PatchMapping("/pwedit")
+  public String pwEdit(
+      @Valid @ModelAttribute PwEditForm pwEditForm,
+      BindingResult bindingResult,
+      HttpServletRequest request) {
+    HttpSession session = request.getSession(false);
+    LoginMember loginMember
+        = (LoginMember)session.getAttribute("loginMember");
+    log.info("수정입력처리 확인");
+
+
+    if(bindingResult.hasErrors()) {
+      log.info("errors={}",bindingResult);
+      log.info("bindingResult.hasErrors() 확인");
+      return "member/memberPwEditForm";
+    }
+
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //비밀번호 확인 체크
+    if(!pwEditForm.getPw().equals(pwEditForm.getPwChk())) {
+      //bindingResult.reject("error.mypage.editForm", "비밀번호가 다릅니다.");
+      bindingResult.rejectValue("pwChk", "pwChk", "비밀번호가 일치하지 않습니다.");
+      return "member/memberPwEditForm";
+    }
+
+
+    log.info("입력받은 memberDTO:{}",pwEditForm);
+
+    MemberDTO memberDTO = new MemberDTO();
+    BeanUtils.copyProperties(pwEditForm, memberDTO);
+    memberSVC.modifyMemberPw(loginMember.getId(), memberDTO);
     return "redirect:/";
   }
+
+
+
 
 
   //회원탈퇴
@@ -177,6 +249,21 @@ public class MemberController {
     return "member/outCompleted"; //탈퇴수행 완료 view
   }
 
+
+
+  //아이디 찾기
+  @GetMapping("/findid")
+  public String findid(){
+    log.info("findIdForm() 호출됨!");
+    return "member/findIdForm";
+  }
+
+  //pw 찾기
+  @GetMapping("/findpw")
+  public String findpw(){
+    log.info("findPwForm() 호출됨!");
+    return "member/findPwForm";
+  }
 
 
 

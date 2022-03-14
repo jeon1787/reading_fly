@@ -15,6 +15,7 @@ public class BoardDTO {
   private LocalDateTime budate; //수정일
   private String bcontent;      //본문
   private Long bhit;            //조회수
+  private String bstatus;       //게시글 상태(E:exist, D:delete)
   private String bid;           //작성자
   private String nickname;      //닉네임
 }

@@ -2,6 +2,8 @@ package com.kh.reading_fly.domain.member.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter              // 모든멤버필드의 getter 메소드를 자동 생성해준다.
 @Setter              // 모든멤버필드의 setter 메소드를 자동 생성해준다.
 @NoArgsConstructor   // 디폴트 생성자 자동 생성해준다.
@@ -15,6 +17,13 @@ public class MemberDTO {
   private String name;
   private String nickname;
   private String email;
+
+//  private LocalDateTime signup_dt;
+//
+//  private String leave_fl;
+//
+//  private LocalDateTime leave_dt;
+
 
 
 }

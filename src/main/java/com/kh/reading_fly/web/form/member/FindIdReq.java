@@ -1,4 +1,4 @@
-package com.kh.reading_fly.web.form.support;
+package com.kh.reading_fly.web.form.member;
 
 import lombok.Data;
 

@@ -2,6 +2,8 @@ package com.kh.reading_fly.domain.member.svc;
 
 import com.kh.reading_fly.domain.member.dto.MemberDTO;
 
+import java.util.List;
+
 public interface MemberSVC {
 
   // 회원가입
@@ -25,8 +27,17 @@ public interface MemberSVC {
   //비밀번호 일치여부 체크
   boolean isMember(String id, String pw);
 
-  //관리자 코드 로그인 확인
+  //관리자 코드 확인
   String admin(String id);
+
+  // 관리자 전체 회원 확인
+  List<MemberDTO> allMemberList();
+
+  // 관리자 유지 회원 확인
+  List<MemberDTO> isMemberList();
+
+  // 관리자 탈퇴 회원 확인
+  List<MemberDTO> dleMemberList();
 
   // 사용자  id 조회 또는 수정용 id 조회
   MemberDTO findByID(String id);
@@ -37,8 +48,11 @@ public interface MemberSVC {
   // 사용자 닉네임 조회
   MemberDTO findByNickname(String nickname);
 
-  // 회원 정보 수정
+  // 회원 일반 정보 수정
   void modifyMember(String id, MemberDTO memberDTO);
+
+  // 회원 PW 정보 수정
+  void modifyMemberPw(String id, MemberDTO memberDTO);
 
   // id 찾기
   String findIdMember(String email, String name);

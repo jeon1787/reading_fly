@@ -7,3 +7,6 @@ GRANT CONNECT, RESOURCE TO c##reading_fly;
 GRANT CREATE VIEW, CREATE SYNONYM TO c##reading_fly; 
 GRANT UNLIMITED TABLESPACE TO c##reading_fly; 
 ALTER USER c##reading_fly ACCOUNT UNLOCK;
+
+-- 스케줄러 사용 권한 추가
+grant create any job to c##reading_fly;

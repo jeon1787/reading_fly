@@ -13,8 +13,10 @@ public interface BoardDAO {
   BoardDTO create(BoardDTO board);
   //수정
   BoardDTO update(BoardDTO board);
-  //삭제
-  int delete(Long bnum, String bid);
+  //댓글 없는 게시글 삭제
+  int delete1(Long bnum, String bid);
+  //댓글 있는 게시글 삭제
+  int delete2(Long bnum, String bid);
   //조회수 증가
   int updateHit(Long bnum);
 }

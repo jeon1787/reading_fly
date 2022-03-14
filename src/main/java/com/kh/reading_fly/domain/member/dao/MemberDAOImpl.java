@@ -115,7 +115,7 @@ public class MemberDAOImpl implements MemberDAO{
     return (count == 1) ? true : false;
   }
 
-  //관리자 코드 로그인 확인
+  //관리자 코드 확인
   @Override
   public String admin(String id) {
 
@@ -125,6 +125,42 @@ public class MemberDAOImpl implements MemberDAO{
     String admin_fl =
             jdbcTemplate.queryForObject(sql.toString(), String.class, id);
     return admin_fl;
+  }
+
+  // 관리자 전체 회원 확인
+  @Override
+  public List<MemberDTO> allMemberList() {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select id, name, email, nickname, signup_dt, leave_fl  ");
+    sql.append("from member where admin_fl = 3 order by signup_dt desc ");
+    List<MemberDTO> list = jdbcTemplate.query(sql.toString(),
+        new BeanPropertyRowMapper<>(MemberDTO.class)
+    );
+    return list;
+  }
+
+  // 관리자 유지 회원 확인
+  @Override
+  public List<MemberDTO> isMemberList() {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select id, name, email, nickname, signup_dt, leave_fl  ");
+    sql.append("from member where admin_fl = 3 and leave_fl=0 order by signup_dt desc ");
+    List<MemberDTO> list = jdbcTemplate.query(sql.toString(),
+        new BeanPropertyRowMapper<>(MemberDTO.class)
+    );
+    return list;
+  }
+
+  // 관리자 탈퇴 회원 확인
+  @Override
+  public List<MemberDTO> dleMemberList() {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select id, name, email, nickname, leave_dt, leave_fl  ");
+    sql.append("from member where leave_fl=1 order by signup_dt desc ");
+    List<MemberDTO> list = jdbcTemplate.query(sql.toString(),
+        new BeanPropertyRowMapper<>(MemberDTO.class)
+    );
+    return list;
   }
 
   // 사용자  id 조회 또는 수정용 id 조회
@@ -161,14 +197,24 @@ public class MemberDAOImpl implements MemberDAO{
     return memberDTO;
   }
 
-  // 회원 정보 수정
+  // 회원 일반 정보 수정
   @Override
   public void modifyMember(String id, MemberDTO memberDTO) {
     StringBuffer sql = new StringBuffer();
-    sql.append("update member set nickname = ?, email = ?, pw = ? ");
+    sql.append("update member set nickname = ?, email = ? ");
     sql.append(" where id = ? and leave_fl = 0  ");
     jdbcTemplate.update( sql.toString(),
-            memberDTO.getNickname(), memberDTO.getEmail(), memberDTO.getPw(), id);
+            memberDTO.getNickname(), memberDTO.getEmail(), id);
+  }
+
+  // 회원 PW 정보 수정
+  @Override
+  public void modifyMemberPw(String id, MemberDTO memberDTO) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("update member set pw = ? ");
+    sql.append(" where id = ? and leave_fl = 0  ");
+    jdbcTemplate.update( sql.toString(),
+        memberDTO.getPw(), id);
   }
 
   // id 찾기

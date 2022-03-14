@@ -13,8 +13,10 @@ public interface BoardSVC {
   BoardDTO write(BoardDTO board);
   //수정
   BoardDTO modify(BoardDTO board);
-  //삭제
-  int remove(Long bnum, String bid);
+  //댓글 있는 게시글 삭제
+  int remove1(Long bnum, String bid);
+  //댓글 없는 게시글 삭제
+  int remove2(Long bnum, String bid);
   //조회수 증가
   int increaseHit(Long bnum);
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>공지사항</title>
+  <link rel="stylesheet" th:href="@{/css/notice/noticeList.css}">
+  <script defer src="/js/notice/noticeList.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div class="content">
+    <h3>공지사항</h3>
+    <hr>
+    <div class="cont">
+      <div class="col ct">No</div>
+      <div class="col ct">제목</div>
+      <div class="col ct">글쓴이</div>
+      <div class="col ct">작성시간</div>
+      <div class="col ct">조회수</div>
+
+      <th:block th:each="item : ${notices}">
+        <div class="col ct" th:text="${item.nNum}">1</div>
+        <div class="col le" >
+          <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.nTitle}">제목1</a>
+          <!--          <a class="question" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.q_title}">제목1</a>-->
+          <!--          if(a_title != null) {-->
+          <!--          <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.a_title}">답변제목</a>-->
+          <!--   질문 답변 참고       }-->
+        </div>
+        <div class="col ct">관리자</div>
+        <div class="col ct" th:text="${item.nCDate}">2022/02/22</div>
+        <div class="col ct" th:text="${item.nHit}">10</div>
+      </th:block>
+
+      <th:block th:remove="all">
+        <div class="col">1</div>
+        <div class="col">제목1</div>
+        <div class="col">2022/02/22</div>
+        <div class="col">10</div>
+        <div class="col">NO</div>
+        <div class="col">제목2</div>
+        <div class="col">2022/02/22</div>
+        <div class="col">20</div>
+        <div class="col">NO</div>
+        <div class="col">제목3</div>
+        <div class="col">2022/02/21</div>
+        <div class="col">5</div>
+        <div class="col">NO</div>
+        <div class="col">제목3</div>
+        <div class="col">2022/02/21</div>
+        <div class="col">5</div>
+        <div class="col">NO</div>
+        <div class="col">제목3</div>
+        <div class="col">2022/02/21</div>
+        <div class="col">5</div>
+        <div class="col">NO</div>
+        <div class="col">제목3</div>
+        <div class="col">2022/02/21</div>
+        <div class="col">5</div>
+      </th:block>
+    </div>
+    <div class="btn-grp">
+      <button type="button" id="writeBtn">작성</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

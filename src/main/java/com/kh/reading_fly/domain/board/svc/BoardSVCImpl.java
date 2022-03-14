@@ -66,13 +66,23 @@ public class BoardSVCImpl implements BoardSVC{
   }
 
   /**
-   * 삭제
+   * 댓글 없는 게시글 삭제
    * @param bnum
    * @return
    */
   @Override
-  public int remove(Long bnum, String bid) {
-    return boardDAO.delete(bnum, bid);
+  public int remove1(Long bnum, String bid) {
+    return boardDAO.delete1(bnum, bid);
+  }
+
+  /**
+   * 댓글 있는 게시글 삭제
+   * @param bnum
+   * @return
+   */
+  @Override
+  public int remove2(Long bnum, String bid) {
+    return boardDAO.delete2(bnum, bid);
   }
 
   /**

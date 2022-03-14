@@ -2,7 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
-import com.kh.reading_fly.web.form.singup.SignupForm;
+import com.kh.reading_fly.web.form.signup.SignupForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -79,6 +79,9 @@ public class SignupController {
     log.info("signupForm={}", signupForm);
     MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
             signupForm.getPw(), signupForm.getName(), signupForm.getNickname());
+//    MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
+//        signupForm.getPw(), signupForm.getName(), signupForm.getNickname(),
+//        signupForm.getSignup_dt(), signupForm.getLeave_fl(), signupForm.getLeave_dt());
 
 //    MemberDTO mdto = new MemberDTO();
     BeanUtils.copyProperties(signupForm, memberDTO);
@@ -96,4 +99,4 @@ public class SignupController {
 
 
 
-} // end of signupController
+}
