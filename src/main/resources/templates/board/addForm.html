@@ -29,9 +29,9 @@
 <h3>게시글 작성하기</h3>
 <div id="container">
   <form th:method="post" th:object="${addForm}">
-    <div>제목<input type="text" th:field="*{btitle}"></div>
+    <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
     <div>내용</div>
-    <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}"></textarea>
+    <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
     <div>
       <button type="submit">등록</button>
       <button type="button" onclick="location.href='/board'">목록</button>

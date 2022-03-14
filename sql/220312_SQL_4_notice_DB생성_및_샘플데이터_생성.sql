@@ -6,7 +6,7 @@ drop sequence notice_nnum_seq;
 
 create table notice(
   nnum NUMBER(15) not null,         -- 공지사항번호
-  ntitle VARCHAR2(50) not null,     -- 공지사항제목
+  ntitle VARCHAR2(60) not null,     -- 공지사항제목
   ncdate TIMESTAMP default systimestamp, -- 공지사항작성일
   nudate TIMESTAMP,                 -- 공지사항수정일
   ncontent CLOB not null,          -- 공지사항내용
