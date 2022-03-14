@@ -63,7 +63,7 @@
       </th:block>
     </div>
     <div class="btn-grp">
-      <button type="button" id="writeBtn">작성</button>
+      <button type="button" id="writeBtn" th:if="${session.id == 'admin'}">작성</button>
     </div>
   </div>
 </div>
