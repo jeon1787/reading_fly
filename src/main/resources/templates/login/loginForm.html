@@ -46,29 +46,31 @@
     <li th:if="${#fields.hasErrors('pw')}">
       <p th:errors="*{pw}" th:errorclass="fieldError"></p>
     </li>
-    <div class="toggle"></div>
-    <label class="switch">
-      <input type="checkbox" name="autologincheck">
-      <span class="slider round"></span>
-    </label>
-    <span class="switch__text">자동 로그인</span>
+<!--    <div class="toggle"></div>-->
+<!--    <label class="switch">-->
+<!--      <input type="checkbox" name="autologincheck">-->
+<!--      <span class="slider round"></span>-->
+<!--    </label>-->
+<!--    <span class="switch__text">자동 로그인</span>-->
     <li>
-      <button type="submit" th:text="#{btn.login}">로그인</button>
+<!--      <button type="submit" th:text="#{btn.login}">로그인</button>-->
+      <button type="submit" >로그인</button>
     </li>
     <li>
-      <a href="#" th:href="@{/support/findid}">아이디찾기</a>
-      <a href="#" th:href="@{/support/findpw}">비밀번호찾기</a>
+      <a href="#" th:href="@{/member/findid}">아이디찾기</a>
+      <a href="#" th:href="@{/member/findpw}">비밀번호찾기</a>
       <a href="#" th:href="@{/signup}">회원가입</a>
     </li>
   </ul>
 </form>
 
 <script>
-     var check = $("input[type='checkbox']");
-      check.click(function(){
-        $("p").toggle();
-      });
-    </script>
+<!--     var check = $("input[type='checkbox']");-->
+<!--      check.click(function(){-->
+<!--        $("p").toggle();-->
+<!--      });-->
+
+</script>
 
 
 

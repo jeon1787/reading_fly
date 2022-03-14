@@ -1,22 +1,28 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
-import com.kh.reading_fly.web.form.support.FindIdReq;
-import com.kh.reading_fly.web.form.support.FindPwReq;
+import com.kh.reading_fly.web.form.login.LoginMember;
+import com.kh.reading_fly.web.form.member.FindIdReq;
+import com.kh.reading_fly.web.form.member.FindPwReq;
+import com.kh.reading_fly.web.form.member.PwEditForm;
 import com.kh.reading_fly.web.form.support.JsonResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class RestSupportController {
+public class ApiSupportController {
 
   private final MemberSVC memberSVC;
 
@@ -63,9 +69,41 @@ public class RestSupportController {
     return result;
   }
 
+  // id 중복 체크
+  @ResponseBody
+  @GetMapping("/id/{id}/exist")
+  public JsonResult<MemberDTO> isExistId(@PathVariable String id){
+    boolean isExistId = memberSVC.isExistId(id);
+    if(isExistId){
+      return new JsonResult("00","success","OK");
+    }else{
+      return new JsonResult("99","fail","NOK");
+    }
+  }
 
+  // email 중복 체크
+  @ResponseBody
+  @GetMapping("/email/{email}/exist")
+  public JsonResult<MemberDTO> isExistEmail(@PathVariable String email){
+    boolean isExistEmail = memberSVC.isExistEmail(email);
+    if(isExistEmail){
+      return new JsonResult("00","success","OK");
+    }else{
+      return new JsonResult("99","fail","NOK");
+    }
+  }
 
-
+  // 닉네임 중복 체크
+  @ResponseBody
+  @GetMapping("/nickname/{nickname}/exist")
+  public JsonResult<MemberDTO> isExistNickname(@PathVariable String nickname){
+    boolean isExistNickname = memberSVC.isExistNickname(nickname);
+    if(isExistNickname){
+      return new JsonResult("00","success","OK");
+    }else{
+      return new JsonResult("99","fail","NOK");
+    }
+  }
 
 
 }

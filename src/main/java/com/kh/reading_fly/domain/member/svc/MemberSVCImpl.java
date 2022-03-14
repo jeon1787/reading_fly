@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -54,9 +56,28 @@ public class MemberSVCImpl implements MemberSVC{
     return memberDAO.isMember(id, pw);
   }
 
+  //관리자 코드 확인
   @Override
   public String admin(String id) {
     return memberDAO.admin(id);
+  }
+
+  // 관리자 전체 회원 확인
+  @Override
+  public List<MemberDTO> allMemberList() {
+    return memberDAO.allMemberList();
+  }
+
+  // 관리자 유지 회원 확인
+  @Override
+  public List<MemberDTO> isMemberList() {
+    return memberDAO.isMemberList();
+  }
+
+  // 관리자 탈퇴 회원 확인
+  @Override
+  public List<MemberDTO> dleMemberList() {
+    return memberDAO.dleMemberList();
   }
 
   // 사용자 정보 수정용 id 조회
@@ -77,10 +98,16 @@ public class MemberSVCImpl implements MemberSVC{
     return memberDAO.findByNickname(nickname);
   }
 
-  // 회원 정보 수정
+  // 회원 일반 정보 수정
   @Override
   public void modifyMember(String id, MemberDTO memberDTO) {
     memberDAO.modifyMember(id, memberDTO);
+  }
+
+  // 회원 PW 정보 수정
+  @Override
+  public void modifyMemberPw(String id, MemberDTO memberDTO) {
+    memberDAO.modifyMemberPw(id, memberDTO);
   }
 
   // id 찾기

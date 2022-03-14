@@ -79,6 +79,9 @@ public class SignupController {
     log.info("signupForm={}", signupForm);
     MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
             signupForm.getPw(), signupForm.getName(), signupForm.getNickname());
+//    MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
+//        signupForm.getPw(), signupForm.getName(), signupForm.getNickname(),
+//        signupForm.getSignup_dt(), signupForm.getLeave_fl(), signupForm.getLeave_dt());
 
 //    MemberDTO mdto = new MemberDTO();
     BeanUtils.copyProperties(signupForm, memberDTO);
@@ -96,4 +99,4 @@ public class SignupController {
 
 
 
-} // end of signupController
+}

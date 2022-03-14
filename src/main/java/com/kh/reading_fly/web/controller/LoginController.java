@@ -77,6 +77,14 @@ public class LoginController {
 //    session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
     session.setAttribute("loginMember", loginMember );
 
+    // 자동로그인
+    if(loginForm.isAutologincheck()) {
+      Cookie cookie = new Cookie("loginCookie", session.getId());
+      cookie.setPath("/");
+      cookie.setMaxAge(60*60*24*7);	//7일
+      response.addCookie(cookie);
+    }
+
     // 관리자 여부 확인
     int code =  Integer.parseInt(memberSVC.admin(loginForm.getId()));
     if(code == 2) {
@@ -84,14 +92,6 @@ public class LoginController {
     }
     if(code == 3) {
       session.setAttribute("loginMember", loginMember );
-    }
-
-    // 자동로그인
-    if(loginForm.isAutologincheck()) {
-      Cookie cookie = new Cookie("loginCookie", session.getId());
-      cookie.setPath("/");
-      cookie.setMaxAge(60*60*24*7);	//7일
-      response.addCookie(cookie);
     }
 
     return "redirect:/";
@@ -109,4 +109,4 @@ public class LoginController {
   }
 
 
-} // end of LoginController
+}
