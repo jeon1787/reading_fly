@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @ToString
 public class ItemForm {
   private Long cnum;            //댓글번호
-  private LocalDateTime cudate; //날짜
-  private String ccontent;      //댓글본문
   private String nickname;      //닉네임
+  private String ccontent;      //댓글본문
+  private String cudate; //날짜
 }

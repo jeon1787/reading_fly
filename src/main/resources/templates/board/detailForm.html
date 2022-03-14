@@ -106,7 +106,7 @@
 
   <hr>
 
-  <div id="content" th:text="${detailForm.bcontent}">본문</div>
+  <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>
 
   <hr>
 
@@ -114,17 +114,17 @@
 
     <div class="comment-upper">댓글</div>
     <div id="commentList">
-      <div class="comment-content">
-        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>
-        <div>댓글</div>
-        <div><span>날짜</span><a href="">대댓글쓰기</a></div>
-      </div>
+<!--      <div class="comment-content">-->
+<!--        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>-->
+<!--        <div>댓글</div>-->
+<!--        <div><span>날짜</span><a href="">대댓글쓰기</a></div>-->
+<!--      </div>-->
     </div>
 
     <div class="container comment-container">
       <form action="">
         <div>닉네임</div>
-        <textarea name="" cols="104" rows="10" placeholder="댓글을 입력하세요" autofocus></textarea>
+        <textarea id="reply" name="" cols="104" rows="10" placeholder="댓글을 입력하세요"></textarea>
         <button type="submit" id="addBtn">등록</button>
       </form>
     </div>
@@ -136,15 +136,15 @@
   //dom 이벤트
   document.addEventListener('DOMContentLoaded', e=>{
     console.log('DOM 생성');
-    list_f();
+    const bnum = /*[[ ${detailForm.bnum} ]]*/;
+    console.log(bnum);
+    list_f(bnum);
   });
 
+  //댓글목록 조회 함수
+  function list_f(bnum){
+        console.log("list_f 호출됨!");
 
-  const bnum = /*[[ ${detailForm.bnum} ]]*/;
-
-  console.log(bnum);
-
-  function list_f(){
     fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})
     .then(res => res.json())
     .then(res => {
@@ -154,20 +154,58 @@
     .catch(err => console.error('Err:',err))
   }
 
+  //댓글목록 출력 함수
   function displayComments_f(comments){
+    console.log("displayComments_f 호출됨!");
+
     let content = ``;
     comments.forEach(comment => {
       content +=
         `<div class="comment-content">
         <div class="comment-header"><span>${comment.nickname}</span><span><a href="">수정</a><a href="">삭제</a></span></div>
-        <div>${comment.ccontent}</div>
+        <div style="white-space:pre-wrap;">${comment.ccontent}</div>
         <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>
         </div>`;
     });
-
     commentList.innerHTML = content;
   }
 
+  //댓글등록 함수
+  addBtn.addEventListener('click', e=>{
+    const loginChk = /*[[ ${session} ]]*/;
+    console.log(loginChk);
+
+    //비로그인 상태
+    if(Object.keys(loginChk).length === 0){
+      console.log("로그인이 필요한 서비스입니다.");
+      alert("로그인이 필요한 서비스입니다.");
+
+    //로그인 상태
+    }else{
+      const bnum = /*[[ ${detailForm.bnum} ]]*/;
+      console.log(bnum);
+
+      const addForm = {
+        "ccontent": reply.value
+      };
+
+      fetch(`http://localhost:9080/api/comment/${bnum}`,{
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(addForm)  // js객체를 => json 포맷 문자열 변환
+      }).then(res=>res.json())
+        .then(res=>{
+          console.log(res);
+          list_f(bnum);
+        })
+        .catch(err => console.error('Err:',err));
+    }
+
+  })
+
+  //게시글 수정 및 삭제 이벤트리스너
   eventHandler.addEventListener('click', e=>{
     //수정 버튼 클릭시
     if(e.target.textContent == '수정'){
