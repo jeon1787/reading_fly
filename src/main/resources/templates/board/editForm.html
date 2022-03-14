@@ -29,7 +29,7 @@
 <h3>게시글 수정하기</h3>
 <div id="container">
   <form th:method="patch" th:object="${editForm}">
-    <div>제목<input type="text" th:field="*{btitle}"></div>
+    <div>제목<input type="text" th:field="*{btitle}" autofocus></div>
     <div>내용</div>
     <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}"></textarea>
     <div>
