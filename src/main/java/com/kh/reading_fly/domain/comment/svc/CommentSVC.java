@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CommentSVC {
 
-  List<CommentDTO> findAll();
+  List<CommentDTO> findAll(Long cbnum);
 }

@@ -1,9 +1,8 @@
 package com.kh.reading_fly.web.controller;
 
-import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
-import com.kh.reading_fly.web.form.support.FindIdReq;
-import com.kh.reading_fly.web.form.support.FindPwReq;
+import com.kh.reading_fly.web.form.member.FindIdReq;
+import com.kh.reading_fly.web.form.member.FindPwReq;
 import com.kh.reading_fly.web.form.support.JsonResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,55 +21,8 @@ public class SupportController {
 
   private final MemberSVC memberSVC;
 
-  // id 중복 체크
-  @ResponseBody
-  @GetMapping("/id/{id}/exist")
-  public JsonResult<MemberDTO> isExistId(@PathVariable String id){
-    boolean isExistId = memberSVC.isExistId(id);
-    if(isExistId){
-      return new JsonResult("00","success","OK");
-    }else{
-      return new JsonResult("99","fail","NOK");
-    }
-  }
 
-  // email 중복 체크
-  @ResponseBody
-  @GetMapping("/email/{email}/exist")
-  public JsonResult<MemberDTO> isExistEmail(@PathVariable String email){
-    boolean isExistEmail = memberSVC.isExistEmail(email);
-    if(isExistEmail){
-      return new JsonResult("00","success","OK");
-    }else{
-      return new JsonResult("99","fail","NOK");
-    }
-  }
 
-  // 닉네임 중복 체크
-  @ResponseBody
-  @GetMapping("/nickname/{nickname}/exist")
-  public JsonResult<MemberDTO> isExistNickname(@PathVariable String nickname){
-    boolean isExistNickname = memberSVC.isExistNickname(nickname);
-    if(isExistNickname){
-      return new JsonResult("00","success","OK");
-    }else{
-      return new JsonResult("99","fail","NOK");
-    }
-  }
-
-  //아이디 찾기
-  @GetMapping("/findid")
-  public String findid(){
-    log.info("findIdForm() 호출됨!");
-    return "support/findIdForm";
-  }
-
-  //pw 찾기
-  @GetMapping("/findpw")
-  public String findpw(){
-    log.info("findPwForm() 호출됨!");
-    return "support/findPwForm";
-  }
 
 
 
