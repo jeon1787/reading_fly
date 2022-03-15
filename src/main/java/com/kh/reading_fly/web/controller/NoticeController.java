@@ -2,6 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.svc.NoticeSVC;
+import com.kh.reading_fly.web.form.login.LoginMember;
 import com.kh.reading_fly.web.form.notice.NoticeAddForm;
 import com.kh.reading_fly.web.form.notice.NoticeDetailForm;
 import com.kh.reading_fly.web.form.notice.NoticeEditForm;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +52,13 @@ public class NoticeController {
   }
   //  상세화면
   @GetMapping("/{nNum}/detail")
-  public String detailForm(@PathVariable Long nNum, Model model){
+  public String detailForm(@PathVariable Long nNum, Model model, HttpSession session){
+//    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
+//
+//    if(loginMember.getId() != null ) {
+//      String id = loginMember.getId();
+//      session.setAttribute("id",id);
+//    }
 
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
 
@@ -103,7 +112,14 @@ public class NoticeController {
   }
   //  전체목록
   @GetMapping("/all")
-  public String list(Model model){
+  public String list(Model model, HttpSession session){
+    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
+
+    if(loginMember.getId() != null ) {
+      String id = loginMember.getId();
+      session.setAttribute("id",id);
+    }
+
     List<NoticeDTO> list = noticeSVC.findAll();
 
     List<NoticeItem> notices = new ArrayList<>();

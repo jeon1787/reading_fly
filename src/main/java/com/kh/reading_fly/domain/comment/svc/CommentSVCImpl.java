@@ -19,4 +19,9 @@ public class CommentSVCImpl implements CommentSVC{
   public List<CommentDTO> findAll(Long cbnum) {
     return commentDAO.selectAll(cbnum);
   }
+
+  @Override
+  public CommentDTO write(CommentDTO comment) {
+    return commentDAO.create(comment);
+  }
 }

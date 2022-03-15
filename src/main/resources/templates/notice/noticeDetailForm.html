@@ -27,9 +27,9 @@
           <textarea cols="30" rows="10" readonly="readonly" th:field="*{nContent}"></textarea>
         </li>
         <li>
-          <button type="button" id="editBtn">수정</button>
-          <button type="button" id="delBtn">삭제</button>
-          <button type="button" id="listBtn">목록</button>
+          <button type="button" id="editBtn" th:if="${session.id == 'admin'}">수정</button>
+          <button type="button" id="delBtn"  th:if="${session.id == 'admin'}">삭제</button>
+          <button type="button" id="listBtn" onclick="location.href='/notices/all'">목록</button>
         </li>
       </ul>
     </form>
