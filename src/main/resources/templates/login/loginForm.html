@@ -25,7 +25,8 @@
 <ul th:if="${#fields.hasErrors('${loginForm}')}">
   <li th:errors="${loginForm}" th:errorclass="globalError">글로벌 오류</li>
 </ul>
-<form action="" th:action="@{/login}" method="post" th:object="${loginForm}">
+<!--<form action="" th:action="@{/login}" method="post" th:object="${loginForm}">-->
+<form action=""  method="post" th:object="${loginForm}">
   <ul>
     <!-- 글로벌 오류 case2) form태그 안에 있을 때
     <li th:if="${#fields.hasErrors('global')}" class="globalError">
@@ -46,12 +47,14 @@
     <li th:if="${#fields.hasErrors('pw')}">
       <p th:errors="*{pw}" th:errorclass="fieldError"></p>
     </li>
-<!--    <div class="toggle"></div>-->
-<!--    <label class="switch">-->
-<!--      <input type="checkbox" name="autologincheck">-->
-<!--      <span class="slider round"></span>-->
-<!--    </label>-->
-<!--    <span class="switch__text">자동 로그인</span>-->
+
+    <div class="toggle"></div>
+    <label class="switch">
+      <input type="checkbox" name="autologincheck">
+      <span class="slider round"></span>
+    </label>
+    <span class="switch__text">자동 로그인</span>
+
     <li>
 <!--      <button type="submit" th:text="#{btn.login}">로그인</button>-->
       <button type="submit" >로그인</button>

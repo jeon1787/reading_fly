@@ -77,28 +77,25 @@ public class MemberController {
     log.info("수정입력처리 확인");
 
 
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //닉네임 존재유무
+    MemberDTO findmemberDTO =  memberSVC.findByID(loginMember.getId());
+    if(memberSVC.isExistNickname(editForm.getNickname()) && !(editForm.getNickname().equals(findmemberDTO.getNickname()))) {
+      bindingResult.rejectValue("nickname", "nickname", "동일한 닉네임이 존재합니다");
+    }
+
+    //이메일 존재유무
+    if(memberSVC.isExistEmail(editForm.getEmail()) && !(editForm.getEmail().equals(findmemberDTO.getEmail()))) {
+      bindingResult.rejectValue("email", "email", "동일한 email이 존재합니다");
+    }
+
     if(bindingResult.hasErrors()) {
       log.info("errors={}",bindingResult);
       log.info("bindingResult.hasErrors() 확인");
       return "member/memberEditForm";
     }
-
-    //세션이 없으면 로그인 페이지로 이동
-    if(loginMember == null) return "redirect:/";
-
-    //닉네임 존재유무
-    if(memberSVC.isExistNickname(editForm.getNickname()) && !(editForm.getNickname().equals(loginMember.getNickname()))) {
-      bindingResult.rejectValue("nickname", "nickname", "동일한 닉네임이 존재합니다");
-
-    }
-
-    //이메일 존재유무
-    if(memberSVC.isExistEmail(editForm.getEmail()) && !(editForm.getEmail().equals(loginMember.getNickname()))) {
-      bindingResult.rejectValue("email", "email", "동일한 email이 존재합니다");
-
-    }
-
-
 
     log.info("입력받은 memberDTO:{}",editForm);
 
@@ -201,8 +198,8 @@ public class MemberController {
 
 
   //회원탈퇴
-  @GetMapping("/{id}/out")
-//  @GetMapping("/out")
+//  @GetMapping("/{id}/out")
+  @GetMapping("/out")
   public String outForm(@ModelAttribute OutForm outForm){
     log.info("outForm 호출됨!");
     return "member/outForm";
