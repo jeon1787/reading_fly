@@ -12,7 +12,7 @@
 <body>
 <h3>회원탈퇴</h3>
 <hr>
-<form id="frm" action="/member/out" method="post" th:object="${outForm}">
+<form id="frm" action="/member/out" method="get" th:object="${outForm}">
   <input type="hidden" th:field="*{id}" th:value="${session.loginMember.id}">
   <ul>
     <li>
