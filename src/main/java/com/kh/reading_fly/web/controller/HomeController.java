@@ -21,7 +21,7 @@ public class HomeController {
     String view = null;
     HttpSession session = request.getSession(false);
 
-    view = (session == null || session.getAttribute("loginMember") == null || session.getAttribute("loginMember").equals("")) ? "main/main" : "main/mainDetail" ;
+    view = (session == null || session.getAttribute("loginMember") == null) ? "main/main" : "main/mainDetail" ;
 
     return view;
   }

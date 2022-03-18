@@ -36,24 +36,26 @@ public class WebConfig implements WebMvcConfigurer {
             "/logout",
             "/signup",
             "/board",
+            "/board/*/detail",
             "/notices/all",
             "/css/**",
             "/js/**",
             "/img/**",
             "/member/findid",
-            "/member/findpw"
+            "/member/findpw",
+            "/error"
 
         );
 
 
-//    registry.addInterceptor(new AdminCheckInterceptor())
-//        .order(2)
-//        .addPathPatterns("/admin/**")
-//        .addPathPatterns("/notices/")
-//
-//        .excludePathPatterns(
-//
-//        );
+    registry.addInterceptor(new AdminCheckInterceptor())
+        .order(2)
+        .addPathPatterns("/admin/**")
+        .addPathPatterns("/notices/")
+
+        .excludePathPatterns(
+
+        );
 
 
   }
