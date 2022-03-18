@@ -1,6 +1,7 @@
 package com.kh.reading_fly.web.interceptor;
 
 
+import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.domain.member.svc.MemberSVC;
 import com.kh.reading_fly.web.form.login.LoginMember;
 import lombok.extern.slf4j.Slf4j;
@@ -15,16 +16,14 @@ import java.net.URLEncoder;
 public class AdminCheckInterceptor implements HandlerInterceptor{
 
   private MemberSVC memberSVC;
+  private MemberDTO memberDTO;
 
-  public void setMemberSVC(MemberSVC memberSVC) {
-    this.memberSVC = memberSVC;
-  }
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     String redirectUrl = null;
     String requestURI = request.getRequestURI();
-    log.info("requestURI={}", requestURI);
+    log.info("admin_requestURI={}", requestURI);
 
     if(request.getQueryString() != null){
       String queryString = URLEncoder.encode(request.getQueryString(), "UTF-8");
@@ -38,9 +37,16 @@ public class AdminCheckInterceptor implements HandlerInterceptor{
     }
 
 
-    HttpSession session = request.getSession(false);
-    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
-    int code = Integer.parseInt(memberSVC.admin(loginMember.getId()));
+
+    LoginMember loginMember = new LoginMember(
+        memberDTO.getId(), memberDTO.getNickname(), memberDTO.getEmail(), memberDTO.getAdmin_fl());
+    log.info("id={}, email={}, nickname={}, admin_fl={}",
+        memberDTO.getId(), memberDTO.getEmail(),memberDTO.getNickname(), memberDTO.getAdmin_fl());
+    HttpSession session = request.getSession(true);
+    session.setAttribute("loginMember", loginMember );
+
+    int code = loginMember.getAdmin_fl();
+//    int code = Integer.parseInt(memberSVC.admin(loginMember.getId()));
     if(code == 2) {
       log.info("admin 인증 요청");
       response.sendRedirect("/redirectUrl=" + redirectUrl);
@@ -48,11 +54,25 @@ public class AdminCheckInterceptor implements HandlerInterceptor{
     }
 
 
+
+
+//    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");
+//    int code = Integer.parseInt(memberSVC.admin(loginMember.getId()));
+//    if(code == 2) {
+//      log.info("admin 인증 요청");
+//      response.sendRedirect("/redirectUrl=" + redirectUrl);
+//      return false;
+//    }
+
+
+
 //    if(session == null || session.getAttribute("loginMember.admin_fl") == "3" ){
+//      if(session.getAttribute("loginMember.admin_fl()") == "2" ){
 //      log.info("미인증 요청");
 //      response.sendRedirect("/redirectUrl=" + redirectUrl);
 //      return false;
 //    }
+
     return true;
   }
 

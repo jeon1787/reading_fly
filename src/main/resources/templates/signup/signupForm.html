@@ -94,7 +94,7 @@
     $idDupChk.addEventListener('click', e=>{
       const xmlHttpreq = new XMLHttpRequest();
 
-      const url = `/id/${$id.value}/exist`;
+      const url = `/memberexist/id/${$id.value}/exist`;
       xmlHttpreq.open("GET",url);
       xmlHttpreq.send(id);
 
@@ -123,7 +123,7 @@
         }
       });
     });
-    
+
 
 
 
@@ -138,7 +138,7 @@
     $emailDupChk.addEventListener('click', e=>{
       const xmlHttpreq = new XMLHttpRequest();
 
-      const url = `/email/${$email.value}/exist`;
+      const url = `/memberexist/email/${$email.value}/exist`;
       xmlHttpreq.open("GET",url);
       xmlHttpreq.send(email);
 
@@ -179,7 +179,7 @@
     $nicknameDupChk.addEventListener('click', e=>{
       const xmlHttpreq = new XMLHttpRequest();
 
-      const url = `/nickname/${$nickname.value}/exist`;
+      const url = `/memberexist/nickname/${$nickname.value}/exist`;
       xmlHttpreq.open("GET",url);
       xmlHttpreq.send(nickname);
 
@@ -209,7 +209,7 @@
       });
     });
 
-    
+
 
 
 

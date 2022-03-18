@@ -77,13 +77,13 @@ public class SignupController {
 
     //4)정상처리로직
     log.info("signupForm={}", signupForm);
-    MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
-            signupForm.getPw(), signupForm.getName(), signupForm.getNickname());
+//    MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
+//            signupForm.getPw(), signupForm.getName(), signupForm.getNickname());
 //    MemberDTO memberDTO = new MemberDTO( signupForm.getId(), signupForm.getEmail(),
 //        signupForm.getPw(), signupForm.getName(), signupForm.getNickname(),
 //        signupForm.getSignup_dt(), signupForm.getLeave_fl(), signupForm.getLeave_dt());
 
-//    MemberDTO mdto = new MemberDTO();
+    MemberDTO memberDTO = new MemberDTO();
     BeanUtils.copyProperties(signupForm, memberDTO);
     memberSVC.insertMember(memberDTO);
     log.info("id={}, pw={}, name={}, email={}, nickname={}",

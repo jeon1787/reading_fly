@@ -12,4 +12,6 @@ public class LoginMember {
   private String nickname;
   private String email;
 
+  private int admin_fl;
+
 }

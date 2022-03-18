@@ -73,7 +73,14 @@ public class LoginController {
 //    }
 
     //회원 세션 정보
-    LoginMember loginMember = new LoginMember(memberDTO.getId(), memberDTO.getEmail(), memberDTO.getNickname());
+//    LoginMember loginMember = new LoginMember(memberDTO.getId(), memberDTO.getEmail(), memberDTO.getNickname());
+    LoginMember loginMember = new LoginMember(
+        memberDTO.getId(), memberDTO.getNickname(), memberDTO.getEmail(), memberDTO.getAdmin_fl());
+    log.info("id={}, email={}, nickname={}, admin_fl={}",
+        memberDTO.getId(), memberDTO.getEmail(),memberDTO.getNickname(), memberDTO.getAdmin_fl());
+
+
+
 
     //인증성공
     //세션이 있으면 세션 반환, 없으면 새로이 생성
