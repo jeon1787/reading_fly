@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LoginCheckInterceptor())
-        .order(1)
+        .order(2)
         .addPathPatterns("/**")
         .addPathPatterns("/member/**")
         .addPathPatterns("/board/**")
@@ -31,29 +31,37 @@ public class WebConfig implements WebMvcConfigurer {
 
 
         .excludePathPatterns(
-            "/",
-            "/login",
-            "/logout",
-            "/signup",
-            "/board",
-            "/notices/all",
             "/css/**",
             "/js/**",
             "/img/**",
-            "/member/findid",
-            "/member/findpw"
+
+            "/",                          // 메인화면
+            "/login",                     // 로그인
+            "/logout",                    // 로그아웃
+            "/signup",                    // 회원가입
+            "/member/outCompleted",       // 회원탈퇴 완료
+            "/memberexist/**",             // id 및 pw 찾기 관련 일체
+
+
+
+            "/board",                     // 게시판 목록 보기
+            "/board/*/detail",            // 게시판 내용 보기
+            "/notices/all",                // 공지사항 목록 보기
+            "/error/**"
+
+
 
         );
 
 
-//    registry.addInterceptor(new AdminCheckInterceptor())
-//        .order(2)
-//        .addPathPatterns("/admin/**")
-//        .addPathPatterns("/notices/")
-//
-//        .excludePathPatterns(
-//
-//        );
+    registry.addInterceptor(new AdminCheckInterceptor())
+        .order(1)
+        .addPathPatterns("/admin/**")
+        .addPathPatterns("/notices/")
+
+        .excludePathPatterns(
+
+        );
 
 
   }

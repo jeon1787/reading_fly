@@ -22,14 +22,38 @@ import javax.validation.Valid;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/memberexist")
 public class ApiSupportController {
 
   private final MemberSVC memberSVC;
 
 
+
+  //아이디 찾기
+  @GetMapping("/findid")
+  public String findid(){
+    log.info("findIdForm() 호출됨!");
+    return "member/findIdForm";
+  }
+
+  //pw 찾기
+  @GetMapping("/findpw")
+  public String findpw(){
+    log.info("findPwForm() 호출됨!");
+    return "member/findPwForm";
+  }
+
+
+
+
+
+
+
+
+
   // id 찾기 확인
   @ResponseBody
-  @PutMapping("/api/findid")
+  @PutMapping("/exist/findid")
   public JsonResult<String> findIdMember(
           @RequestBody FindIdReq findIdReq, BindingResult bindingResult){
 
@@ -50,7 +74,7 @@ public class ApiSupportController {
 
   // pw 찾기 획인
   @ResponseBody
-  @PutMapping("/api/findpw")
+  @PutMapping("/exist/findpw")
   public JsonResult<String> findPwMember(
           @RequestBody FindPwReq findPwReq, BindingResult bindingResult){
 

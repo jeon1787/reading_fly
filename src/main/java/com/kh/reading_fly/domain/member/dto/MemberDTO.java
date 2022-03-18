@@ -12,17 +12,15 @@ import java.time.LocalDateTime;
 @Data
 public class MemberDTO {
 
-  private String id;
-  private String pw;
-  private String name;
-  private String nickname;
-  private String email;
-
-//  private LocalDateTime signup_dt;
-//
-//  private String leave_fl;
-//
-//  private LocalDateTime leave_dt;
+  private String id;                      // 아이디 id VARCHAR2(40) not null
+  private String pw;                      // 비밀번호 pw VARCHAR2(30) not null
+  private String name;                    // 이름 name VARCHAR2(20) not null
+  private String email;                   // 이메일 email VARCHAR2(50) not null
+  private String nickname;                // 닉네임 nickname VARCHAR2(30) not null
+  private int admin_fl;                   // 관리자여부 2 관리자 3 사용자 admin_fl NUMBER(1) default 3
+  private LocalDateTime signup_dt;        // 가입시간 signup_dt TIMESTAMP  default systimestamp
+  private int leave_fl;                   // 탈퇴여부 0 회원 1 탈퇴 leave_fl NUMBER(1) default 0
+  private LocalDateTime leave_dt;          // 탈퇴시간 leave_dt TIMESTAMP
 
 
 

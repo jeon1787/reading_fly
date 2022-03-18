@@ -31,20 +31,20 @@
     findIdBtn.addEventListener('click', findById);
 
 
-    fetch(`/api/comments/${search.value}`,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    }).then(res=>res.json())
-      .then(res=>{console.log(res); findAll_f();})
-      .catch(err=>console.error('Err:',err))    ;
+<!--    fetch(`/api/comments/${search.value}`,{-->
+<!--      method:'PATCH',-->
+<!--      headers:{'Content-Type':'application/json'},-->
+<!--      body:JSON.stringify(data)-->
+<!--    }).then(res=>res.json())-->
+<!--      .then(res=>{console.log(res); findAll_f();})-->
+<!--      .catch(err=>console.error('Err:',err))    ;-->
 
     function findById(e){
         const data ={};
     data.name = nameTxt.value;
     data.email = emailTxt.value;
 
-        fetch('/api/findid',{
+        fetch('/memberexist/exist/findid',{
       method:'PUT',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify(data)
