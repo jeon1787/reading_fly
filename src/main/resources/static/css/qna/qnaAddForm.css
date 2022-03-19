@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+ main { display:flex; justify-content:center; }
+    .qna-wrap * {
+      /* outline:1px solid red; */
+      box-sizing: border-box;
+    }
+    .qna-wrap { width:80% }
+    .qna-wrap .qna-title {
+      text-align: center; padding:20px 0;
+    }
+    .qna-wrap .qna-content{
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 5px;
+    }
+    .qna-wrap .qna-content .w100{
+      width:100%; padding:3px;
+    }
+    .qna-wrap .qna-btngrp{
+      display:flex;
+      justify-content: flex-end;
+    }
+  .fieldError {
+    color:red;
+  }
