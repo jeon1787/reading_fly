@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+</head>
+<body>
+
+  <!--비로그인-->
+  <div class="upper-right" th:fragment="beforeLoginUpm">
+    <button type="submit" onclick="location.href='/login'"> 로그인 </button>
+    <button type="submit" onclick="location.href='/signup'"> 회원가입 </button>
+  </div>
+
+  <!--로그인-->
+  <div class="upper-right" th:fragment="afterLoginUpm">
+    <button type="submit" onclick="location.href='member/memberinfo'"> 마이페이지 </button>
+    <button type="submit" onclick="location.href='/logout'"> 로그아웃 </button>
+  </div>
+
+</body>
+</html>
