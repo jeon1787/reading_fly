@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글보기</title>
+  <link rel="stylesheet" href="" th:href="@{/css/qna/qnaDetailForm.css}">
+  <script defer src="" th:src="@{/js/qna/qnaDetailForm.js}"></script>
+</head>
+<body>
+<main>
+  <div class="qna-wrap">
+    <div class="qna-title"><h3>게시글 보기</h3></div>
+    <div class="class-body">
+      <form action="" method="post" th:object="${qnaDetailForm}">
+        <input type="hidden" th:field="*{qNum}">
+        <div class="qna-hit">
+          <span class="qna-hit-content bbs-hit-tit">조회수</span>
+          <span class="qna-hit-content bbs-hit-cnt" th:text="*{qHit}">10</span>
+        </div>
+        <div class="qna-content">
+          <div><lable>제목</lable></div>
+          <div><input type="text" name="" id="" class="w100" th:field="*{qTitle}" th:readonly="readonly"></div>
+          <div><lable>작성자</lable></div>
+          <div><span th:text="*{qNickname}"></span></div>
+          <div><lable>내용</lable></div>
+          <div><textarea name="" id="" rows="10" class="w100" th:field="*{qContent}" th:readonly="readonly"></textarea></div>
+        </div>
+        <div class="qna-btngrp">
+          <button type="button" id="replyBtn">답글</button>
+          <!--글작성자와 세션아이디체크해서 동이한경우만 수행-->
+<!--          session?.loginMember?.nickname-->
+<!--          <button type="button" id="editBtn" th:if="${session.id == 'admin'}">수정</button>-->
+          <th:block th:if="*{qNickname} eq ${session?.loginMember?.nickname}">
+            <button type="button" id="editBtn">수정</button>
+            <button type="button" id="delBtn">삭제</button>
+          </th:block>
+          <!-------------------------------------------->
+          <button type="button" id="listBtn">목록</button>
+        </div>
+        <div class="qna-attach">
+          첨부파일
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>
