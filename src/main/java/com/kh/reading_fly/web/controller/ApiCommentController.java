@@ -8,6 +8,7 @@ import com.kh.reading_fly.web.form.comment.ItemForm;
 import com.kh.reading_fly.web.form.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -35,14 +36,15 @@ public class ApiCommentController {
 
     for(CommentDTO commentDTO : list){
       ItemForm item = new ItemForm();
-      item.setCnum(commentDTO.getCnum());
-      item.setNickname(commentDTO.getNickname());
-      item.setCcontent(commentDTO.getCcontent());
+//      item.setCnum(commentDTO.getCnum());
+//      item.setNickname(commentDTO.getNickname());
+//      item.setCcontent(commentDTO.getCcontent());
+      BeanUtils.copyProperties(commentDTO, item);
 
       LocalDate boardDate = commentDTO.getCudate().toLocalDate();
-      log.info("boardDate={}", boardDate);
+//      log.info("boardDate={}", boardDate);
       LocalDate today = LocalDate.now();
-      log.info("today={}", today);
+//      log.info("today={}", today);
 
       if(boardDate.equals(today)){//오늘 작성된 글이면
         item.setCudate(commentDTO.getCudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());

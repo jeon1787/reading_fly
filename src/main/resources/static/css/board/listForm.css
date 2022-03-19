@@ -1,0 +1,35 @@
+@charset "utf-8";
+  div#container{
+    width: 800px;
+    border: 1px solid #ebecef;
+    border-radius: 6px;
+    padding: 29px 29px 0;
+  }
+  hr{
+    border: 1px solid #ebecef;
+  }
+  table{
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  tr{
+    border-bottom: 1px solid #ebecef;
+    height: 36.5px;
+  }
+  td.num{width: 50px; text-align: center;}
+  td.title{width: 500px;}
+  td.nickname{width: 100px; text-align: center;}
+  td.date{width: 100px; text-align: center;}
+  td.hit{width: 50px; text-align: center;}
+  a{margin-left: 50px}
+  button{
+    margin-bottom: 10px;
+  }
+  button{
+    cursor: pointer;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 6px;
+    font-weight: bolder;
+    font-size: medium;
+  }

@@ -23,9 +23,9 @@ public class CommentDAOImpl implements CommentDAO{
   private final JdbcTemplate jdbcTemplate;
 
   /**
-   * 게시글번호로 댓글조회
+   * 게시글번호로 댓글 전체 조회
    * @param cbnum 게시글번호
-   * @return 댓글
+   * @return 전체 댓글
    */
   @Override
   public List<CommentDTO> selectAll(Long cbnum) {
@@ -41,6 +41,29 @@ public class CommentDAOImpl implements CommentDAO{
     List<CommentDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(CommentDTO.class), cbnum);
 
     return list;
+  }
+
+  /**
+   * 댓글번호로 댓글 단건 조회
+   * @param cnum 댓글번호
+   * @return 단건 댓글
+   */
+  @Override
+  public CommentDTO selectOne(Long cnum) {
+    //sql 작성
+    StringBuffer sql = new StringBuffer();
+    sql.append(" select cnum, ccdate, cudate, ccontent, cid, cbnum, nickname ");
+    sql.append(" from comments, member ");
+    sql.append(" where comments.cid = member.id and cnum = 1; ");
+
+    //sql 실행
+    List<CommentDTO> query = jdbcTemplate.query(
+            sql.toString(),
+            new BeanPropertyRowMapper<>(CommentDTO.class),
+            cnum
+    );
+
+    return (query.size() == 1)? query.get(0) : null;
   }
 
   /**
@@ -64,5 +87,29 @@ public class CommentDAOImpl implements CommentDAO{
             comment.getCbnum());
 
     return (query.size() == 1)? query.get(0) : null;
+  }
+
+  /**
+   * 댓글수정
+   * @param comment 댓글
+   * @return 댓글
+   */
+  @Override
+  public CommentDTO update(CommentDTO comment) {
+//    //sql 작성
+//    StringBuffer sql = new StringBuffer();
+//    sql.append(" insert into comments (cnum, ccontent, cid, cbnum) ");
+//    sql.append(" values (board_bnum_seq.nextval, ?, ?, ?) ");
+//
+//    //sql 실행
+//    List<CommentDTO> query = jdbcTemplate.query(
+//            sql.toString(),
+//            new BeanPropertyRowMapper<>(CommentDTO.class),
+//            comment.getCcontent(),
+//            comment.getCid(),
+//            comment.getCbnum());
+//
+//    return (query.size() == 1)? query.get(0) : null;
+    return null;
   }
 }
