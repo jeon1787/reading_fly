@@ -2,7 +2,7 @@
 
      main {
             display:flex; justify-content:center;
-            /* outline: 1px solid red; */
+             outline: 1px solid red;
             }
     .qna-wrap * {
       /* outline: 1px solid red;*/
