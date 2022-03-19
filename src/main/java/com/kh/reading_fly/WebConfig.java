@@ -14,48 +14,54 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addCorsMappings(CorsRegistry registry) {
     registry.addMapping("/api/**")            //요청url
-        .allowedOrigins("http://192.168.0.8:5500","http://localhost:5500")    //요청 client
-        .allowedMethods("*")                            //모든 메소드
-        .maxAge(3000);                                  //캐쉬시간
+            .allowedOrigins("http://192.168.0.8:5500","http://localhost:5500")    //요청 client
+            .allowedMethods("*")                            //모든 메소드
+            .maxAge(3000);                                  //캐쉬시간
   }
 
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LoginCheckInterceptor())
-        .order(1)
-        .addPathPatterns("/**")
-        .addPathPatterns("/member/**")
-        .addPathPatterns("/board/**")
-        .addPathPatterns("/notices/**")
+            .order(2)
+            .addPathPatterns("/**")
+            .addPathPatterns("/member/**")
+            .addPathPatterns("/board/**")
+            .addPathPatterns("/notices/**")
 
 
-        .excludePathPatterns(
-            "/",
-            "/login",
-            "/logout",
-            "/signup",
-            "/board",
-            "/board/*/detail",
-            "/notices/all",
-            "/css/**",
-            "/js/**",
-            "/img/**",
-            "/member/findid",
-            "/member/findpw",
-            "/error"
+            .excludePathPatterns(
+                    "/css/**",
+                    "/js/**",
+                    "/img/**",
 
-        );
+                    "/",                          // 메인화면
+                    "/login",                     // 로그인
+                    "/logout",                    // 로그아웃
+                    "/signup",                    // 회원가입
+                    "/member/outCompleted",       // 회원탈퇴 완료
+                    "/memberexist/**",             // id 및 pw 찾기 관련 일체
+
+
+
+                    "/board",                     // 게시판 목록 보기
+                    "/board/*/detail",            // 게시판 내용 보기
+                    "/notices/all",                // 공지사항 목록 보기
+                    "/error/**"
+
+
+
+            );
 
 
     registry.addInterceptor(new AdminCheckInterceptor())
-        .order(2)
-        .addPathPatterns("/admin/**")
-        .addPathPatterns("/notices/")
+            .order(1)
+            .addPathPatterns("/admin/**")
+            .addPathPatterns("/notices/")
 
-        .excludePathPatterns(
+            .excludePathPatterns(
 
-        );
+            );
 
 
   }
