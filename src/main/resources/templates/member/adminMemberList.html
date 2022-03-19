@@ -33,21 +33,23 @@
       <tr th:each="member : ${memberAll}">
         <th:block th:if="${memberStat.first}">
           <td class="first-row" th:text="${memberStat.count}"></td>
-          <td class="first-row" ><a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>
+<!--          <td class="first-row" ><a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>-->
+          <td class="first-row" ><a th:href="@{|/admin/memberdetail/|}" th:text="${member.id}"></a></td>
           <td class="first-row" th:text="${member.name}"></td>
           <td class="first-row" th:text="${member.email}"></td>
           <td class="first-row" th:text="${member.nickname}"></td>
-<!--          <td class="first-row" th:text="${member.signup_dt}"></td>-->
-<!--          <td class="first-row" th:text="${member.leave_fl}"></td>-->
+          <td class="first-row" th:text="${member.signup_dt}"></td>
+          <td class="first-row" th:text="${member.leave_fl}"></td>
         </th:block>
         <th:block th:unless="${memberStat.first}">
           <td th:text="${memberStat.count}"></td>
-          <td> <a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>
+<!--          <td> <a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>-->
+          <td> <a th:href="@{|/admin/memberdetail/|}" th:text="${member.id}"></a></td>
           <td th:text="${member.name}"></td>
           <td th:text="${member.email}"></td>
           <td th:text="${member.nickname}"></td>
-<!--          <td th:text="${member.signup_dt}"></td>-->
-<!--          <td th:text="${member.leave_fl}"></td>-->
+          <td th:text="${member.signup_dt}"></td>
+          <td th:text="${member.leave_fl}"></td>
         </th:block>
       </tr>
     </tbody>
@@ -57,9 +59,6 @@
   <p>
     회원 상세 보기를 실시 할 경우 템플릿 오류로 인하여 진행이 안됨
   </p>
-  <P>가입일과 탈퇴여부를 보기 위해서는 MemberDTO에 추가하면서 SignupController에도 수정해야한다 </br>
-    LocalDateTime 로 진행 할 경우 개인정보 수정에서 오류가 발생함에 형식을 확인해야 함
-  </P>
 </div>
 
 
