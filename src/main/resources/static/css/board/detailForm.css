@@ -1,0 +1,80 @@
+@charset "utf-8";
+.form{
+  width: 1024px;
+  padding: 42px;
+}
+.wrap{
+  width: 940px;
+}
+.form .button-area{
+  display: flex;
+  justify-content: space-between;
+}
+.form #content{
+  height: auto;
+  min-height: 400px;
+  width: 100%;
+}
+/*
+
+
+.form button{
+  cursor: pointer;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 6px;
+  font-weight: bolder;
+  font-size: medium;
+}
+.form #editBtn{
+  margin-right: 10px;
+}
+.form.container{
+  border: 1px solid #ebecef;
+  border-radius: 6px;
+}
+.form.board-container{
+  width: 800px;
+  padding: 29px 29px 0;
+}
+.form .comment-container{
+  width: auto;
+  padding: 15px;
+  margin: 13px 0px;
+}
+.form hr{
+  border: 1px solid #ebecef;
+}
+.form .comment-header{
+  display: flex;
+  justify-content: space-between;
+}
+.form a{
+  cursor: pointer;
+  margin-left: 10px;
+  text-decoration: none;
+  color: gray;
+  font-size: small;
+}
+.form .comment-upper{
+  margin: 13px 0px;
+  font-weight: bolder;
+}
+.form #addBtn{
+  display: block;
+  margin: 10px 0px 0px 0px;
+  padding: 0px;
+  border: 0px;
+  font-weight: inherit;
+  font-size: small;
+  color: gray;
+  background-color: white;
+}
+.form textarea{
+  margin: 10px 0px 0px 0px;
+  border: 0px;
+  padding: 10px;
+  outline: none;
+  resize: none;
+  background-color: #f8f9fa;
+}*/

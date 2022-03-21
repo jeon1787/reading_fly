@@ -1,238 +1,190 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 상세</title>
-  <style>
-  #content{
-    height: auto;
-    min-height: 400px;
-    width: 100%;
-  }
-  #button-container{
-    width: 840px;
-    padding-left: 10px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  button{
-    cursor: pointer;
-    border: none;
-    padding: 5px 20px;
-    border-radius: 6px;
-    font-weight: bolder;
-    font-size: medium;
-  }
-  #editBtn{
-    margin-right: 10px;
-  }
-  .container{
-    border: 1px solid #ebecef;
-    border-radius: 6px;
-  }
-  .board-container{
-    width: 800px;
-    padding: 29px 29px 0;
-  }
-  .comment-container{
-    width: auto;
-    padding: 15px;
-    margin: 13px 0px;
-  }
-  hr{
-    border: 1px solid #ebecef;
-  }
-  .comment-header{
-    display: flex;
-    justify-content: space-between;
-  }
-  a{
-    cursor: pointer;
-    margin-left: 10px;
-    text-decoration: none;
-    color: gray;
-    font-size: small;
-  }
-  .comment-upper{
-    margin: 13px 0px;
-    font-weight: bolder;
-  }
-  #addBtn{
-    display: block;
-    margin: 10px 0px 0px 0px;
-    padding: 0px;
-    border: 0px;
-    font-weight: inherit;
-    font-size: small;
-    color: gray;
-    background-color: white;
-  }
-  textarea{
-    margin: 10px 0px 0px 0px;
-    border: 0px;
-    padding: 10px;
-    outline: none;
-    resize: none;
-    background-color: #f8f9fa;
-  }
-</style>
+  <link rel="stylesheet" th:href="@{/css/board/detailForm.css}">
+  <script defer th:src="@{/js/board/detailForm.js}" th:inline="javascript"></script>
 </head>
 <body>
-<h3>게시글</h3>
-<div id="button-container">
-  <span th:if="${!session.isEmpty()}">
-    <button id="editBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">수정</button>
-    <button id="delBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">삭제</button>
-  </span>
-  <span th:unless="${!session.isEmpty()}"></span>
-  <span>
-    <div><button onclick="location.href='/board'">목록</button></div>
-  </span>
-</div>
-<div class="container board-container">
 
-  <div>
-    <div th:text="${detailForm.btitle}">제목</div>
-    <div>
-      <span th:text="${detailForm.nickname}">닉네임</span>
-      <span th:text="${detailForm.budate}">날짜</span>
-      <span th:text="${detailForm.bhit}">조회수</span>
+<!--form-->
+<div class="form" th:data-bnum="${detailForm.bnum}"
+
+  <!--wrap-->
+  <div class="wrap">
+
+    <!--1. 제목-->
+    <h3>게시판</h3>
+    <hr>
+
+    <!--2. 수정/삭제 버튼-->
+    <div class="button-area">
+      <span th:if="${!session.isEmpty()}">
+        <button id="editBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">수정</button>
+        <button id="delBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">삭제</button>
+      </span>
+      <span th:unless="${!session.isEmpty()}"></span>
+
+      <span>
+        <div><button onclick="location.href='/board'">목록</button></div>
+      </span>
+    </div>
+    <hr>
+
+    <!--3. 게시글 제목-->
+    <div class="title-area">
+      <div th:text="${detailForm.btitle}">제목</div>
+      <div>
+        <span th:text="${detailForm.nickname}">닉네임</span>
+        <span th:text="${detailForm.budate}">날짜</span>
+        <span th:text="${detailForm.bhit}">조회수</span>
+      </div>
+    </div>
+    <hr>
+
+    <!--4. 게시글 본문-->
+    <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>
+    <hr>
+
+    <!--5. 댓글-->
+    <div id="comment-container">
+      <div class="comment-upper">댓글</div>
+      <div id="commentList">
+  <!--      <div class="comment-content">-->
+  <!--        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>-->
+  <!--        <div>댓글</div>-->
+  <!--        <div><span>날짜</span><a href="">대댓글쓰기</a></div>-->
+  <!--      </div>-->
+      </div>
+
+      <div class="container comment-container">
+        <form action="">
+          <div th:if="${!session?.isEmpty()}" th:text="${session?.loginMember?.nickname}">닉네임</div>
+          <div th:unless="${!session?.isEmpty()}">로그인이 필요한 서비스입니다.</div>
+          <textarea id="reply" name="" cols="104" rows="10" placeholder="댓글을 입력하세요"></textarea>
+          <button type="submit" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button>
+        </form>
+      </div>
     </div>
   </div>
-
-  <hr>
-
-  <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>
-
-  <hr>
-
-  <div id="comment-container">
-    <div class="comment-upper">댓글</div>
-    <div id="commentList">
-<!--      <div class="comment-content">-->
-<!--        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>-->
-<!--        <div>댓글</div>-->
-<!--        <div><span>날짜</span><a href="">대댓글쓰기</a></div>-->
-<!--      </div>-->
-    </div>
-
-    <div class="container comment-container">
-      <form action="">
-        <div th:if="${!session?.isEmpty()}" th:text="${session?.loginMember?.nickname}">닉네임</div>
-        <div th:unless="${!session?.isEmpty()}">로그인이 필요한 서비스입니다.</div>
-        <textarea id="reply" name="" cols="104" rows="10" placeholder="댓글을 입력하세요"></textarea>
-        <button type="submit" id="addBtn">등록</button>
-      </form>
-    </div>
-
-  </div>
-
 </div>
-<script th:inline="javascript">
-  //dom 이벤트
-  document.addEventListener('DOMContentLoaded', e=>{
-    console.log('DOM 생성');
-    const bnum = /*[[ ${detailForm.bnum} ]]*/;
-    console.log(bnum);
-    list_f(bnum);
-  });
 
-  //댓글목록 조회 함수
-  function list_f(bnum){
-        console.log("list_f 호출됨!");
+<!--<script>-->
+<!--console.log("1");-->
+<!--  //dom 이벤트-->
+<!--  document.addEventListener('DOMContentLoaded', e=>{-->
+<!--    console.log('DOM 생성');-->
+<!--    const bnum = /*[[ ${detailForm.bnum} ]]*/;-->
+<!--    console.log(bnum);-->
+<!--    list_f(bnum);-->
+<!--  });-->
 
-    fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})
-    .then(res => res.json())
-    .then(res => {
-    console.log(res);
-    displayComments_f(res.data);
-    })
-    .catch(err => console.error('Err:',err))
-  }
+<!--  //댓글목록 조회 함수-->
+<!--  function list_f(bnum){-->
+<!--        console.log("list_f 호출됨!");-->
 
-  //댓글목록 출력 함수
-  function displayComments_f(comments){
-    console.log("displayComments_f 호출됨!");
+<!--    fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})-->
+<!--    .then(res => res.json())-->
+<!--    .then(res => {-->
+<!--    console.log(res);-->
+<!--    displayComments_f(res.data);-->
+<!--    })-->
+<!--    .catch(err => console.error('Err:',err))-->
+<!--  }-->
 
-    let content = ``;
-    comments.forEach(comment => {
-      content +=
-       `<div class="comment-content">
-          <div class="comment-header"><span>${comment.nickname}</span><span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span></div>
-          <div style="white-space:pre-wrap;">${comment.ccontent}</div>
-          <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>
-        </div>`;
-    });
-    commentList.innerHTML = content;
-  }
+<!--  //댓글목록 출력 함수-->
+<!--  function displayComments_f(comments){-->
+<!--    console.log("displayComments_f 호출됨!");-->
 
-  //댓글등록 함수
-  addBtn.addEventListener('click', e=>{
-    const loginChk = /*[[ ${session} ]]*/;
-    console.log(loginChk);
+<!--    let content = ``;-->
+<!--    comments.forEach(comment => {-->
+<!--      content +=-->
+<!--       `<div class="comment-content">-->
+<!--          <div class="comment-header"><span>${comment.nickname}</span><span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span></div>-->
+<!--          <div style="white-space:pre-wrap;">${comment.ccontent}</div>-->
+<!--          <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>-->
+<!--        </div>`;-->
+<!--    });-->
+<!--    commentList.innerHTML = content;-->
+<!--  }-->
 
-    //비로그인 상태
-    if(Object.keys(loginChk).length === 0){
-      console.log("로그인이 필요한 서비스입니다.");
-      alert("로그인이 필요한 서비스입니다.");
+<!--  //댓글등록 함수-->
+<!--  addBtn.addEventListener('click', e=>{-->
+<!--    const loginChk = /*[[ ${session} ]]*/;-->
+<!--    console.log(loginChk);-->
 
-    //로그인 상태
-    }else{
-      const bnum = /*[[ ${detailForm.bnum} ]]*/;
-      console.log(bnum);
+<!--    //비로그인 상태-->
+<!--    if(Object.keys(loginChk).length === 0){-->
+<!--      console.log("로그인이 필요한 서비스입니다.");-->
+<!--      alert("로그인이 필요한 서비스입니다.");-->
 
-      const addForm = {
-        "ccontent": reply.value
-      };
+<!--    //로그인 상태-->
+<!--    }else{-->
+<!--      const bnum = /*[[ ${detailForm.bnum} ]]*/;-->
+<!--      console.log(bnum);-->
 
-      fetch(`http://localhost:9080/api/comment/${bnum}`,{
-        method:'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(addForm)  // js객체를 => json 포맷 문자열 변환
-      }).then(res=>res.json())
-        .then(res=>{
-          console.log(res);
-          list_f(bnum);
-        })
-        .catch(err => console.error('Err:',err));
-    }
-  })
+<!--      const addForm = {-->
+<!--        "ccontent": reply.value-->
+<!--      };-->
 
-  //댓글수정 버튼 클릭시
-  const $comment = 
-  const $ceditBtn = document.getElementsByClassName('editBtn');
-  $ceditBtn?.addEventListener('click',e=>{
-    e.preventDefault();
-    console.log(e.target);
-  })
+<!--      fetch(`http://localhost:9080/api/comment/${bnum}`,{-->
+<!--        method:'POST',-->
+<!--        headers: {-->
+<!--          'Content-Type': 'application/json',-->
+<!--        },-->
+<!--        body: JSON.stringify(addForm)  // js객체를 => json 포맷 문자열 변환-->
+<!--      }).then(res=>res.json())-->
+<!--        .then(res=>{-->
+<!--          console.log(res);-->
+<!--          list_f(bnum);-->
+<!--        })-->
+<!--        .catch(err => console.error('Err:',err));-->
+<!--    }-->
+<!--  })-->
 
-  //댓글삭제 버튼 클릭시
+<!--  //댓글수정 버튼 클릭시-->
+<!--//  const $comment =-->
+<!--  const $ceditBtn = document.getElementsByClassName('editBtn');-->
+<!--  $ceditBtn?.addEventListener('click',e=>{-->
+<!--    e.preventDefault();-->
+<!--    console.log(e.target);-->
+<!--  })-->
 
-  //게시글 수정 버튼 클릭시
-  const $editBtn = document.getElementById('editBtn');
-  $editBtn?.addEventListener('click', e=>{
-    const bnum = e.target.dataset.bnum;
-    const url = `/board/${bnum}/edit`;
-    location.href = url;
-  })
+<!--  //댓글삭제 버튼 클릭시-->
 
-  //게시글 삭제 버튼 클릭시
-  const $delBtn = document.getElementById('delBtn');
-  $delBtn?.addEventListener('click', e=>{
-    //댓글이 달린경우 삭제가 안된다 알려야함
-    if(window.confirm('댓글이 있는 게시글은 본문 삭제만 가능합니다.<br> 정말 삭제하시겠습니까?')){
-      const bnum = e.target.dataset.bnum;
-      const url = `/board/${bnum}/del`;
-      location.href = url;
-    }
-  })
+<!--  //게시글 수정 버튼 클릭시-->
+<!--  const $editBtn = document.getElementById('editBtn');-->
+<!--  $editBtn?.addEventListener('click', e=>{-->
+<!--    const bnum = e.target.dataset.bnum;-->
+<!--    const url = `/board/${bnum}/edit`;-->
+<!--    location.href = url;-->
+<!--  })-->
 
-</script>
+<!--  //게시글 삭제 버튼 클릭시-->
+<!--  const $delBtn = document.getElementById('delBtn');-->
+<!--  $delBtn?.addEventListener('click', e=>{-->
+<!--    //댓글이 달린경우 삭제가 안된다 알려야함-->
+<!--    if(window.confirm('댓글이 있는 게시글은 본문 삭제만 가능합니다.<br> 정말 삭제하시겠습니까?')){-->
+<!--      const bnum = e.target.dataset.bnum;-->
+<!--      const url = `/board/${bnum}/del`;-->
+<!--      location.href = url;-->
+<!--    }-->
+<!--  })-->
+<!--</script>-->
 </body>
 </html>
