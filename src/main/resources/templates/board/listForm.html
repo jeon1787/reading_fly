@@ -20,10 +20,20 @@
   <link rel="stylesheet" href="" th:href="@{/css/board/listForm.css}">
 </head>
 <body>
+
+<!--form-->
 <div class="form">
-  <h3>게시판</h3>
-  <div id="container">
+
+  <!--wrap-->
+  <div class="wrap">
+
+    <!--1. 제목-->
+    <h3>게시판</h3>
+    <hr>
+
+    <!--2. 전체목록-->
     <table>
+      <!--테이블헤드-->
       <thead>
         <tr>
           <th>no</th>
@@ -33,19 +43,24 @@
           <th>조회수</th>
         </tr>
       </thead>
+      <!--테이블바디-->
       <tbody>
-      <block th:each="item : ${items}">
-        <tr>
-          <td th:text="${itemStat.size - itemStat.index}" class="num">NO</td>
-          <td class="title"><a th:href="@{|/board/${item.bnum}/detail|}" th:text="${item.btitle}">제목</a></td>
-          <td th:text="${item.nickname}" class="nickname">작성자</td>
-          <td th:text="${item.budate}" class="date">작성일</td>
-          <td th:text="${item.bhit}" class="hit">조회수</td>
-        </tr>
-      </block>
+        <block th:each="item : ${items}">
+          <tr>
+            <td th:text="${itemStat.size - itemStat.index}" class="num">NO</td>
+            <td class="title"><a th:href="@{|/board/${item.bnum}/detail|}" th:text="${item.btitle}">제목</a></td>
+            <td th:text="${item.nickname}" class="nickname">작성자</td>
+            <td th:text="${item.budate}" class="date">작성일</td>
+            <td th:text="${item.bhit}" class="hit">조회수</td>
+          </tr>
+        </block>
       </tbody>
     </table>
-    <button id="writeBtn" type="button" onclick="location.href='/board/add'">작성하기</button>
+    <hr>
+
+    <!--3. 글쓰기버튼-->
+    <button class="btn" id="writeBtn" type="button" onclick="location.href='/board/add'">글쓰기</button>
+
   </div>
 </div>
 </body>

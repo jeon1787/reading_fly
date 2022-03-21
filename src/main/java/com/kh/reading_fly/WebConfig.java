@@ -46,6 +46,7 @@ public class WebConfig implements WebMvcConfigurer {
 
             "/board",                     // 게시판 목록 보기
             "/board/*/detail",            // 게시판 내용 보기
+            "/api/comment/*",            // 게시판 댓글 보기
             "/notices/all",                // 공지사항 목록 보기
             "/error/**"
 
