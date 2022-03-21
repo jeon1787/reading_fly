@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LoginCheckInterceptor())
-        .order(2)
+        .order(1)
         .addPathPatterns("/**")
         .addPathPatterns("/member/**")
         .addPathPatterns("/board/**")
@@ -55,9 +55,8 @@ public class WebConfig implements WebMvcConfigurer {
 
 
     registry.addInterceptor(new AdminCheckInterceptor())
-        .order(1)
-        .addPathPatterns("/admin/**")
-        .addPathPatterns("/notices/")
+        .order(2)
+        .addPathPatterns("/admin/**")       // 관리자 전용 화면
 
         .excludePathPatterns(
 

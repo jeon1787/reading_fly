@@ -6,6 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인</title>
+
+  <script src="/js/login/loginForm.js" defer></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+
+
   <style>
     input.fieldError{
       border: 1px solid red;
@@ -48,12 +54,12 @@
       <p th:errors="*{pw}" th:errorclass="fieldError"></p>
     </li>
 
-    <div class="toggle"></div>
-    <label class="switch">
-      <input type="checkbox" name="autologincheck">
-      <span class="slider round"></span>
-    </label>
-    <span class="switch__text">자동 로그인</span>
+<!--    <div class="toggle"></div>-->
+<!--    <label class="switch">-->
+<!--      <input type="checkbox" name="autologincheck">-->
+<!--      <span class="slider round"></span>-->
+<!--    </label>-->
+<!--    <span class="switch__text">자동 로그인</span>-->
 
     <li>
 <!--      <button type="submit" th:text="#{btn.login}">로그인</button>-->
@@ -66,6 +72,15 @@
     </li>
   </ul>
 </form>
+
+
+<hr>
+<div class="SNSBtn_container">
+  <button type="button" onclick="kakaoLogin();" ><img src="/img/kakao.png" alt="" id="kakao"></button>
+</div>
+
+
+
 
 <script>
 <!--     var check = $("input[type='checkbox']");-->
