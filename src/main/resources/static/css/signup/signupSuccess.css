@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+
+.signupSuccessForm {
+  position:relative;
+  /* width:500px; */
+  height:300px;
+  background-color:#FFFFFF;
+  text-align:center;
+  /* top:30%; 
+  left:30%;
+  transform: translate(-50%,-50%); */
+  border-radius: 15px;
+
+}
+
+.success {
+  
+  
+}
+
+
+
+.btn_login_success_group button {
+
+  width: 50px;
+  
+
+  border-top-left-radius: 5px; 
+  border-top-right-radius: 5px; 
+  border-bottom-left-radius: 5px; 
+  border-bottom-right-radius: 5px; 
+  margin-right: 10px;
+
+  border: 1px solid skyblue; 
+  background-color: rgba(0,0,0,0); 
+  color: skyblue; 
+  padding: 5px;    
+}
+
+.btn_login_success_group button:hover {
+  color:white; 
+  background-color: skyblue;
+
+}

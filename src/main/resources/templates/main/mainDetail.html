@@ -147,8 +147,8 @@
 <!--            <span th:if="${!session.isEmpty()}" th:text="${session.loginMember.nickname}"></span>님 환영합니다.-->
             <span th:if="${!session.isEmpty()}" th:text="${session.loginMember.nickname}"></span>님 환영합니다.
 
-            <button type="submit" onclick="location.href='member/memberinfo'"> 마이페이지 </button>
-            <button type="submit" onclick="location.href='/logout'"> 로그아웃 </button>
+            <button type="button" onclick="location.href='/member/memberinfo'"> 마이페이지 </button>
+            <button type="button" onclick="location.href='/logout'"> 로그아웃 </button>
 <!--            <button type="submit" onclick=location.href=/member/out> 탈퇴 </button>-->
 <!--            <button type="submit" th:onclick="'location.href=/'+ @{/member/${loginMember.id}/out} + '/'"> 탈퇴 </button>-->
 <!--            th:onclick="'location.href=\''+ @{${moveUrl}} + '\''"-->
