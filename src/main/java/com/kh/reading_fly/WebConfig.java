@@ -39,6 +39,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/login",                     // 로그인
             "/logout",                    // 로그아웃
             "/signup",                    // 회원가입
+            "/signupSuccess",             // 회원가입 완료
             "/member/outCompleted",       // 회원탈퇴 완료
             "/memberexist/**",             // id 및 pw 찾기 관련 일체
 

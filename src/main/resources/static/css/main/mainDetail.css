@@ -59,18 +59,18 @@ main{
     width: 20%;   height: 100%;
 }
 
-ul{
+.nav ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-li{
+.nav li{
     margin: 30%;
 }
 
-li a{
+.nav li a{
     display: block;
     color: black;
     padding: 5px;
@@ -79,7 +79,7 @@ li a{
     font-size: 20px;
 }
 
-li a:hover{
+.nav li a:hover{
     background-color: slategrey;
     color: dimgray;
 }
@@ -118,3 +118,10 @@ li a:hover{
     width: 100px;
     height: 130px;
 }
+
+
+.form{
+    width: 1024px;
+    padding: 42px;
+  }
+  
