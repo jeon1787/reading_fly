@@ -9,7 +9,7 @@
          ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::form},
         _
       )}">
 <head>
@@ -21,21 +21,21 @@
   <script defer src="" th:src="@{/js/qna/qnaDetailForm.js}"></script>
 </head>
 <body>
-<main>
+<form>
   <div class="qna-wrap">
     <div class="qna-title"><h3>게시글 보기</h3></div>
     <div class="class-body">
       <form action="" method="post" th:object="${qnaDetailForm}">
         <input type="hidden" th:field="*{qNum}">
-        <div class="qna-hit">
+        <div class="qna-info">
+          <div><span th:text="*{qNickname}"></span></div>
+          <sapn class="date" th:text="${#temporals.format(qnaDetailForm.qUDate,'yyyy-MM-dd')}"></sapn>
           <span class="qna-hit-content bbs-hit-tit">조회수</span>
           <span class="qna-hit-content bbs-hit-cnt" th:text="*{qHit}">10</span>
         </div>
         <div class="qna-content">
           <div><lable>제목</lable></div>
           <div><input type="text" name="" id="" class="w100" th:field="*{qTitle}" th:readonly="readonly"></div>
-          <div><lable>작성자</lable></div>
-          <div><span th:text="*{qNickname}"></span></div>
           <div><lable>내용</lable></div>
           <div><textarea name="" id="" rows="10" class="w100" th:field="*{qContent}" th:readonly="readonly"></textarea></div>
         </div>
@@ -57,6 +57,6 @@
       </form>
     </div>
   </div>
-</main>
+</form>
 </body>
 </html>
