@@ -16,14 +16,14 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시글 목록</title>
+  <title>Q&A</title>
   <link rel="stylesheet" href="" th:href="@{/css/qna/qnaList.css}">
   <script defer src="" th:src="@{/js/qna/qnaList.js}"></script>
 </head>
 <body>
 <main>
   <div class="qna-wrap">
-    <div class="qna-title"><h3>게시글 목록</h3></div>
+    <div class="qna-title"><h3>Q&A</h3></div>
     <div class="qna-body">
       <div class="qna-content">
         <table>
@@ -49,29 +49,19 @@
               </th:block>
               <a href="" th:href="@{|/qna/${item.qNum}|}" th:text="${item.qTitle}">제목</a>
             </td>
-            <td th:text="${item.qNickname}">작성자1</td>
-            <td th:text="${#temporals.format(item.qCDate,'yy-MM-dd')}">작성일1</td>
+            <td id="qna-name" th:text="${item.qNickname}">작성자1</td>
+            <td id="qna-date" th:text="${#temporals.format(item.qUDate,'yy-MM-dd')}">작성일1</td>
             <td th:text="${item.qHit}">5</td>
           </tr>
           </tbody>
         </table>
       </div>
       <div class="qna-btngrp">
-        <button type="botton" id="writeBtn">글작성</button>
+        <button type="botton" id="writeBtn">문의하기</button>
       </div>
 
       <div class="qna-page">
         <a href="">1</a><a href="">2</a><a href="">3</a>
-      </div>
-
-      <div class="qna-search">
-        <select name="" id="">
-          <option value="">제목</option>
-          <option value="">작성자</option>
-          <option value="">내용</option>
-        </select>
-        <input type="text">
-        <button>검색</button>
       </div>
     </div>
   </div>

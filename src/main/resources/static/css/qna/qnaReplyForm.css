@@ -1,18 +1,24 @@
 @charset "utf-8";
 
- main { display:flex; justify-content:center; }
+   form {
+      width: 1024px;
+      padding: 42px;
+    }
     .qna-wrap * {
       /* outline:1px solid red;*/
       box-sizing: border-box;
     }
-    .qna-wrap { width:80% }
+    .qna-wrap {
+        width: 940px;
+     }
     .qna-wrap .qna-title {
       text-align: center; padding:20px 0;
     }
     .qna-wrap .qna-content{
       display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 5px;
+      grid-template-columns: 50px 1fr;
+       /*nav
+       gap: 1px;간격*/
     }
     .qna-wrap .qna-content .w100{
       width:100%; padding:3px;

@@ -1,19 +1,24 @@
 @charset "utf-8";
- main { display:flex; justify-content:center; }
+
+    form {
+      width: 1024px;
+    }
     .qna-wrap * {
       /* outline:1px solid red; */
       box-sizing: border-box;
     }
-    .qna-wrap { width:80% }
-    .qna-wrap .qna-hit{
+    .qna-wrap {
+      width: 940px;
+     }
+    .qna-wrap .qna-info{
       display: flex;
       justify-content: end;
     }
-    .qna-wrap .qna-hit .qna-hit-content{
+    .qna-wrap .qna-info .qna-hit-content{
       width:50px;
       font-weight: bold;
     }
-    .qna-wrap .qna-hit .qna-hit-content.qna-hit-cnt{
+    .qna-wrap .qna-info .qna-hit-content.qna-hit-cnt{
       text-align: right;
     }
     .qna-wrap .qna-title {
@@ -21,11 +26,13 @@
     }
     .qna-wrap .qna-content{
       display: grid;
-      grid-template-columns: 100px 1fr;
-      gap: 5px;
+       /*제목,내용과 값 간격 = 50px */
+      grid-template-columns: 50px 1fr;
+       /*nav
+      gap: 1px;간격*/
     }
     .qna-wrap .qna-content .w100{
-      width:100%; padding:3px;
+      width:100%; padding:1px;
     }
     .qna-wrap .qna-btngrp{
       display:flex;

@@ -10,7 +10,7 @@ public class QnaListForm {
   private String qTitle;         //제목
   private String qEmail;         //EMAIL
   private String qNickname;      //별칭
-  private LocalDateTime qCDate;  //작성일
+  private LocalDateTime qUDate;  //날짜
   private int qHit;              //조회수
   private int qIndent;          //들여쓰기
 }

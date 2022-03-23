@@ -1,15 +1,17 @@
 @charset "utf-8";
 
-     main {
-            display:flex; justify-content:center;
-             outline: 1px solid red;
-            }
+     from {
+     width: 1024px;
+     padding: 42px;
+
+       /*outline: 1px solid red;*/
+     }
     .qna-wrap * {
-      /* outline: 1px solid red;*/
+       /*outline: 1px solid red;*/
       box-sizing: border-box;
     }
     .qna-wrap {
-     width: 90%
+     width: 940px;
     }
 
     .qna-wrap .qna-title {
@@ -19,24 +21,29 @@
 
     .qna-wrap .qna-content table {
       width: 100%;
-      border: 1px solid #333;
+      border-top: 2px solid #333;
+      border-bottom: 2px solid #333;
       border-collapse: collapse;
     }
 
     .qna-wrap .qna-content table th,
     .qna-wrap .qna-content table td {
-      border: 1px solid #333;
+      border-bottom: 1px solid #333;
       padding: 3px;
     }
 
     .qna-wrap .qna-content table>thead>tr th:nth-child(2) {
       width: 50%;
-      background: yellow;
+    }
+
+    #qna-name,
+    #qna-date {
+      text-align: center;
     }
 
     .qna-wrap .qna-content table>tbody>tr>td:first-child,
     .qna-wrap .qna-content table>tbody>tr>td:last-child {
-      text-align: right;
+      text-align: center;
     }
 
     .qna-wrap .qna-btngrp {
@@ -52,7 +59,3 @@
 
 a {text-decoration: none; color:inherit;}
 
-    .qna-wrap .qna-search {
-      display: flex;
-      justify-content: center;
-    }
