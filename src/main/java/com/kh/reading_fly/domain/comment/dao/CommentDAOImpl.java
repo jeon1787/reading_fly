@@ -41,7 +41,7 @@ public class CommentDAOImpl implements CommentDAO{
     List<CommentDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(CommentDTO.class), cbnum);
 
     return list;
-  }
+  }//end of selectAll
 
   /**
    * 댓글번호로 댓글 단건 조회
@@ -64,7 +64,7 @@ public class CommentDAOImpl implements CommentDAO{
     );
 
     return (query.size() == 1)? query.get(0) : null;
-  }
+  }//end of selectOne
 
   /**
    * 댓글등록
@@ -113,7 +113,7 @@ public class CommentDAOImpl implements CommentDAO{
     Long cnum = Long.valueOf(keyHolder.getKeys().get("cnum").toString());
     log.info("4번");
     return selectOne(cnum);
-  }
+  }//end of create
 
   /**
    * 댓글수정
@@ -122,20 +122,32 @@ public class CommentDAOImpl implements CommentDAO{
    */
   @Override
   public CommentDTO update(CommentDTO comment) {
-//    //sql 작성
-//    StringBuffer sql = new StringBuffer();
-//    sql.append(" insert into comments (cnum, ccontent, cid, cbnum) ");
-//    sql.append(" values (board_bnum_seq.nextval, ?, ?, ?) ");
-//
-//    //sql 실행
-//    List<CommentDTO> query = jdbcTemplate.query(
-//            sql.toString(),
-//            new BeanPropertyRowMapper<>(CommentDTO.class),
-//            comment.getCcontent(),
-//            comment.getCid(),
-//            comment.getCbnum());
-//
-//    return (query.size() == 1)? query.get(0) : null;
-    return null;
-  }
+
+    StringBuffer sql = new StringBuffer();
+    sql.append(" update comments ");
+    sql.append(" set ccontent = ? ");
+    sql.append("     cudate = systimestamp ");
+    sql.append(" where cnum = ? and cid = ? ");
+
+    KeyHolder keyHolder = new GeneratedKeyHolder();
+    jdbcTemplate.update(new PreparedStatementCreator() {
+      @Override
+      public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+        PreparedStatement pstmt = con.prepareStatement(
+                sql.toString(),
+                new String[]{"cnum"}
+        );
+
+        pstmt.setString(1, comment.getCcontent());
+        pstmt.setLong(1, comment.getCnum());
+        pstmt.setString(1, comment.getCid());
+
+        return pstmt;
+      }
+    }, keyHolder);
+
+    Long cnum = Long.valueOf(keyHolder.getKeys().get("cnum").toString());
+    return selectOne(cnum);
+  }//end of update
+
 }
