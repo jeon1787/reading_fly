@@ -33,6 +33,8 @@
       content +=
        `<div class="comment">
           <div class="comment-head">
+            <input class="cnum" type="hidden" value="${comment.cnum}">
+            <input class="cid" type="hidden" value="${comment.cid}">
             <span>${comment.nickname}</span>
             <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
           </div>
@@ -44,13 +46,6 @@
     const $commentList = document.querySelector('.comment-list');
     $commentList.innerHTML = content;
   }
-
-
-
-
-
-
-
 
   //댓글등록 함수
   addBtn.addEventListener('click', e=>{
@@ -77,12 +72,13 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(addForm)  // js객체를 => json 포맷 문자열 변환
-      }).then(res=>res.json())
-        .then(res=>{
-          console.log(res);
-          list_f(bnum);
-        })
-        .catch(err => console.error('Err:',err));
+      })
+      .then(res=>res.json())
+      .then(res=>{
+        console.log(res);
+        list_f(bnum);
+      })
+      .catch(err => console.error('Err:',err));
     }
   })
 
@@ -92,41 +88,95 @@
     //a태그 이벤트 막기
     e.preventDefault();
 
+    //수정 버튼 체크
     if(e.target.textContent == '수정'){
       console.log("댓글 수정 클릭");
+      const $comment = e.target.closest('.comment');
 
       //로그인 체크
-      const chk = document.querySelector('.form').dataset.loginChk;
-      console.log();
+      const id = document.querySelector('.form').dataset.id;
+      console.log("로그인한 id : "+id);
 
+      const cid = $comment.children[0].children[1].value;
+      console.log("댓글작성자 cid : "+cid);
+
+      //로그인 상태
+      if(id == cid){
+        //기존 수정모드 해제
+        modifyModeCancel();
+
+        //수정모드 변경
+        modifyMode($comment, cid);
       //비로그인 상태
-//      if(chk == 'true'){
-//        console.log(chk);
-//        console.log("로그인이 필요한 서비스입니다.");
-//        alert("로그인이 필요한 서비스입니다.");
-//        return;
-//      //로그인 상태
-//      }else{
-//
-//        const $comment = e.target.closest('.comment');
-//
-//        const nickname = $comment.children[0].children[0].textContent;
-//        const content = $comment.children[1].textContent;
-//        const date = $comment.children[2].children[0].textContent;
-//
-//        $comment.innerHTML =
-//        `<div class="comment-head">
-//            <span>${nickname}</span>
-//        </div>
-//        <textarea id="reply" name="" cols="104" rows="10" value="${content}"></textarea>
-//        <div><span>${date}</span><button>저장</button><button>취소</button></div>`;
-//        alert("else");
-//        return;
-//
-//      };
+      }else{
+        console.log("로그인이 필요한 서비스입니다.");
+        alert("로그인이 필요한 서비스입니다.");
+        return;
+      };
     }
 
   })
+
+  //기존 수정모드 해제
+  function modifyModeCancel(){
+    if(document.getElementById("saveBtn") != null){
+      console.log("modifyModeCancel() 실행");
+      const $saveBtn = document.getElementById("saveBtn");
+      const $closeComment = $saveBtn.closest('.comment');
+      console.log($closeComment);
+      const cnum = $closeComment.children[0].children[0].value;
+      fetch(`http://localhost:9080/api/comment/${cnum}/detail`,{method:'GET'})
+      .then(res=>res.json())
+      .then(res=>{
+        console.log(res);
+        displayComment_f(res.data, $closeComment);
+      })
+      .catch(err => console.error('Err:',err));
+    return;
+    }
+  }
+
+  //단건 조회
+  function displayComment_f(detailForm, $closeComment){
+    $closeComment.innerHTML =
+       `<div class="comment">
+          <div class="comment-head">
+            <input class="cnum" type="hidden" value="${detailForm.cnum}">
+            <input class="cid" type="hidden" value="${detailForm.cid}">
+            <span>${detailForm.nickname}</span>
+            <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
+          </div>
+          <div class="comment-content" style="white-space:pre-wrap;">${detailForm.ccontent}</div>
+          <div><span>${detailForm.cudate}</span><a href="">대댓글쓰기</a></div>
+        </div>`;
+    return;
+  }
+
+  //수정모드 변경
+  function modifyMode($comment, cid){
+    console.log("modifyMode() 실행");
+    const cnum = $comment.children[0].children[0].value;
+    const nickname = $comment.children[0].children[2].textContent;
+    const content = $comment.children[1].textContent;
+    const cudate = $comment.children[2].children[0].textContent;
+    console.log(cnum);
+    console.log(nickname);
+    console.log(content);
+    console.log(cudate);
+
+    $comment.innerHTML =
+    `<div class="comment">
+       <div class="comment-head">
+         <input class="cnum" type="hidden" value="${cnum}">
+         <input class="cid" type="hidden" value="${cid}">
+         <span>${nickname}</span>
+         <span>${cudate}</span>
+       </div>
+       <textarea class="comment-content">${content}</textarea>
+       <div><button id="saveBtn">저장</button><button id="cancelBtn">취소</button></div>       </div>`;
+    //alert("else");
+    return;
+  }//end of modifyMode
 
   //댓글삭제 버튼 클릭시
 
