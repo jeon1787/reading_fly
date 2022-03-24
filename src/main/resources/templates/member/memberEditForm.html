@@ -1,159 +1,147 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+                    ~{::title},
+                    _,
+                    ~{},
+                    ~{::link},
+                    ~{::script},
+                    _,
+                    _,
+                    ~{::.form},
+                    _
+                  )}">
 <head>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원정보 수정</title>
-
+  <link rel="stylesheet" th:href="@{/css/member/memberEditForm.css}">
+  <script defer th:src="@{/js/member/memberEditForm.js}"></script>
 </head>
 <body>
 
-<main>
-  <div>
-
-    <form  th:method="patch" th:action="@{/member/edit}" th:object="${editForm}" >
-
-      <ul>
-        <li class="title"><h1 class="title">회원 수정</h1></li>
-
-        <li><label for="id" class="form-label">아이디</label></li>
-        <li><input id="id" class="form-control" type="text" th:field="*{id}" readonly/></li>
-
-        <li><label class="form-label" for="name">이름</label></li>
-        <li><input class="form-control" type="text"  th:field="*{name}" readonly/></li>
-
-        <li><label class="form-label" for="nickname">닉네임</label></li>
-<!--        <li><input class="form-control" type="text" name="nickname" th:field="*{nickname}" /></li>-->
-<!--        <li th:errors="*{nickname}" th:errorclass="field-msg"></li>-->
-
-        <input type="text" name="nickname" id="nickname" th:field="*{nickname}"
-               th:class="${#fields.hasErrors('nickname') ? 'fieldError' : 'fieldSuccess'}">
-        <button id="nicknameDupChk" type="button">중복확인</button>
-        <p class="errmsg"></p>
-        </li>
-        <li th:if="${#fields.hasErrors('nickname')}">
-          <p th:errors="*{nickname}" th:errorclass="fieldError"></p>
-        </li>
-
-        <li><label class="form-label" for="email">이메일</label></li>
-<!--        <li><input class="form-control" type="text" name="email" th:field="*{email}" /></li>-->
-<!--        <li th:errors="*{email}" th:errorclass="field-msg"></li>-->
-
-        <input type="text" name="email" id="email" th:field="*{email}"
-               th:class="${#fields.hasErrors('email') ? 'fieldError' : 'fieldSuccess'}">
-        <button id="emailDupChk" type="button">중복확인</button>
-        <p class="errmsg"></p>
-        </li>
-        <li th:if="${#fields.hasErrors('email')}">
-          <p th:errors="*{email}" th:errorclass="fieldError"></p>
-        </li>
-
-        <li class=button>
-          <button class="btn btn-success btn-block" type="submit" onclick="return confirm('정말로 수정 하시겠습니까?')" id="modifyBtn">수정하기</button>
-          <button class="btn btn-success btn-block" type="reset" onclick="location.href='/'">취소</button>
-<!--          <button class="btn btn-success btn-block" type="submit" th:formaction="@{|/member/${loginMember.id}/out|}" onclick="return confirm('정말로 탈퇴 하시겠습니까?')">탈퇴</button>-->
-        </li>
-      </ul>
-    </form>
-  </div>
-
-  <div>
-    <P>
-      중복확인 버튼 클릭시 메시지 확인 불가함에 조정 필요
-    </P>
-  </div>
+  <div class="form">
 
 
-</main>
+    <form th:action="@{/member/edit}" th:method="PATCH" class="editForm" th:object="${editForm}">
+
+      <h3>회원정보 수정</h3>
+      <p>
+      </p>
+  
+    
+      <table class="tableForm">
+        <tr>
+          <td class="td1"> 아이디 </td>
+          <td class="td2">
+            <div class="textForm">
+              <input name="editId" type="text" class="id" th:field="*{id}" readonly>
+            </div>
+          </td>          
+          <td class="td3">
+
+          </td>
+          <td class="td4">
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>이 름</td>
+          <td>
+            <div class="textForm">
+              <input name="name" type="text" class="name" th:field="*{name}" readonly>
+            </div>
+          </td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>이메일</td>
+          <td>
+            <div class="textForm">
+              <input name="email" type="text" class="email" th:field="*{email}"
+                  th:class="${#fields.hasErrors('email') ? 'fieldError' : 'fieldSuccess'}">
+            </div>
+          </td>
+          <td>
+            <div class="btn_edit_group"> 
+              <button id="emailDupChk" type="button">중복확인</button>
+            </div>
+          </td>
+          <td>
+            <p th:if="${#fields.hasErrors('email')}"> </p>
+            <p th:errors="*{email}" th:errorclass="fieldError"></p>
+            <div class="errmsg">
+            
+
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>별칭</td>
+          <td>
+            <div class="textForm">
+              <input name="nickname" type="text" class="nickname" placeholder="별칭" th:field="*{nickname}"
+                  th:class="${#fields.hasErrors('nickname') ? 'fieldError' : 'fieldSuccess'}">
+            </div>
+          </td>
+          <td>
+            <div class="btn_edit_group"> 
+              <button id="nicknameDupChk" type="button">중복확인</button>
+            </div>
+
+          </td>
+          <td>
+            <p th:if="${#fields.hasErrors('nickname')}"> </p>
+            <p th:errors="*{nickname}" th:errorclass="fieldError"></p>
+            <div class="errmsg">
+            
+
+            </div>
 
 
-<!--<footer th:replace="/fragment/fragment_footer :: fragment_footer">-->
-<!--  연습용 빈 footer입니다.-->
-
-<script>
-<!--  console.log(${editForm});-->
-
-    const $email       = document.getElementById('email');
-    const $emailDupChk = document.getElementById('emailDupChk');
-
-    $emailDupChk.addEventListener('click', e=>{
-      const xmlHttpreq = new XMLHttpRequest();
-
-      const url = `/email/${$email.value}/exist`;
-      xmlHttpreq.open("GET",url);
-      xmlHttpreq.send(email);
-
-      xmlHttpreq.addEventListener('load', e=>{
-        if(xmlHttpreq.status ===200){ //성공적으로 서버응답 받으면
-          console.log(xmlHttpreq.response);
-          const result = JSON.parse(xmlHttpreq.response); //Json포맷 문자열 => JS객체로변환
-          console.log(result);
-          const $errmsg = $emailDupChk.closest('li').querySelector('.errmsg');
-
-          if(result.rtcd === '00'){
-            //alert('이미 사용되고 있는 이메일 입니다.');
-            $errmsg.textContent = '이미 사용되고 있는 이메일 입니다.';
-            $errmsg.style.display = 'block';
-
-          }else{
-            $errmsg.textContent = '';
-            $errmsg.style.display = 'none';
-            $emailDupChk.textContent = '사용가능';
-            // $emailDupChk.disabled = 'disabled';
-            // $email.disabled = 'disabled';
-            valemailChkStatus.email = true;
-          }
-        }else{
-          console.log('Error', xmlHttpreq.status, xmlHttpreq.statusText);
-        }
-      });
-    });
+          </td>
+        </tr>
 
 
-    const $nickname       = document.getElementById('nickname');
-    const $nicknameDupChk = document.getElementById('nicknameDupChk');
 
-    $nicknameDupChk.addEventListener('click', e=>{
-      const xmlHttpreq = new XMLHttpRequest();
-
-      const url = `/nickname/${$nickname.value}/exist`;
-      xmlHttpreq.open("GET",url);
-      xmlHttpreq.send(nickname);
-
-      xmlHttpreq.addEventListener('load', e=>{
-        if(xmlHttpreq.status ===200){ //성공적으로 서버응답 받으면
-          console.log(xmlHttpreq.response);
-          const result = JSON.parse(xmlHttpreq.response); //Json포맷 문자열 => JS객체로변환
-          console.log(result);
-          const $errmsg = $nicknameDupChk.closest('li').querySelector('.errmsg');
-
-          if(result.rtcd === '00'){
-            //alert('이미 사용되고 있는 닉네임 입니다.');
-            $errmsg.textContent = '이미 사용되고 있는 닉네임 입니다.';
-            $errmsg.style.display = 'block';
-
-          }else{
-            $errmsg.textContent = '';
-            $errmsg.style.display = 'none';
-            $nicknameDupChk.textContent = '사용가능';
-            // $nicknameDupChk.disabled = 'disabled';
-            // $nickname.disabled = 'disabled';
-            valnicknameChkStatus.nickname = true;
-          }
-        }else{
-          console.log('Error', xmlHttpreq.status, xmlHttpreq.statusText);
-        }
-      });
-    });
+      </table>
 
     
 
 
 
+        
 
-</script>
+
+
+
+
+
+
+
+
+      <br>
+      <div class="btn_edit_group"> 
+        <button id="modifyBtn" type="submit" onclick="return confirm('정말로 수정 하시겠습니까?')" >수정하기</button>
+        <button id="cancelBtn" type="reset" onclick="location.href='/'">취소</button>
+
+      </div>
+
+    </form>
+
+
+
+
+
+
+    
+  </div>
+
+
+  
 </body>
 </html>
-
-

@@ -189,7 +189,7 @@ select *from review;
 -- 게시판
 create table board(
   bnum NUMBER(15) not null,                   -- 게시글번호
-  btitle VARCHAR2(50) not null,               -- 게시글제목
+  btitle VARCHAR2(60) not null,               -- 게시글제목
   bcdate TIMESTAMP default systimestamp,      -- 게시글작성일
   budate TIMESTAMP default systimestamp,      -- 게시글수정일
   bcontent CLOB not null,                     -- 게시글내용

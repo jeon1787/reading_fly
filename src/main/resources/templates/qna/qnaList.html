@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::main},
+        _
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Q&A</title>
+  <link rel="stylesheet" href="" th:href="@{/css/qna/qnaList.css}">
+  <script defer src="" th:src="@{/js/qna/qnaList.js}"></script>
+</head>
+<body>
+<main>
+  <div class="qna-wrap">
+    <div class="qna-title"><h3>Q&A</h3></div>
+    <div class="qna-body">
+      <div class="qna-content">
+        <table>
+          <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item : ${list}">
+            <td th:text="${item.qNum}"></td>
+            <td>
+              <!--들여쓰기-->
+              <th:block th:if="${item.qIndent} > 0">
+                <!--                  컬렉션없이 단순 반복 처리하고자할때 -->
+                <!--                  Create a sequence (array) of integer numbers going from x to y -->
+                <!--                  ${#numbers.sequence(from,to)}-->
+                <span th:each="cnt : ${#numbers.sequence(1,item.qIndent)}">&nbsp;&nbsp;</span>
+              </th:block>
+              <a href="" th:href="@{|/qna/${item.qNum}|}" th:text="${item.qTitle}">제목</a>
+            </td>
+            <td id="qna-name" th:text="${item.qNickname}">작성자1</td>
+            <td id="qna-date" th:text="${#temporals.format(item.qUDate,'yy-MM-dd')}">작성일1</td>
+            <td th:text="${item.qHit}">5</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="qna-btngrp">
+        <button type="botton" id="writeBtn">문의하기</button>
+      </div>
+
+      <div class="qna-page">
+        <a href="">1</a><a href="">2</a><a href="">3</a>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+
+</html>

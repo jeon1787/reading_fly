@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::form},
+        _
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 수정</title>
+  <link rel="stylesheet" href="" th:href="@{/css/qna/qnaEditForm.css}">
+  <script defer src="" th:src="@{/js/qna/qnaEditForm.js}"></script>
+</head>
+<body>
+<form>
+  <div class="qna-wrap">
+    <div class="qna-title"><h3>게시글 수정</h3></div>
+    <div class="class-body" >
+      <form id="editForm" action="" th:action="@{|/qna/*{qNum}/edit|}" method="post" th:object="${qnaEditForm}">
+        <input type="hidden" th:field="*{qNum}">
+        <!--              <input type="hidden" th:field="*{email}">-->
+        <input type="hidden" th:field="*{qNickname}">
+        <div class="qna-hit">
+          <span class="qna-hit-content qna-hit-tit">조회수</span>
+          <span class="qna-hit-content qna-hit-cnt" th:text="*{qHit}">10</span>
+        </div>
+        <div class="qna-content">
+          <div><lable>제목</lable></div>
+          <div>
+            <input type="text" name="" id="" class="w100" th:field="*{qTitle}" >
+            <div class="fieldError" th:errors="*{qTitle}"></div>
+          </div>
+          <div><lable>작성자</lable></div>
+          <div><span th:text="*{qNickname}"></span></div>
+          <div><lable>내용</lable></div>
+          <div>
+            <textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
+            <div class="fieldError" th:errors="*{qContent}"></div>
+          </div>
+          <div><label>첨부</label></div>
+          <div><input type="file"></div>
+        </div>
+        <div class="qna-btngrp">
+          <button type="button" id="cancelBtn">취소</button>
+          <button type="submit" id="saveBtn">저장</button>
+          <button type="button" id="listBtn">목록</button>
+        </div>
+        <div class="qna-attach">
+          첨부파일
+        </div>
+      </form>
+    </div>
+  </div>
+</form>
+</body>
+</html>

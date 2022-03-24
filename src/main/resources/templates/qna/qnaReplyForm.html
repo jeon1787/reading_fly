@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::form},
+        _
+      )}">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시글 답글 작성</title>
+  <link rel="stylesheet" href="" th:href="@{/css/qna/qnaReplyForm.css}">
+  <script defer src="" th:src="@{/js/qna/qnaReplyForm.js}"></script>
+</head>
+<body>
+<form>
+  <div class="qna-wrap">
+    <div class="qna-title"><h3>게시글 답글 작성</h3></div>
+    <div class="class-body">
+      <form id="writeForm" action="" method="post" th:object="${qnaReplyForm}">
+        <!--              <input type="hidden" th:field="*{email}">-->
+        <input type="hidden" th:field="*{qNickname}">
+        <div class="qna-content">
+          <div><lable>제목</lable></div>
+          <div>
+            <input type="text" name="" id="" class="w100" th:field="*{qTitle}">
+            <div class="fieldError" th:errors="*{qTitle}"></div>
+          </div>
+          <div><lable>작성자</lable></div>
+          <div><span th:text="*{qNickname}"></span>
+            <div><lable>내용</lable></div>
+            <div>
+              <textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
+              <div class="fieldError" th:errors="*{qContent}"></div>
+            </div>
+            <div><lable>첨부</lable></div>
+            <div><input type="file" name="" id="" class="w100"></div>
+          </div>
+      </form>
+    </div>
+    <div class="qna-btngrp">
+      <button type="button" id="writeBtn">등록</button>
+      <button type="button" id="listBtn">목록</button>
+    </div>
+  </div>
+</form>
+</body>
+</html>

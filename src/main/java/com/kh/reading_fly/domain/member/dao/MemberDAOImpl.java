@@ -92,7 +92,8 @@ public class MemberDAOImpl implements MemberDAO{
   @Override
   public MemberDTO login(String id, String pw) {
     StringBuffer sql = new StringBuffer();
-    sql.append("select id, pw from member ");
+//    sql.append("select id, pw from member ");
+    sql.append("select id, pw, name, email, nickname, admin_fl, signup_dt from member ");
     sql.append(" where id = ? and pw = ? and leave_fl = 0  ");
     List<MemberDTO> list = jdbcTemplate.query(sql.toString(),
             new BeanPropertyRowMapper<>(MemberDTO.class), id, pw );
@@ -163,12 +164,13 @@ public class MemberDAOImpl implements MemberDAO{
     return list;
   }
 
-  // 사용자  id 조회 또는 수정용 id 조회
+  // 사용자 id 조회 또는 수정용 id 조회
   @Override
   public MemberDTO findByID(String id) {
 
     StringBuffer sql = new StringBuffer();
-    sql.append("select id, email, pw, name, nickname from member ");
+//    sql.append("select id, email, pw, name, nickname from member ");
+    sql.append("select id, email, pw, name, nickname, admin_fl, signup_dt, leave_fl, leave_dt from member ");
     sql.append(" where id = ? ");
     MemberDTO memberDTO = jdbcTemplate.queryForObject(sql.toString(),
             new BeanPropertyRowMapper<>(MemberDTO.class), id);

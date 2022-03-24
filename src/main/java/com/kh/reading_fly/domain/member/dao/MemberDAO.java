@@ -30,6 +30,7 @@ public interface MemberDAO {
   //관리자 코드 확인
   String admin(String id);
 
+
   // 관리자 전체 회원 확인
   List<MemberDTO> allMemberList();
 
@@ -39,7 +40,7 @@ public interface MemberDAO {
   // 관리자 탈퇴 회원 확인
   List<MemberDTO> dleMemberList();
 
-  // 사용자  id 조회 또는 수정용 id 조회
+  // 사용자 id 조회 또는 수정용 id 조회
   MemberDTO findByID(String id);
 
   // 사용자 email 조회 - 사용 확인 필요

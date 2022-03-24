@@ -1,15 +1,15 @@
 package com.kh.reading_fly.web.controller;
 
-import com.kh.reading_fly.domain.comment.svc.CommentSVC;
-import com.kh.reading_fly.web.form.board.EditForm;
-import com.kh.reading_fly.web.form.login.LoginMember;
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
+import com.kh.reading_fly.web.form.board.EditForm;
 import com.kh.reading_fly.web.form.board.ItemForm;
+import com.kh.reading_fly.web.form.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,15 +40,18 @@ public class BoardController {
 
     for(BoardDTO boardDTO : list){
       ItemForm item = new ItemForm();
-      item.setBnum(boardDTO.getBnum());
-      item.setBtitle(boardDTO.getBtitle());
-      item.setBhit(boardDTO.getBhit());
-      item.setNickname(boardDTO.getNickname());
+
+//      item.setBnum(boardDTO.getBnum());
+//      item.setBtitle(boardDTO.getBtitle());
+//      item.setBhit(boardDTO.getBhit());
+//      item.setNickname(boardDTO.getNickname());
+//copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
+      BeanUtils.copyProperties(boardDTO, item);
 
       LocalDate boardDate = boardDTO.getBudate().toLocalDate();
-      log.info("boardDate={}", boardDate);
+//      log.info("boardDate={}", boardDate);
       LocalDate today = LocalDate.now();
-      log.info("today={}", today);
+//      log.info("today={}", today);
 
       if(boardDate.equals(today)){//오늘 작성된 글이면
         item.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
@@ -72,17 +75,19 @@ public class BoardController {
     BoardDTO boardDTO = boardSVC.findByBnum(bnum);
     DetailForm detailForm = new DetailForm();
 
-    detailForm.setBnum(boardDTO.getBnum());
-    detailForm.setBtitle(boardDTO.getBtitle());
-    detailForm.setBcontent(boardDTO.getBcontent());
-    detailForm.setBhit(boardDTO.getBhit());
-    detailForm.setBid(boardDTO.getBid());
-    detailForm.setNickname(boardDTO.getNickname());
+//    detailForm.setBnum(boardDTO.getBnum());
+//    detailForm.setBtitle(boardDTO.getBtitle());
+//    detailForm.setBcontent(boardDTO.getBcontent());
+//    detailForm.setBhit(boardDTO.getBhit());
+//    detailForm.setBid(boardDTO.getBid());
+//    detailForm.setNickname(boardDTO.getNickname());
+//copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
+    BeanUtils.copyProperties(boardDTO, detailForm);
 
     LocalDate boardDate = boardDTO.getBudate().toLocalDate();
-    log.info("boardDate={}", boardDate);
+//    log.info("boardDate={}", boardDate);
     LocalDate today = LocalDate.now();
-    log.info("today={}", today);
+//    log.info("today={}", today);
 
     if(boardDate.equals(today)){//오늘 작성된 글이면
       detailForm.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
@@ -91,7 +96,9 @@ public class BoardController {
     }
 
     model.addAttribute("detailForm", detailForm);
+    log.info("detailForm={}", detailForm);
 
+    log.info("detail() 호출됨!끝");
     return "board/detailForm";
   }
 
@@ -122,8 +129,11 @@ public class BoardController {
     log.info("addBoard() 호출됨!");
 
     BoardDTO boardDTO = new BoardDTO();
-    boardDTO.setBtitle(addForm.getBtitle());
-    boardDTO.setBcontent(addForm.getBcontent());
+//    boardDTO.setBtitle(addForm.getBtitle());
+//    boardDTO.setBcontent(addForm.getBcontent());
+    BeanUtils.copyProperties(addForm, boardDTO);
+    
+    //보안을 위해 세션에서 id 값을 받아온다 만약 비로그인상태거나 세션이 만료된 상태면 인터셉터에서 처리한다
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     boardDTO.setBid(loginMember.getId());
 
@@ -143,9 +153,10 @@ public class BoardController {
     BoardDTO boardDTO = boardSVC.findByBnum(bnum);
 
     EditForm editForm = new EditForm();
-    editForm.setBnum(boardDTO.getBnum());
-    editForm.setBtitle(boardDTO.getBtitle());
-    editForm.setBcontent(boardDTO.getBcontent());
+//    editForm.setBnum(boardDTO.getBnum());
+//    editForm.setBtitle(boardDTO.getBtitle());
+//    editForm.setBcontent(boardDTO.getBcontent());
+    BeanUtils.copyProperties(boardDTO, editForm);
 
     model.addAttribute("editForm", editForm);
 
@@ -164,8 +175,9 @@ public class BoardController {
     BoardDTO boardDTO = new BoardDTO();
 
     boardDTO.setBnum(bnum);
-    boardDTO.setBtitle(editForm.getBtitle());
-    boardDTO.setBcontent(editForm.getBcontent());
+//    boardDTO.setBtitle(editForm.getBtitle());
+//    boardDTO.setBcontent(editForm.getBcontent());
+    BeanUtils.copyProperties(editForm, boardDTO);
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     boardDTO.setBid(loginMember.getId());
 

@@ -1,77 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+xmlns:th="http://www.thymeleaf.org"
+th:replace="~{fragment/mainDetail::main(
+  ~{::title},
+  _,
+  ~{},
+  ~{::link},
+  ~{::script},
+  _,
+  _,
+  ~{::.form},
+  _
+)}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>아이디 찾기</title>
-  <style>
-    .content-findId{
-      display:grid;
-      grid-template-columns: 100px 300px;
-    }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/member/findIdForm.css}">
+  <script defer th:src="@{/js/member/findIdForm.js}"></script>
+
+
 </head>
 
 <body>
-<h3>아이디찾기</h3>
-<hr>
-<div class="content-findId">
-  <div><label>이름</label></div>
-  <div><input type="text" id="nameTxt"></div>
-  <div><label>email</label></div>
-  <div><input type="text" id="emailTxt"></div>
-  <div><label>아이디</label></div>
-  <div><span id="findedId"></span></div>
-  <div></div><div><button id="findIdBtn">아이디찾기</button></div>
+
+<div class="form">
+  <h3>아이디찾기</h3>
+  <hr>
+  <div class="content-findId">
+    <div><label>이름</label></div>
+    <div><input type="text" id="nameTxt"></div>
+    <div><label>email</label></div>
+    <div><input type="text" id="emailTxt"></div>
+    <div><label>아이디</label></div>
+    <div><span id="findedId"></span></div>
+    <div></div><div><button id="findIdBtn">아이디찾기</button></div>
+  </div>
+
+  잘못 입력 할 경우 오류 표기 방법 찾아야 함
+
 </div>
 
-<script>
-    findIdBtn.addEventListener('click', findById);
-
-
-    fetch(`/api/comments/${search.value}`,{
-      method:'PATCH',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    }).then(res=>res.json())
-      .then(res=>{console.log(res); findAll_f();})
-      .catch(err=>console.error('Err:',err))    ;
-
-    function findById(e){
-        const data ={};
-    data.name = nameTxt.value;
-    data.email = emailTxt.value;
-
-        fetch('/api/findid',{
-      method:'PUT',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    }).then(res=>res.json())
-      .then(res=>{console.log(res);
-        findedId.innerHTML = res.data;}
-      )
-      .catch(err=>console.error('Err:',err));
-
-<!--      const xhr = new XMLHttpRequest();-->
-<!--      xhr.open('PUT','/api/findid');-->
-<!--      xhr.send(data);-->
-<!--      xhr.addEventListener('load',e=>{-->
-<!--        //console.log(xhr);-->
-<!--        if(xhr.status === 200){-->
-<!--          //console.log(xhr.response); //json포맷의 문자열 수신확인-->
-<!--          const obj = JSON.parse(xhr.response);//json포맷의 문자열 => js객체변환-->
-<!--          if(obj.rtcd === '00'){-->
-<!--            findedId.textContent = obj.data;-->
-<!--          }else{-->
-<!--            findedId.textContent = obj.data;-->
-<!--          }-->
-<!--        }else{-->
-<!--          console.err('Error', xhr.status, xhr.statusText);-->
-<!--        }-->
-<!--      });-->
-    }
-  </script>
 </body>
 </html>

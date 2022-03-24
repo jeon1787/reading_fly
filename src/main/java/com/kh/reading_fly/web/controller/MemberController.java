@@ -77,28 +77,25 @@ public class MemberController {
     log.info("수정입력처리 확인");
 
 
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //닉네임 존재유무
+    MemberDTO findmemberDTO =  memberSVC.findByID(loginMember.getId());
+    if(memberSVC.isExistNickname(editForm.getNickname()) && !(editForm.getNickname().equals(findmemberDTO.getNickname()))) {
+      bindingResult.rejectValue("nickname", "nickname", "동일한 닉네임이 존재합니다");
+    }
+
+    //이메일 존재유무
+    if(memberSVC.isExistEmail(editForm.getEmail()) && !(editForm.getEmail().equals(findmemberDTO.getEmail()))) {
+      bindingResult.rejectValue("email", "email", "동일한 email이 존재합니다");
+    }
+
     if(bindingResult.hasErrors()) {
       log.info("errors={}",bindingResult);
       log.info("bindingResult.hasErrors() 확인");
       return "member/memberEditForm";
     }
-
-    //세션이 없으면 로그인 페이지로 이동
-    if(loginMember == null) return "redirect:/";
-
-    //닉네임 존재유무
-    if(memberSVC.isExistNickname(editForm.getNickname()) && !(editForm.getNickname().equals(loginMember.getNickname()))) {
-      bindingResult.rejectValue("nickname", "nickname", "동일한 닉네임이 존재합니다");
-
-    }
-
-    //이메일 존재유무
-    if(memberSVC.isExistEmail(editForm.getEmail()) && !(editForm.getEmail().equals(loginMember.getNickname()))) {
-      bindingResult.rejectValue("email", "email", "동일한 email이 존재합니다");
-
-    }
-
-
 
     log.info("입력받은 memberDTO:{}",editForm);
 
@@ -201,14 +198,39 @@ public class MemberController {
 
 
   //회원탈퇴
-  @GetMapping("/{id}/out")
+//  @GetMapping("/{id}/out")
 //  @GetMapping("/out")
-  public String outForm(@ModelAttribute OutForm outForm){
-    log.info("outForm 호출됨!");
+//  public String outForm(@ModelAttribute OutForm outForm){
+//    log.info("outForm 호출됨!");
+//    return "member/outForm";
+//  }
+
+  @GetMapping("/out")
+  public String outForm(HttpServletRequest request,
+                        Model model) {
+    HttpSession session = request.getSession(false);
+    LoginMember loginMember
+        = (LoginMember)session.getAttribute("loginMember");
+
+    //세션이 없으면 로그인 페이지로 이동
+    if(loginMember == null) return "redirect:/";
+
+    //회원정보 가져오기
+    MemberDTO memberDTO =  memberSVC.findByID(loginMember.getId());
+    OutForm outForm = new OutForm();
+    BeanUtils.copyProperties(memberDTO, outForm);
+    model.addAttribute("outForm", outForm);
     return "member/outForm";
   }
 
-  @PostMapping("/out")
+
+
+
+
+
+
+//  @PostMapping("/out")
+  @PatchMapping("/out")
   public String out(
           @Valid @ModelAttribute OutForm outForm,
           BindingResult bindingResult,
@@ -218,19 +240,22 @@ public class MemberController {
     //1)유효성체크
     if(bindingResult.hasErrors()){
       log.info("bindingResult={}",bindingResult);
-      return "/member/outForm";
+//      return "/member/outForm";
+      return "redirect:/member/out";
     }
     //2)동의 체크여부
     if(!outForm.getAgree()){
       bindingResult.rejectValue("agree",null, "탈퇴 안내를 확인하고 동의해 주세요.");
-      return "/member/outForm";
+//      return "/member/outForm";
+      return "redirect:/member/out";
     }
 
     //3) 비밀번호가 일치하는지 체크
     if(!memberSVC.isMember(outForm.getId(), outForm.getPw())){
       bindingResult.rejectValue("pw","memberDTO.pwChk");
       log.info("bindingResult={}", bindingResult);
-      return "member/outForm";
+//      return "member/outForm";
+      return "redirect:/member/out";
     }
 
     //4) 탈퇴로직 수행
@@ -251,21 +276,21 @@ public class MemberController {
 
 
 
-  //아이디 찾기
-  @GetMapping("/findid")
-  public String findid(){
-    log.info("findIdForm() 호출됨!");
-    return "member/findIdForm";
-  }
-
-  //pw 찾기
-  @GetMapping("/findpw")
-  public String findpw(){
-    log.info("findPwForm() 호출됨!");
-    return "member/findPwForm";
-  }
-
-
+//  //아이디 찾기
+//  @GetMapping("/findid")
+//  public String findid(){
+//    log.info("findIdForm() 호출됨!");
+//    return "member/findIdForm";
+//  }
+//
+//  //pw 찾기
+//  @GetMapping("/findpw")
+//  public String findpw(){
+//    log.info("findPwForm() 호출됨!");
+//    return "member/findPwForm";
+//  }
+//
+//
 
 
 

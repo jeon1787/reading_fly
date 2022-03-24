@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::main},
+        _
+      )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +21,7 @@
   <script defer src="/js/notice/noticeList.js"></script>
 </head>
 <body>
+<main>
 <div class="wrap">
   <div class="content">
     <h3>공지사항</h3>
@@ -63,9 +75,11 @@
       </th:block>
     </div>
     <div class="btn-grp">
-      <button type="button" id="writeBtn">작성</button>
+      <button type="button" id="writeBtn" th:if="${session.id == 'admin'}">작성</button>
     </div>
   </div>
 </div>
+</main>
 </body>
+
 </html>

@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::main},
+        _
+      )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +21,7 @@
   <script defer src="/js/notice/noticeDetailForm.js"></script>
 </head>
 <body>
+<main>
 <div class="wrap">
   <div class="content">
     <h3>공지사항 상세</h3>
@@ -27,13 +39,15 @@
           <textarea cols="30" rows="10" readonly="readonly" th:field="*{nContent}"></textarea>
         </li>
         <li>
-          <button type="button" id="editBtn">수정</button>
-          <button type="button" id="delBtn">삭제</button>
-          <button type="button" id="listBtn">목록</button>
+          <button type="button" id="editBtn" th:if="${session.id == 'admin'}">수정</button>
+          <button type="button" id="delBtn"  th:if="${session.id == 'admin'}">삭제</button>
+          <button type="button" id="listBtn" onclick="location.href='/notices/all'">목록</button>
         </li>
       </ul>
     </form>
   </div>
 </div>
+</main>
 </body>
+
 </html>

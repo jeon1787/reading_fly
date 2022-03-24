@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,9 @@ public class LoginController {
   // 로그인 입력에 따른 인증 진행
   @PostMapping("/login")
   public String login(@Valid @ModelAttribute LoginForm loginForm,
-                      BindingResult bindingResult, HttpServletRequest request,HttpServletResponse response
+                      BindingResult bindingResult,
+                      @RequestParam(required = false,defaultValue="/") String redirectUrl,
+                      HttpServletRequest request,HttpServletResponse response
   ){
     if(bindingResult.hasErrors()){
       log.info("loginError={}", bindingResult);
@@ -46,6 +49,7 @@ public class LoginController {
     //오브젝트 체크 : 회원유무
     if(!memberSVC.isExistId(loginForm.getId())) {
       log.info("loginError={}", bindingResult);
+      bindingResult.reject("error.login", "회원정보가 없습니다");
       return "login/loginForm";
     }
 
@@ -63,13 +67,20 @@ public class LoginController {
       return "login/loginForm";
     }
 
-    if(memberDTO == null){
-      bindingResult.reject("error.login", "회원정보가 없습니다");
-      return "login/loginForm";
-    }
+//    if(memberDTO == null){
+//      bindingResult.reject("error.login", "회원정보가 없습니다");
+//      return "login/loginForm";
+//    }
 
     //회원 세션 정보
-    LoginMember loginMember = new LoginMember(memberDTO.getId(), memberDTO.getEmail(), memberDTO.getNickname());
+//    LoginMember loginMember = new LoginMember(memberDTO.getId(), memberDTO.getEmail(), memberDTO.getNickname());
+    LoginMember loginMember = new LoginMember(
+        memberDTO.getId(), memberDTO.getNickname(), memberDTO.getEmail(), memberDTO.getAdmin_fl());
+    log.info("id={}, email={}, nickname={}, admin_fl={}",
+        memberDTO.getId(), memberDTO.getEmail(),memberDTO.getNickname(), memberDTO.getAdmin_fl());
+
+
+
 
     //인증성공
     //세션이 있으면 세션 반환, 없으면 새로이 생성
@@ -93,8 +104,9 @@ public class LoginController {
     if(code == 3) {
       session.setAttribute("loginMember", loginMember );
     }
-
-    return "redirect:/";
+    log.info("redirect={}",redirectUrl);
+//    return "redirect:/";
+    return "redirect:"+redirectUrl;
   }
 
   //로그아웃
