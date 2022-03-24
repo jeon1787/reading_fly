@@ -38,7 +38,7 @@ public class LoginController {
   @PostMapping("/login")
   public String login(@Valid @ModelAttribute LoginForm loginForm,
                       BindingResult bindingResult,
-                      @RequestParam(name="redirectUrl",defaultValue="/") String redirectUrl,
+                      @RequestParam(required = false,defaultValue="/") String redirectUrl,
                       HttpServletRequest request,HttpServletResponse response
   ){
     if(bindingResult.hasErrors()){
@@ -104,7 +104,7 @@ public class LoginController {
     if(code == 3) {
       session.setAttribute("loginMember", loginMember );
     }
-
+    log.info("redirect={}",redirectUrl);
 //    return "redirect:/";
     return "redirect:"+redirectUrl;
   }

@@ -4,16 +4,14 @@
     console.log('DOM 생성');
 
     const bnum = document.querySelector('.form').dataset.bnum;
+//    const bnum = /*[[ ${detailForm.bnum} ]]*/;
+    console.log(bnum);
     list_f(bnum);
   });
 
   //댓글목록 조회 함수
   function list_f(bnum){
     console.log("list_f 호출됨!");
-    const chk = document.querySelector('.form').dataset.loginChk;
-    console.log("확인용"+chk);
-
-
 
     fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})
     .then(res => res.json())
@@ -45,31 +43,27 @@
     $commentList.innerHTML = content;
   }
 
-
-
-
-
-
-
-
   //댓글등록 함수
   addBtn.addEventListener('click', e=>{
-    const chk = document.querySelector('.form').dataset.loginChk;
-    console.log(chk);
+    const loginChk = e.target.dataset.session;
+    console.log(loginChk);
 
     //비로그인 상태
-    if(chk == "false"){
-      console.log(chk);
-      const bnum = document.querySelector('.form').dataset.bnum;
-      location.href = `/login?redirectUrl=/board/${bnum}/detail`;
+    if(loginChk == 'true'){
+      console.log(loginChk);
+      console.log("로그인이 필요한 서비스입니다.");
+      alert("로그인이 필요한 서비스입니다.");
       return;
     //로그인 상태
     }else{
       const bnum = document.querySelector('.form').dataset.bnum;
 
+//      const addForm = {
+//        "ccontent": reply.value
+//      };
+
       const addForm = {};
       addForm.ccontent = reply.value;
-
 
       fetch(`http://localhost:9080/api/comment/${bnum}`,{
         method:'POST',
@@ -96,12 +90,12 @@
       console.log("댓글 수정 클릭");
 
       //로그인 체크
-      const chk = document.querySelector('.form').dataset.loginChk;
+      const loginChk = document.querySelector('.form').dataset.session;
       console.log();
 
       //비로그인 상태
-//      if(chk == 'true'){
-//        console.log(chk);
+//      if(loginChk == 'true'){
+//        console.log(loginChk);
 //        console.log("로그인이 필요한 서비스입니다.");
 //        alert("로그인이 필요한 서비스입니다.");
 //        return;

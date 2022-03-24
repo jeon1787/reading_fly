@@ -23,7 +23,7 @@
 <body>
 
 <!--form-->
-<div class="form" th:data-bnum="${detailForm.bnum}"
+<div class="form" th:data-bnum="${detailForm.bnum}" th:data-login-chk="${!session?.isEmpty()}" th:data-id="${session?.loginMember?.id}" th:data-member-chk="${session?.loginMember?.id}==${detailForm?.bid}">
 
   <!--wrap-->
   <div class="wrap">
@@ -62,9 +62,9 @@
     <hr>
 
     <!--5. 댓글-->
-    <div id="comment-container">
+    <div class="comment-area">
       <div class="comment-upper">댓글</div>
-      <div id="commentList">
+      <div class="comment-list">
   <!--      <div class="comment-content">-->
   <!--        <div class="comment-header"><span>닉네임</span><span><a href="">수정</a><a href="">삭제</a></span></div>-->
   <!--        <div>댓글</div>-->
@@ -115,9 +115,15 @@
 <!--    comments.forEach(comment => {-->
 <!--      content +=-->
 <!--       `<div class="comment-content">-->
-<!--          <div class="comment-header"><span>${comment.nickname}</span><span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span></div>-->
+
+<!--          <div class="comment-header">
+                <span>${comment.nickname}</span>
+                <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
+              </div>-->
+
 <!--          <div style="white-space:pre-wrap;">${comment.ccontent}</div>-->
 <!--          <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>-->
+
 <!--        </div>`;-->
 <!--    });-->
 <!--    commentList.innerHTML = content;-->
