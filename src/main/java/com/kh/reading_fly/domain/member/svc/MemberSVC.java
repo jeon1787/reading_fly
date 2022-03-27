@@ -1,6 +1,10 @@
 package com.kh.reading_fly.domain.member.svc;
 
+import com.kh.reading_fly.domain.member.dto.ChangPwDTO;
 import com.kh.reading_fly.domain.member.dto.MemberDTO;
+import com.kh.reading_fly.web.form.member.find.ChangPwReq;
+import com.kh.reading_fly.web.form.member.find.FindIdReq;
+import com.kh.reading_fly.web.form.member.find.FindPwReq;
 
 import java.util.List;
 
@@ -59,6 +63,28 @@ public interface MemberSVC {
 
   // pw 찾기
   String findPwMember(String id, String name, String email);
+
+
+
+  // id 찾기
+  List<String> findMemberId(FindIdReq findIdReq);
+
+  //pw 변경 처리를 위한 찾기
+  ChangPwReq findMemberPw(FindPwReq findPwReq);
+
+  //임시 pw 변경 처리
+  MemberDTO changeMemberPW(String id, ChangPwDTO changPwDTO);
+
+  //변경된 pw 찾기
+  List<String> changeMemberPW(FindPwReq findPwReq);
+
+
+  //비밀번호찾기시 실행되는 비밀번호변경 화면용
+  void changeMemberPW(String email, String pw, String tmpPw);
+
+
+
+
 
   // 회원탈퇴
   void deleteMember(String id);

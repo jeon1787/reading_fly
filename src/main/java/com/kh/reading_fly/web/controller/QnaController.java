@@ -2,7 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
-import com.kh.reading_fly.web.form.login.LoginMember;
+import com.kh.reading_fly.web.form.member.login.LoginMember;
 import com.kh.reading_fly.web.form.qna.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

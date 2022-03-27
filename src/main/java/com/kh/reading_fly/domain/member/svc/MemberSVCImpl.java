@@ -1,7 +1,11 @@
 package com.kh.reading_fly.domain.member.svc;
 
 import com.kh.reading_fly.domain.member.dao.MemberDAO;
+import com.kh.reading_fly.domain.member.dto.ChangPwDTO;
 import com.kh.reading_fly.domain.member.dto.MemberDTO;
+import com.kh.reading_fly.web.form.member.find.ChangPwReq;
+import com.kh.reading_fly.web.form.member.find.FindIdReq;
+import com.kh.reading_fly.web.form.member.find.FindPwReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -121,6 +125,36 @@ public class MemberSVCImpl implements MemberSVC{
   public String findPwMember(String id, String name, String email) {
     return memberDAO.findPwMember(id, name, email);
   }
+
+
+
+
+
+  @Override
+  public List<String> findMemberId(FindIdReq findIdReq) {
+    return memberDAO.findMemberId(findIdReq);
+  }
+
+  @Override
+  public ChangPwReq findMemberPw(FindPwReq FindPwReq) {
+    return memberDAO.findMemberPw(FindPwReq);
+  }
+
+  @Override
+  public MemberDTO changeMemberPW(String id, ChangPwDTO changPwDTO) {
+    return memberDAO.changeMemberPW(id, changPwDTO);
+  }
+
+  @Override
+  public List<String> changeMemberPW(FindPwReq findPwReq) {
+    return memberDAO.changeMemberPW(findPwReq);
+  }
+
+  @Override
+  public void changeMemberPW(String email, String pw, String tmpPw) {
+    memberDAO.changeMemberPW(email, pw, tmpPw);
+  }
+
 
   // 회원탈퇴
   @Override
