@@ -2,7 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.svc.NoticeSVC;
-import com.kh.reading_fly.web.form.login.LoginMember;
+import com.kh.reading_fly.web.form.member.login.LoginMember;
 import com.kh.reading_fly.web.form.notice.NoticeAddForm;
 import com.kh.reading_fly.web.form.notice.NoticeDetailForm;
 import com.kh.reading_fly.web.form.notice.NoticeEditForm;
@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

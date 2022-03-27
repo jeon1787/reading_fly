@@ -3,13 +3,11 @@ package com.kh.reading_fly.web.controller;
 import com.kh.reading_fly.domain.comment.dto.CommentDTO;
 import com.kh.reading_fly.domain.comment.svc.CommentSVC;
 import com.kh.reading_fly.web.form.comment.*;
-import com.kh.reading_fly.web.form.login.LoginMember;
+import com.kh.reading_fly.web.form.member.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
