@@ -1,5 +1,5 @@
 'use strict';
-  //dom 이벤트
+  //dom 이벤트 : 댓글목록 불러오기
   document.addEventListener('DOMContentLoaded', e=>{
     console.log('DOM 생성');
 
@@ -12,8 +12,6 @@
     console.log("list_f 호출됨!");
     const chk = document.querySelector('.form').dataset.loginChk;
     console.log("확인용"+chk);
-
-
 
     fetch(`http://localhost:9080/api/comment/${bnum}`,{method:'GET'})
     .then(res => res.json())
@@ -47,18 +45,18 @@
     $commentList.innerHTML = content;
   }
 
-  //댓글등록 함수
+  //댓글등록 버튼 클릭시
   addBtn.addEventListener('click', e=>{
     const chk = document.querySelector('.form').dataset.loginChk;
     console.log(chk);
 
-    //비로그인 상태
+    //비로그인 상태 : 리다이렉트
     if(chk == "false"){
       console.log(chk);
       const bnum = document.querySelector('.form').dataset.bnum;
       location.href = `/login?redirectUrl=/board/${bnum}/detail`;
       return;
-    //로그인 상태
+    //로그인 상태 : 댓글등록
     }else{
       const bnum = document.querySelector('.form').dataset.bnum;
 
@@ -85,39 +83,83 @@
   //댓글수정 버튼 클릭시
   const $commentArea = document.querySelector('.comment-area');
   $commentArea.addEventListener('click',e=>{
-    //a태그 이벤트 막기
+    //1) a태그 이벤트 막기
     e.preventDefault();
+    const $comment = e.target.closest('.comment');
 
-    //수정 버튼 체크
-    if(e.target.textContent == '수정'){
-      console.log("댓글 수정 클릭");
-      const $comment = e.target.closest('.comment');
+    //2) 수정 버튼 체크
+//    if(e.target.textContent == '수정'){
+//    }else if(e.target.textContent == '취소'){
+//      console.log("댓글 수정 취소 버튼 클릭");
+//    }else if(e.target.textContent == '취소'){
+//      console.log("댓글 수정 저장 버튼 클릭");
+//    }
 
-      //로그인 체크
-      const id = document.querySelector('.form').dataset.id;
-      console.log("로그인한 id : "+id);
+    switch(e.target.textContent){
+      case "수정":
+          console.log("댓글 수정 버튼 클릭");
 
-      const cid = $comment.children[0].children[1].value;
-      console.log("댓글작성자 cid : "+cid);
+          //로그인 체크
+          const id = document.querySelector('.form').dataset.id;
+          console.log("로그인한 id : "+id);
 
-      //로그인 상태
-      if(id == cid){
-        //기존 수정모드 해제
-        modifyModeCancel();
+          const cid = $comment.children[0].children[1].value;
+          console.log("댓글작성자 cid : "+cid);
 
-        //수정모드 변경
-        modifyMode($comment, cid);
-      //비로그인 상태
-      }else{
-        console.log("로그인이 필요한 서비스입니다.");
-        alert("로그인이 필요한 서비스입니다.");
-        return;
-      };
+          //로그인 상태 : 수정창 열기
+          if(id == cid){
+            //기존 수정창 닫기
+            modifyModeCancel();
+
+            //새 수정창 열기
+            modifyMode($comment, cid);
+          //비로그인 상태 : 리턴
+          }else{
+            console.log("로그인이 필요한 서비스입니다.");
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+          };
+          break;
+      case "취소":
+          console.log("댓글 수정 취소 버튼 클릭");
+
+          //기존 수정창 닫기
+          modifyModeCancel();
+          break;
+      case "저장":
+          console.log("댓글 수정 저장 버튼 클릭");
+
+          modifyReply_f($comment);
+          break;
     }
 
   })
 
-  //기존 수정모드 해제
+  function modifyReply_f($comment){
+    const bnum = document.querySelector('.form').dataset.bnum;
+
+    //객체 생성
+    const editForm = {};
+    editForm.cnum = $comment.children[0].children[0].value;
+    editForm.cid = $comment.children[0].children[1].value;
+    editForm.ccontent = $comment.children[1].value;
+
+    fetch(`http://localhost:9080/api/comment/${bnum}`,{
+      method:'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(editForm)  // js객체를 => json 포맷 문자열 변환
+    })
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      list_f(bnum);
+    })
+    .catch(err => console.error('Err:',err));
+  }
+
+  //기존 수정창 닫기
   function modifyModeCancel(){
     if(document.getElementById("saveBtn") != null){
       console.log("modifyModeCancel() 실행");
@@ -136,7 +178,7 @@
     }
   }
 
-  //단건 조회
+  //댓글 단건 조회 : 기존 수정창 닫기용
   function displayComment_f(detailForm, $closeComment){
     $closeComment.innerHTML =
        `<div class="comment">
@@ -152,7 +194,7 @@
     return;
   }
 
-  //수정모드 변경
+  //수정창 열기
   function modifyMode($comment, cid){
     console.log("modifyMode() 실행");
     const cnum = $comment.children[0].children[0].value;

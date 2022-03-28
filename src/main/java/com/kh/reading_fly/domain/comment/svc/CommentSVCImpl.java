@@ -34,4 +34,9 @@ public class CommentSVCImpl implements CommentSVC{
   public CommentDTO modify(CommentDTO comment) {
     return commentDAO.update(comment);
   }
+
+  @Override
+  public int remove1(Long cnum, String cid) {
+    return commentDAO.delete1(cnum, cid);
+  }
 }

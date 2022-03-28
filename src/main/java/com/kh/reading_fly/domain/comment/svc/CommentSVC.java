@@ -13,4 +13,6 @@ public interface CommentSVC {
   CommentDTO write(CommentDTO comment);
 
   CommentDTO modify(CommentDTO comment);
+
+  int remove1(Long cnum, String cid);
 }

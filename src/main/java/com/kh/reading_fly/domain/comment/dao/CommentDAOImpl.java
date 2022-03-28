@@ -125,7 +125,7 @@ public class CommentDAOImpl implements CommentDAO{
 
     StringBuffer sql = new StringBuffer();
     sql.append(" update comments ");
-    sql.append(" set ccontent = ? ");
+    sql.append(" set ccontent = ? , ");
     sql.append("     cudate = systimestamp ");
     sql.append(" where cnum = ? and cid = ? ");
 
@@ -139,8 +139,8 @@ public class CommentDAOImpl implements CommentDAO{
         );
 
         pstmt.setString(1, comment.getCcontent());
-        pstmt.setLong(1, comment.getCnum());
-        pstmt.setString(1, comment.getCid());
+        pstmt.setLong(2, comment.getCnum());
+        pstmt.setString(3, comment.getCid());
 
         return pstmt;
       }
@@ -150,4 +150,32 @@ public class CommentDAOImpl implements CommentDAO{
     return selectOne(cnum);
   }//end of update
 
+  /**
+   * 대댓글 없는 게시글 삭제
+   * @param cnum
+   * @param cid
+   * @return
+   */
+  @Override
+  public int delete1(Long cnum, String cid) {
+
+    StringBuffer sql = new StringBuffer();
+    sql.append(" delete from comments ");
+    sql.append("  where cnum =? and cid = ? ");
+
+    int result = jdbcTemplate.update(sql.toString(), cnum, cid);//성공시 1 실패시 0
+
+    return result;
+  }
+
+  /**
+   * 대댓글 있는 게시글 삭제(대댓글 구현시 구현)
+   * @param cnum
+   * @param cid
+   * @return
+   */
+  @Override
+  public int delete2(Long cnum, String cid) {
+    return 0;
+  }
 }
