@@ -121,4 +121,24 @@ public class ApiCommentController {
     return new ApiResult<>("00", "success", modifiedComment);
   }//end of edit
 
+  //댓글 삭제
+  @DeleteMapping("/{cnum}")
+  public ApiResult<Object> delete(@PathVariable Long cnum,
+                                  HttpSession session){
+    log.info("delete() 호출됨!");
+
+    LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
+    int result = commentSVC.remove1(cnum, loginMember.getId());
+    ApiResult<Object> apiResult = null;
+
+    if(result == 1){
+      apiResult = new ApiResult<>("00", "success", "댓글 삭제를 성공했습니다.");
+      log.info("apiResult = {}", apiResult);
+    }else{
+      apiResult = new ApiResult<>("01", "fail", "댓글 삭제를 실패했습니다.");
+      log.info("apiResult = {}", apiResult);
+    }
+
+    return apiResult;
+  }
 }
