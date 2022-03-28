@@ -39,8 +39,8 @@
     font-weight: bold;
 }
 
-.container {
-    width: 1280px;  height: 730px;
+main>.container {
+    width: 1280px;  min-height: 730px;
     display: flex;
 }
 .footer {

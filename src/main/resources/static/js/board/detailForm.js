@@ -95,30 +95,49 @@
 //      console.log("댓글 수정 저장 버튼 클릭");
 //    }
 
+    //a태그, button태그 아니면 리턴
+    if(e.target.tagName != "A" && e.target.tagName != "BUTTON"){
+      console.log("리턴");
+      return;
+    }
+
+    //등록이면 리턴
+    if(e.target.textContent == "등록"){
+      return;
+    }
+
+    //로그인 체크
+    const id = document.querySelector('.form').dataset.id;
+    console.log("로그인한 id : "+id);
+
+    const cid = $comment?.children[0].children[1].value;
+    console.log("댓글작성자 cid : "+cid);
+
+    if(id != cid){
+      console.log("로그인이 필요한 서비스입니다.");
+      alert("로그인이 필요한 서비스입니다.");
+      return;
+    }
+
+//    //로그인 체크
+//    const id = document.querySelector('.form').dataset.id;
+//    console.log("로그인한 id : "+id);
+//
+//    const cid = $comment.children[0].children[1].value;
+//    console.log("댓글작성자 cid : "+cid);
+//
+//    //로그인 상태 : 수정창 열기
+//    if(id == cid){
+
     switch(e.target.textContent){
       case "수정":
           console.log("댓글 수정 버튼 클릭");
 
-          //로그인 체크
-          const id = document.querySelector('.form').dataset.id;
-          console.log("로그인한 id : "+id);
-
-          const cid = $comment.children[0].children[1].value;
-          console.log("댓글작성자 cid : "+cid);
-
-          //로그인 상태 : 수정창 열기
-          if(id == cid){
             //기존 수정창 닫기
             modifyModeCancel();
 
             //새 수정창 열기
             modifyMode($comment, cid);
-          //비로그인 상태 : 리턴
-          }else{
-            console.log("로그인이 필요한 서비스입니다.");
-            alert("로그인이 필요한 서비스입니다.");
-            return;
-          };
           break;
       case "취소":
           console.log("댓글 수정 취소 버튼 클릭");
@@ -131,11 +150,27 @@
 
           modifyReply_f($comment);
           break;
-    }
+      case "삭제":
+          console.log("댓글 삭제 버튼 클릭");
+
+          if(confirm("정말 삭제하시겠습니까?")){
+            deleteReply_f($comment);
+          }
+          break;
+    }//end of switch
+
+//    //비로그인 상태 : 리턴
+//    }else{
+//      console.log("로그인이 필요한 서비스입니다.");
+//      alert("로그인이 필요한 서비스입니다.");
+//      return;
+//    };
 
   })
 
   function modifyReply_f($comment){
+    console.log("modifyReply_f() 실행");
+
     const bnum = document.querySelector('.form').dataset.bnum;
 
     //객체 생성
@@ -151,6 +186,21 @@
       },
       body: JSON.stringify(editForm)  // js객체를 => json 포맷 문자열 변환
     })
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      list_f(bnum);
+    })
+    .catch(err => console.error('Err:',err));
+  }
+
+  function deleteReply_f($comment){
+    console.log("deleteReply_f() 실행");
+
+    const cnum = $comment.children[0].children[0].value;
+    const bnum = document.querySelector('.form').dataset.bnum;
+
+    fetch(`http://localhost:9080/api/comment/${cnum}`,{method:'DELETE'})
     .then(res=>res.json())
     .then(res=>{
       console.log(res);
