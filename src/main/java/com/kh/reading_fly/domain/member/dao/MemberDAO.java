@@ -5,6 +5,7 @@ import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.web.form.member.find.ChangPwReq;
 import com.kh.reading_fly.web.form.member.find.FindIdReq;
 import com.kh.reading_fly.web.form.member.find.FindPwReq;
+import com.kh.reading_fly.web.form.member.find.FindTest;
 
 import java.util.List;
 
@@ -82,6 +83,16 @@ public interface MemberDAO {
 
   //비밀번호찾기시 실행되는 비밀번호변경 화면용
   void changeMemberPW(String email, String pw, String tmpPw);
+
+
+
+  //pw 변경 처리를 위한 찾기
+  ChangPwReq findMemberTestPw(FindTest findTest);
+
+  //변경된 pw 찾기
+  List<String> changeMemberTestPW(FindTest findTest);
+
+
 
 
 

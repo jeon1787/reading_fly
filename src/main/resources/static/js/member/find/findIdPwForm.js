@@ -9,7 +9,7 @@ function div_show(selectList) {
           obj1.style.display = "block";    
           obj2.style.display = "none";
           
-      } else {
+      } else if( selectList == "1" ) {
           obj1.style.display = "none";    
           obj2.style.display = "block";
           
@@ -19,17 +19,17 @@ function div_show(selectList) {
   
   
   
-    // findIdBtn.addEventListener('click', findById);
+    findIdBtn.addEventListener('click', findById);
   
-    //   function findById(e){
-    //     const data ={};
-    //     data.name = nameIdTxt.value;
-    //     data.email = emailIdTxt.value;
+      function findById(e){
+        const data ={};
+        data.name = idname.value;
+        data.email = idemail.value;
 
-    //     if(data.name == "" || data.email == "") {
-    //       alert('데이터를 입력해주세요')
-    //       return;
-    //     }
+        if(data.name == "" || data.email == "") {
+          alert('데이터를 입력해주세요')
+          return;
+        }
 
     //       fetch('/memberexist/exist/findid',{            
     //     method:'PUT',
@@ -40,23 +40,26 @@ function div_show(selectList) {
     //       findedId.innerHTML = res.data;}
     //     )
     //     .catch(err=>console.error('Err:',err));
+
+
+        findIdForm.submit();
   
-    //   }
+      }
 
   
-    //   findPwBtn.addEventListener('click', findByPw);
+      findPwBtn.addEventListener('click', findByPw);
   
   
-    //   function findByPw(e){
-    //       const data ={};
-    //       data.id = idPwTxt.value;
-    //   data.name = namePwTxt.value;
-    //   data.email = emailPwTxt.value;
+      function findByPw(e){
+          const data ={};
+      data.id = pwid.value;
+      data.name = pwname.value;
+      data.email = pwemail.value;
 
-    //   if(data.id == "" || data.name == "" || data.email == "") {
-    //     alert('데이터를 입력해주세요')
-    //     return;
-    //   }
+      if(data.id == "" || data.name == "" || data.email == "") {
+        alert('데이터를 입력해주세요')
+        return;
+      }
   
     //       fetch('/memberexist/exist/findpw',{
     //     method:'PUT',
@@ -67,9 +70,11 @@ function div_show(selectList) {
     //       findedPw.innerHTML = res.data;}
     //     )
     //     .catch(err=>console.error('Err:',err));
+
+    findPwForm.submit();
   
   
-    //   }
+      }
   
   
   

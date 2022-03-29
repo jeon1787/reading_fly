@@ -5,6 +5,7 @@ import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.web.form.member.find.ChangPwReq;
 import com.kh.reading_fly.web.form.member.find.FindIdReq;
 import com.kh.reading_fly.web.form.member.find.FindPwReq;
+import com.kh.reading_fly.web.form.member.find.FindTest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -258,22 +259,22 @@ public class MemberDAOImpl implements MemberDAO{
     StringBuffer sql = new StringBuffer();
     sql.append("select pw from member ");
     sql.append(" where id = ? and name = ? and email = ? and leave_fl = 0 ");
-//    String pw =
-//            jdbcTemplate.queryForObject(sql.toString(), String.class, id, name, email);
-//    return pw;
+    String pw =
+            jdbcTemplate.queryForObject(sql.toString(), String.class, id, name, email);
+    return pw;
 
-    List<String> result = jdbcTemplate.query(
-        sql.toString(),
-        new RowMapper<String>() {
-          @Override
-          public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return rs.getNString("pw");
-          }
-        },
-        id, name, email
-    );
-    return (result.size() == 1) ? result.get(0) : null;
-
+//    List<String> result = jdbcTemplate.query(
+//        sql.toString(),
+//        new RowMapper<String>() {
+//          @Override
+//          public String mapRow(ResultSet rs, int rowNum) throws SQLException {
+//            return rs.getNString("pw");
+//          }
+//        },
+//        id, name, email
+//    );
+//    return (result.size() == 1) ? result.get(0) : null;
+//
 
 
 
@@ -353,6 +354,36 @@ public class MemberDAOImpl implements MemberDAO{
 
     jdbcTemplate.update(sql.toString(), tmpPw, email, pw);
 
+  }
+
+  @Override
+  public ChangPwReq findMemberTestPw(FindTest findTest) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select pw from member ");
+    sql.append(" where id = ? and name = ? and email = ? ");
+
+    ChangPwReq changPwReq = jdbcTemplate.queryForObject(sql.toString(),
+        new BeanPropertyRowMapper<>(ChangPwReq.class),
+        findTest.getPid(), findTest.getPname(), findTest.getPemail());
+
+    return changPwReq;
+  }
+
+  @Override
+  public List<String> changeMemberTestPW(FindTest findTest) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select pw from member ");
+    sql.append(" where name = ? and email = ? ");
+
+    log.info(findTest.toString());
+
+    List<String> pw =  jdbcTemplate.queryForList(sql.toString(),
+        String.class,
+        findTest.getPname(),findTest.getPemail());
+
+    log.info("form:{}",pw.toString());
+
+    return pw;
   }
 
   // 회원탈퇴

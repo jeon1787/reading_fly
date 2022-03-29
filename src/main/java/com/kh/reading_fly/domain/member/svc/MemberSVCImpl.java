@@ -6,6 +6,7 @@ import com.kh.reading_fly.domain.member.dto.MemberDTO;
 import com.kh.reading_fly.web.form.member.find.ChangPwReq;
 import com.kh.reading_fly.web.form.member.find.FindIdReq;
 import com.kh.reading_fly.web.form.member.find.FindPwReq;
+import com.kh.reading_fly.web.form.member.find.FindTest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -153,6 +154,16 @@ public class MemberSVCImpl implements MemberSVC{
   @Override
   public void changeMemberPW(String email, String pw, String tmpPw) {
     memberDAO.changeMemberPW(email, pw, tmpPw);
+  }
+
+  @Override
+  public ChangPwReq findMemberTestPw(FindTest findTest) {
+    return memberDAO.findMemberTestPw(findTest);
+  }
+
+  @Override
+  public List<String> changeMemberTestPW(FindTest findTest) {
+    return memberDAO.changeMemberTestPW(findTest);
   }
 
 
