@@ -13,40 +13,46 @@
         _
       )}">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항 수정</title>
-  <link rel="stylesheet" href="../css/notice/noticeEditForm.css" th:href="@{/css/notice/noticeEditForm.css}">
-  <script defer src="/js/notice/noticeEditForm.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>게시글 수정</title>
+<link rel="stylesheet" href="../css/notice/noticeEditForm.css" th:href="@{/css/notice/noticeEditForm.css}">
+<script defer src="/js/notice/noticeEditForm.js"></script>
 </head>
 <body>
 <main>
-<div class="wrap">
-  <div class="content">
-    <h3>공지사항 수정</h3>
-    <hr>
-    <form th:action th:method="patch" th:object="${noticeEditForm}"
-          th:data-n-num="*{nNum}">
-      <input type="hidden" th:field="*{nNum}">
-      <ul>
-        <li>
-          <span>제목</span>
-          <input type="text" id="nEditTitle" th:field="*{nTitle}">
-        </li>
-        <li>
-          <span>내용</span>
-          <textarea id="nEditContent" cols="30" rows="10" th:field="*{nContent}"></textarea>
-        </li>
-        <li>
-          <button type="button" id="modifyBtn">저장</button>
+  <div class="notice-wrap">
+    <div class="notice-title"><h3>게시글 수정</h3></div>
+    <div class="class-body" >
+      <form th:action th:method="patch" th:object="${noticeEditForm}"
+            th:data-n-num="*{nNum}">
+        <input type="hidden" th:field="*{nNum}">
+        <div class="notice-hit">
+          <span class="notice-hit-content notice-hit-tit">조회수</span>
+          <span class="notice-hit-content notice-hit-cnt" th:text="*{nHit}">10</span>
+        </div>
+        <div class="notice-content">
+          <div><lable>제목</lable></div>
+          <div>
+            <input type="text" name="" id="" class="w100" th:field="*{nTitle}" >
+            <div class="fieldError" th:errors="*{nTitle}"></div>
+          </div>
+          <div><lable>작성자</lable></div>
+          <div>관리자</div>
+          <div><lable>내용</lable></div>
+          <div>
+            <textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
+            <div class="fieldError" th:errors="*{nContent}"></div>
+          </div>
+        </div>
+        <div class="notice-btngrp">
           <button type="button" id="cancelBtn">취소</button>
-        </li>
-      </ul>
-    </form>
+          <button type="button" id="saveBtn">저장</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </main>
 </body>
-
 </html>
