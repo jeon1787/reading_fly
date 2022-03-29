@@ -1,0 +1,199 @@
+        *{
+                    font-family: 'NanumAmSeuTeReuDam';
+                    font-weight: bold;
+                    margin: 0;
+                    padding: 0;
+                    /* outline: 1px solid red; */
+            }
+
+
+            @-webkit-keyframes AnimationName{
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+            @-moz-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+            @-o-keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+            @keyframes AnimationName {
+                0%{background-position:0% 50%}
+                50%{background-position:100% 50%}
+                100%{background-position:0% 50%}
+            }
+
+
+        body{
+        color: #fff;
+        background: linear-gradient(-45deg, #ee7752,#e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: AnimationName 15s ease infinite;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        top: 35%;
+        text-align: center;
+        }
+
+        .upper {
+            height: 35px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            /* background-color: #edeeb4; */
+            position: sticky;
+            top: 0;
+        }
+
+        .upper > .upper-second{
+            width: 1280px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .upper-left{
+            width: auto;
+            display: flex;
+            padding: 1px;
+            background-color: white;
+            border: solid 0.5px black;
+            border-radius: 5px;
+        }
+
+        .upper-left > input{
+            text-align: center;
+            border: none;
+            width: 300px;
+        }
+
+        .upper-left > a{
+            line-height: 35px;
+        }
+        .upper-right{
+            width: 250px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .upper > .upper-right > button {
+            width: 20%;
+        }
+
+        .login{
+            width: 50%;
+            background-color: burlywood;
+        }
+        .join{
+            width: 50%;
+            background-color: burlywood;
+        }
+
+        main{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        span{
+            font-weight: bolder;
+            color: white;
+            line-height: 35px;
+        }
+
+        .containner{
+
+            width: 1280px; height: 890px;
+            display: flex;
+            justify-content:center;
+            align-items:center
+
+        }
+
+        .center{
+            width: 80%; height: 80%;
+        }
+
+        .center-item1{
+            height: 40%;
+            text-align: center;
+            font-size: 12em;
+        }
+
+        .center-item2{
+            height: 60%;
+        }
+
+        .category{
+            display: grid;
+            justify-content: center;
+            grid-template-columns: 100px 100px 100px;
+            grid-gap: 55px;
+            height: 50%;
+        }
+
+
+        i{
+            color: bisque;
+            transition-duration: 1s;
+        }
+
+        i:hover{
+            opacity: 0;
+            transition-duration: 1s;
+        }
+
+        .dropdown{
+            position : relative;
+            display : inline-block;
+        }
+
+        .dropdown .dropbtn{
+            color: white;
+            font-size: 1.3em;
+            margin-left: 10px;
+        }
+        .dropdown-content{
+            display : none;
+            position : absolute;
+            z-index : 1;
+            background-color: white;
+        }
+
+        .dropdown-content a{
+            font-size: x-large;
+            display : block;
+        }
+
+        .dropdown-content a:hover{
+            background-color: skyblue;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 35px;
+            background-color: rgba(189, 215, 238, 0.5);
+        }
+
+        .upper-right>span>a{
+            color: white;
+            font-size: 1.5em;
+            text-decoration: none;
+        }
