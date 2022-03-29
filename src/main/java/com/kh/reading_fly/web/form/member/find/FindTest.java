@@ -1,22 +1,34 @@
 package com.kh.reading_fly.web.form.member.find;
 
-
 import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class FindPwReq {
-
-
-  @NotBlank
-  private String pwid;
+public class FindTest {
 
   @NotBlank
-  private String pwname;
+  private String iname;
 
   @NotBlank
   @Email
-  private String pwemail;
+  private String iemail;
+
+
+
+
+  @NotBlank
+  private String pid;
+
+  @NotBlank
+  private String pname;
+
+  @NotBlank
+  @Email
+  private String pemail;
+
+
+
 }
+
