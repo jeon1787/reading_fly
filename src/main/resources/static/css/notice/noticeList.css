@@ -1,29 +1,65 @@
+@charset "utf-8";
 
-
-
-.col{ border: 1px solid #ddd; }
-    .cont{
-      display: grid;
-      grid-template-columns: 50px 1fr 90px 110px 70px;
-      grid-auto-rows: 2em;
+    from {
+    width: 1024px;
+    padding: 42px;
+      display:flex; justify-content:center;
+       /*outline: 1px solid red;*/
     }
-    .btn-grp{
+    .notice-wrap * {
+      /* outline: 1px solid red;*/
+      box-sizing: border-box;
+    }
+    .notice-wrap {
+     width: 940px;
+    }
+
+    .notice-wrap .notice-title {
+     text-align: center;
+     padding: 20px 0;
+    }
+
+    .notice-wrap .notice-content table {
+      width: 100%;
+      border-top: 2px solid #333;
+      border-bottom: 2px solid #333;
+      border-collapse: collapse;
+    }
+
+    .notice-wrap .notice-content table th,
+    .notice-wrap .notice-content table td {
+      border-bottom: 1px solid #333;
+
+    }
+
+    .notice-wrap .notice-content table>thead>tr th:nth-child(2) {
+      width: 50%;
+    }
+
+   #notice-name,
+   #notice-date{
+          text-align: center;
+   }
+
+  .notice-wrap .notice-content table>tbody>tr>td:first-child,
+  .notice-wrap .notice-content table>tbody>tr>td:last-child {
+      text-align: center;
+  }
+
+  .notice-wrap .notice-btngrp {
       display: flex;
       justify-content: flex-end;
-    }
+  }
 
-    .ct {
-        text-align:center;
-         line-height: 30px;
+  .notice-wrap .notice-page {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+  }
 
-    }
 
-    .le {
-      padding-left:10px;
-      line-height: 30px;
-    }
-
-    a {
-      text-decoration: none;
-       color: inherit;
-    }
+  .notice-wrap .notice-search {
+      display: flex;
+      justify-content: center;
+  }
+  a {text-decoration: none; color:inherit;}

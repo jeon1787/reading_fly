@@ -11,10 +11,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +38,16 @@ public class NoticeController {
   //  등록처리
   @PostMapping("")
   public String add(
+      @Valid
       @ModelAttribute NoticeAddForm noticeAddForm,
+      BindingResult bindingResult,
       RedirectAttributes redirectAttributes,
       Model model){
+
+    if(bindingResult.hasErrors()){
+      log.info("add/bindingResult={}",bindingResult);
+      return "notice/noticeAddForm";
+    }
 
     NoticeDTO notice = new NoticeDTO();
     notice.setNTitle(noticeAddForm.getNTitle());
@@ -65,7 +74,9 @@ public class NoticeController {
     noticeDetailForm.setNNum(notice.getNNum());
     noticeDetailForm.setNTitle(notice.getNTitle());
     noticeDetailForm.setNContent(notice.getNContent());
-
+    noticeDetailForm.setNHit(notice.getNHit());
+    noticeDetailForm.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    noticeDetailForm.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     model.addAttribute("noticeDetailForm",noticeDetailForm);
 
     return "notice/noticeDetailForm";
@@ -88,10 +99,16 @@ public class NoticeController {
   //  수정처리
   @PatchMapping("/{nNum}")
   public String edit(
+      @Valid
       @ModelAttribute NoticeEditForm noticeEditForm,
+      BindingResult bindingResult,
       @PathVariable Long nNum,
       RedirectAttributes redirectAttributes
   ){
+
+    if(bindingResult.hasErrors()){
+      return "notice/noticeEditForm";
+    }
 
     NoticeDTO notice = new NoticeDTO();
     notice.setNNum(nNum);
@@ -126,7 +143,8 @@ public class NoticeController {
       NoticeItem item = new NoticeItem();
       item.setNNum(notice.getNNum());
       item.setNTitle(notice.getNTitle());
-      item.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//      item.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+      item.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
       item.setNHit(notice.getNHit());
       notices.add(item);
     }

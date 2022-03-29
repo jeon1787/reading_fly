@@ -6,7 +6,7 @@
         _,
         ~{},
         ~{::link},
-        ~{::script},
+         ~{::script},
         _,
         _,
         ~{::main},
@@ -16,38 +16,42 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항 상세</title>
+  <title>게시글보기</title>
   <link rel="stylesheet" href="../css/notice/noticeDetailForm.css" th:href="@{/css/notice/noticeDetailForm.css}">
   <script defer src="/js/notice/noticeDetailForm.js"></script>
 </head>
 <body>
 <main>
-<div class="wrap">
-  <div class="content">
-    <h3>공지사항 상세</h3>
-    <hr>
-    <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}">
-      <input type="hidden" th:field="*{nNum}">
-      <!--        <input type="hidden" id="noticeId" name="noticeId" value="xxx">-->
-      <ul>
-        <li>
-          <span>제목</span>
-          <input type="text" readonly="readonly" th:field="*{nTitle}">
-        </li>
-        <li>
-          <span>내용</span>
-          <textarea cols="30" rows="10" readonly="readonly" th:field="*{nContent}"></textarea>
-        </li>
-        <li>
-          <button type="button" id="editBtn" th:if="${session.id == 'admin'}">수정</button>
-          <button type="button" id="delBtn"  th:if="${session.id == 'admin'}">삭제</button>
-          <button type="button" id="listBtn" onclick="location.href='/notices/all'">목록</button>
-        </li>
-      </ul>
-    </form>
+  <div class="notice-wrap">
+    <div class="notice-title"><h3>게시글 보기</h3></div>
+    <div class="class-body">
+      <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}">
+        <input type="hidden" th:field="*{nNum}">
+        <!--        <input type="hidden" id="noticeId" name="noticeId" value="xxx">-->
+        <div class="notice-info">
+          <div>관리자</div>
+          <sapn class="date">[[*{nUDate}]]</sapn>
+          <span class="notice-hit-content notice-hit-tit">조회수</span>
+          <span class="notice-hit-content notice-hit-cnt" th:text="*{nHit}">10</span>
+        </div>
+        <div class="notice-content">
+          <div><lable>제목:</lable></div>
+          <span class="w100">[[*{nTitle}]]</span>
+          <div><lable>내용</lable></div>
+
+          <div><textarea name="" id="" rows="10" class="w100" th:field="*{nContent}" th:readonly="readonly"></textarea></div>
+        </div>
+        <div class="notice-btngrp">
+          <!--글작성자가 관리지일때만 수행-->
+          <button type="button" id="editBtn" th:block th:if="${session.id == 'admin'}">수정</button>
+          <button type="button" id="delBtn" th:block th:if="${session.id == 'admin'}">삭제</button>
+          </th:block>
+          <!-------------------------------------------->
+          <button type="button" id="listBtn" onclick="location.href = `/notices/all`;">목록</button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 </main>
 </body>
-
 </html>
