@@ -2,6 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
+import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
 import com.kh.reading_fly.web.form.board.EditForm;
@@ -10,6 +11,8 @@ import com.kh.reading_fly.web.form.member.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +33,13 @@ public class BoardController {
 
   private final BoardSVC boardSVC;
 
+  @Autowired
+  @Qualifier("pc10")
+  private PageCriteria pc;
+
   //전체목록
-  @GetMapping
+  @GetMapping({"",
+               "/{reqPage}"})
   public String list(Model model){
     log.info("list() 호출됨!");
 

@@ -54,32 +54,38 @@ main{
     justify-content: center;
 }
 
-.nav{
+nav{
     background-color: #c9c9c9;
-    width: 20%;   height: 100%;
+    width: 20%;
+    height: 450px;
+    position: sticky;
+    top: 0;
+    border-radius: 50px;
 }
 
-.nav ul{
+nav > ul{
     list-style-type: none;
     margin: 0;
     padding: 0;
     width: 100%;
 }
 
-.nav li{
-    margin: 30%;
+nav > ul > li{
+    margin: 10%;
+    font-family: 'NanumAmSeuTeReuDam';
 }
 
-.nav li a{
+nav > ul > li a{
     display: block;
     color: black;
-    padding: 5px;
     text-align: center;
     text-decoration: none;
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 40px;
 }
 
-.nav li a:hover{
+
+nav > ul > li a:hover{
     background-color: slategrey;
     color: dimgray;
 }
@@ -118,7 +124,6 @@ main{
     width: 100px;
     height: 130px;
 }
-
 
 .form{
     width: 1024px;
