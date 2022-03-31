@@ -50,8 +50,7 @@
         </table>
       </div>
       <div class="notice-btngrp">
-        <!--              th:if="${session.id == 'admin'}"-->
-        <button type="botton" id="writeBtn" th:block th:if="${session.id == 'admin'}">문의하기</button>
+        <button type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">문의하기</button>
       </div>
 
       <div class="notice-page">

@@ -43,8 +43,8 @@
         </div>
         <div class="notice-btngrp">
           <!--글작성자가 관리지일때만 수행-->
-          <button type="button" id="editBtn" th:block th:if="${session.id == 'admin'}">수정</button>
-          <button type="button" id="delBtn" th:block th:if="${session.id == 'admin'}">삭제</button>
+          <button type="button" id="editBtn" th:block th:if="${s_email == 'admin@test.com'}">수정</button>
+          <button type="button" id="delBtn" th:block th:if="${s_email == 'admin@test.com'}">삭제</button>
           </th:block>
           <!-------------------------------------------->
           <button type="button" id="listBtn" onclick="location.href = `/notices/all`;">목록</button>
