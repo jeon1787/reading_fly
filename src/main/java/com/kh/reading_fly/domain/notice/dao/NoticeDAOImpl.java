@@ -28,7 +28,7 @@ public class NoticeDAOImpl implements NoticeDAO{
    * @return
    */
   @Override
-  public NoticeDTO create(NoticeDTO notice) {
+  public Long create(NoticeDTO notice) {
     //SQL작성
     StringBuffer sql = new StringBuffer();
     sql.append("insert into notice (nnum,ntitle,ncontent) ");
@@ -52,8 +52,7 @@ public class NoticeDAOImpl implements NoticeDAO{
       }
     },keyHolder);
 
-    long nNum = Long.valueOf(keyHolder.getKeys().get("nnum").toString());
-    return selectOne(nNum);
+    return Long.valueOf(keyHolder.getKeys().get("nnum").toString());
   }
 
   /**
@@ -61,7 +60,7 @@ public class NoticeDAOImpl implements NoticeDAO{
    * @return
    */
   @Override
-  public List<NoticeDTO> selectAll() {
+  public List<NoticeDTO> findAll() {
 
     StringBuffer sql = new StringBuffer();
     sql.append("select nnum, ntitle, ncontent, nhit, ncdate, nudate ");
@@ -71,6 +70,27 @@ public class NoticeDAOImpl implements NoticeDAO{
     List<NoticeDTO> list = jdbcTemplate.query(
         sql.toString(), new BeanPropertyRowMapper<>(NoticeDTO.class));
 
+    return list;
+  }
+
+  @Override
+  public List<NoticeDTO> findAll(int startRec, int endRec) {
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("select t1.* ");
+    sql.append("from( ");
+    sql.append("select ");
+    sql.append("ROW_NUMBER() OVER(ORDER BY nnum desc)no, ");
+    sql.append("nnum,ntitle,ncontent,nhit,ncdate,nudate ");
+    sql.append("from notice) t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+
+    List<NoticeDTO> list = jdbcTemplate.query(
+        sql.toString(),
+        new BeanPropertyRowMapper<>(NoticeDTO.class),
+        startRec, endRec
+    );
     return list;
   }
 
@@ -160,6 +180,17 @@ public class NoticeDAOImpl implements NoticeDAO{
     sql.append(" where nnum = ? ");
 
     int cnt = jdbcTemplate.update(sql.toString(), nNum);
+
+    return cnt;
+  }
+
+  //전체건수
+  @Override
+  public int totalCount() {
+
+    String sql = "select count(*) from notice";
+
+    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
 
     return cnt;
   }

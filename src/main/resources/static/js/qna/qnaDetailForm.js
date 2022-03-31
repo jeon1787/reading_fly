@@ -22,5 +22,5 @@ $delBtn?.addEventListener('click',e=>{
 //목록
 const $listBtn = document.getElementById('listBtn');
 $listBtn?.addEventListener('click',e=>{
-  location.href="/qna";
+  location.href="/qna/list";
 });

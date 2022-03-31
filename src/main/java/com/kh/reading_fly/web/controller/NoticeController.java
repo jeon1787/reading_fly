@@ -1,5 +1,6 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.svc.NoticeSVC;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
@@ -9,6 +10,8 @@ import com.kh.reading_fly.web.form.notice.NoticeEditForm;
 import com.kh.reading_fly.web.form.notice.NoticeItem;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +23,7 @@ import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -28,6 +32,10 @@ import java.util.List;
 public class NoticeController {
 
   private final NoticeSVC noticeSVC;
+
+  @Autowired
+  @Qualifier("pc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
+  private PageCriteria pc;
 
   //  등록화면
   @GetMapping("")
@@ -53,8 +61,8 @@ public class NoticeController {
     notice.setNTitle(noticeAddForm.getNTitle());
     notice.setNContent(noticeAddForm.getNContent());
 
-    NoticeDTO writedNotice = noticeSVC.write(notice);
-    redirectAttributes.addAttribute("nNum",writedNotice.getNNum());
+    Long writedNotice = noticeSVC.write(notice);
+    redirectAttributes.addAttribute("nNum",writedNotice);
 
     return "redirect:/notices/{nNum}/detail";  //http://서버:9080/notices/공지사항번호
   }
@@ -127,16 +135,25 @@ public class NoticeController {
     return "redirect:/notices/all";
   }
   //  전체목록
-  @GetMapping("/all")
-  public String list(Model model, HttpSession session){
-    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
+  @GetMapping({"/all","/all/{reqPage}"})
+  public String list(
+      @PathVariable(required = false) Optional<Integer> reqPage,
+      Model model , HttpSession session){
 
-    if(loginMember.getId() != null ) {
-      String id = loginMember.getId();
-      session.setAttribute("id",id);
-    }
+    log.info("/list 요청됨");
+    //요청없으면 1
+    Integer page = reqPage.orElse(1);
 
-    List<NoticeDTO> list = noticeSVC.findAll();
+    //요청페이지
+    pc.getRc().setReqPage(page);
+
+    //총레코드수
+    pc.setTotalRec(noticeSVC.totalCount());
+    Long a = pc.getTotalRec();
+    log.info("total={}", a);
+    log.info("getStartRec={}", pc.getRc().getStartRec());
+    log.info("getEndRec={}", pc.getRc().getEndRec());
+    List<NoticeDTO> list = noticeSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
 
     List<NoticeItem> notices = new ArrayList<>();
     for (NoticeDTO notice : list) {
@@ -150,6 +167,8 @@ public class NoticeController {
     }
 
     model.addAttribute("notices", notices);
+    model.addAttribute("pc",pc);
+
     return "notice/noticeList";
   }
 }

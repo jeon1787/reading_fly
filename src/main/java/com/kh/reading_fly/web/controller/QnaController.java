@@ -1,5 +1,6 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
@@ -7,6 +8,8 @@ import com.kh.reading_fly.web.form.qna.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -24,6 +28,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QnaController {
   private final QnaSVC qnaSVC;
+
+  @Autowired
+  @Qualifier("pc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
+  private PageCriteria pc;
 
   //작성양식
   @GetMapping("/add")
@@ -83,10 +91,43 @@ public class QnaController {
     return "redirect:/qna/{id}";
   }
   //목록
-  @GetMapping
-  public String list(Model model) {
+//  @GetMapping
+//  public String list(Model model) {
+//
+//    List<QnaDTO> list = qnaSVC.findAll();
+//
+//    List<QnaListForm> partOfList = new ArrayList<>();
+//    for (QnaDTO qna : list) {
+//      QnaListForm qnaListForm = new QnaListForm();
+//      BeanUtils.copyProperties(qna, qnaListForm);
+//      partOfList.add(qnaListForm);
+//    }
+//
+//    model.addAttribute("list", partOfList);
+//
+//    return "qna/qnaList";
+//  }
 
-    List<QnaDTO> list = qnaSVC.findAll();
+  //목록
+  @GetMapping({"/list","/list/{reqPage}"})
+  public String listAndReqPage(
+      @PathVariable(required = false) Optional<Integer> reqPage,
+      Model model) {
+
+    log.info("/list 요청됨");
+    //요청없으면 1
+    Integer page = reqPage.orElse(1);
+
+    //요청페이지
+    pc.getRc().setReqPage(page);
+
+
+    //총레코드수
+    pc.setTotalRec(qnaSVC.totalCount());
+    List<QnaDTO> list = qnaSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+
+
+//    List<Qna> list = qnaSVC.findAll();
 
     List<QnaListForm> partOfList = new ArrayList<>();
     for (QnaDTO qna : list) {
@@ -96,9 +137,11 @@ public class QnaController {
     }
 
     model.addAttribute("list", partOfList);
+    model.addAttribute("pc",pc);
 
     return "qna/qnaList";
   }
+
   //조회
   @GetMapping("/{id}")
   public String detail(

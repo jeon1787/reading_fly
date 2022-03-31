@@ -5,5 +5,5 @@ writeBtn?.addEventListener("click", e=>{
 });
 //목록
 listBtn?.addEventListener("click",e=>{
-  location.href = "/qna";
+  location.href = "/qna/list";
 });

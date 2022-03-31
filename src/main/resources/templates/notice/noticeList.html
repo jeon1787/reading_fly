@@ -55,7 +55,23 @@
       </div>
 
       <div class="notice-page">
-        <a href="">1</a><a href="">2</a><a href="">3</a>
+        <!--이전페이지정보-->
+        <th:block th:if="${pc.prev}">
+          <a class="notice-page-item" href="" th:href="@{/notices/all/1}"><<</i></a>
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${pc.startPage-1})}"><</a>
+        </th:block>
+
+        <!--페이지표시-->
+        <th:block th:each="pnum : ${#numbers.sequence(pc.startPage,pc.endPage)}">
+          <th:block th:if="${pnum != 0}">
+            <a class="notice-page-item" th:classappend="${pc.rc.reqPage == pnum} ? 'active'" href="" th:href="@{/notices/all/{reqPage}(reqPage=${pnum})}" th:text="${pnum}">1</a>
+          </th:block>
+        </th:block>
+        <!--다음페이지정보-->
+        <th:block th:if="${pc.next}">
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${pc.endPage+1})}">></i></a>
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${pc.finalEndPage})}">>></a>
+        </th:block>
       </div>
 
       <div class="notice-search">

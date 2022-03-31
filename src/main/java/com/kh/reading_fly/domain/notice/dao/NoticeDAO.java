@@ -6,10 +6,11 @@ import java.util.List;
 
 public interface NoticeDAO {
   //등록
-  NoticeDTO create(NoticeDTO notice);
+  Long create(NoticeDTO notice);
 
   //전체조회
-  List<NoticeDTO> selectAll();
+  List<NoticeDTO> findAll();
+  List<NoticeDTO> findAll(int startRec, int endRec);
 
   //상세
   NoticeDTO selectOne(Long nNum);
@@ -22,4 +23,7 @@ public interface NoticeDAO {
 
   //조회수증가
   int updateHit(Long nNum);
+
+  //게시글 전체건수
+  int totalCount();
 }
