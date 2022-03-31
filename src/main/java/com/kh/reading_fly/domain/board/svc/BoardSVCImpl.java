@@ -30,6 +30,17 @@ public class BoardSVCImpl implements BoardSVC{
   }
 
   /**
+   * 전체조회(페이징)
+   * @param startRec
+   * @param endRec
+   * @return
+   */
+  @Override
+  public List<BoardDTO> findAll(int startRec, int endRec) {
+    return boardDAO.selectAll(startRec, endRec);
+  }
+
+  /**
    * 상세조회
    * @param bnum
    * @return 게시글 BoardDTO
@@ -93,5 +104,14 @@ public class BoardSVCImpl implements BoardSVC{
   @Override
   public int increaseHit(Long bnum) {
     return boardDAO.updateHit(bnum);
+  }
+
+  /**
+   * 전체건수
+   * @return 게시글 전체건수
+   */
+  @Override
+  public int totalCount() {
+    return boardDAO.totalCount();
   }
 }

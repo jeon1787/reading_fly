@@ -34,13 +34,62 @@ public class BoardDAOImpl implements BoardDAO{
   public List<BoardDTO> selectAll() {
     //sql 작성
     StringBuffer sql = new StringBuffer();
-    sql.append(" select row_number() over (order by bcdate) as num, bnum, btitle, bcdate, budate, bhit, nickname ");
-    sql.append(" from board, member ");
-    sql.append(" where board.bid = member.id ");
-    sql.append(" order by bcdate desc ");
+    sql.append(" SELECT ");
+    sql.append("   ROW_NUMBER() OVER (ORDER BY bcdate) AS num, ");
+    sql.append("   bnum, ");
+    sql.append("   btitle, ");
+    sql.append("   bcdate, ");
+    sql.append("   budate, ");
+    sql.append("   bhit, ");
+    sql.append("   nickname ");
+    sql.append(" FROM ");
+    sql.append("   Board, ");
+    sql.append("   Member ");
+    sql.append(" WHERE ");
+    sql.append("   board.bid = member.id ");
+    sql.append(" ORDER BY bcdate DESC ");
 
     //sql 실행
     List<BoardDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(BoardDTO.class));
+
+    return list;
+  }
+
+  /**
+   * 전체조회(페이징)
+   * @param startRec 시작레코드
+   * @param endRec 종료레코드
+   * @return 페이지별 게시글 목록
+   */
+  @Override
+  public List<BoardDTO> selectAll(int startRec, int endRec) {
+    //sql 작성
+    StringBuffer sql = new StringBuffer();
+    sql.append(" SELECT ");
+    sql.append("   t1.* ");
+    sql.append(" FROM( ");
+    sql.append("     SELECT ");
+    sql.append("       ROW_NUMBER() OVER (ORDER BY bcdate DESC) AS num, ");
+    sql.append("       bnum, ");
+    sql.append("       btitle, ");
+    sql.append("       bcdate, ");
+    sql.append("       budate, ");
+    sql.append("       bhit, ");
+    sql.append("       nickname ");
+    sql.append("     FROM ");
+    sql.append("       Board, ");
+    sql.append("       Member ");
+    sql.append("     WHERE ");
+    sql.append("       board.bid = member.id) t1 ");
+    sql.append(" WHERE t1.num BETWEEN ? AND ? ");
+
+    //sql 실행
+    List<BoardDTO> list = jdbcTemplate.query(
+            sql.toString(),
+            new BeanPropertyRowMapper<>(BoardDTO.class),
+            startRec,
+            endRec
+    );
 
     return list;
   }
@@ -190,5 +239,14 @@ public class BoardDAOImpl implements BoardDAO{
     int result = jdbcTemplate.update(sql.toString(), bnum);//성공시 1 실패시 0(update 의 반환 타입은 int)
 
     return result;
+  }
+
+  @Override
+  public int totalCount() {
+    String sql = "select count(*) from board";
+
+    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
+
+    return cnt;
   }
 }
