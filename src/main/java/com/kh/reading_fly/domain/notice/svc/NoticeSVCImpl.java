@@ -23,7 +23,7 @@ public class NoticeSVCImpl implements NoticeSVC{
    * @return
    */
   @Override
-  public NoticeDTO write(NoticeDTO notice) {
+  public Long write(NoticeDTO notice) {
 
     return noticeDAO.create(notice);
   }
@@ -34,7 +34,12 @@ public class NoticeSVCImpl implements NoticeSVC{
    */
   @Override
   public List<NoticeDTO> findAll() {
-    return noticeDAO.selectAll();
+    return noticeDAO.findAll();
+  }
+
+  @Override
+  public List<NoticeDTO> findAll(int startRec, int endRec) {
+    return noticeDAO.findAll(startRec,endRec);
   }
 
   /**
@@ -77,5 +82,11 @@ public class NoticeSVCImpl implements NoticeSVC{
   @Override
   public int increaseHit(Long nNum) {
     return noticeDAO.updateHit(nNum);
+  }
+
+  //전체건수
+  @Override
+  public int totalCount() {
+    return noticeDAO.totalCount();
   }
 }

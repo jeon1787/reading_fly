@@ -29,6 +29,11 @@ public class QnaSVCImpl implements QnaSVC {
     return qnaDAO.findAll();
   }
 
+  @Override
+  public List<QnaDTO> findAll(int startRec, int endRec) {
+    return qnaDAO.findAll(startRec,endRec);
+  }
+
   //상세조회
   @Override
   public QnaDTO findByQNum(Long qNum) {

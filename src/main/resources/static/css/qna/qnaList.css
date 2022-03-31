@@ -56,6 +56,19 @@
       justify-content: center;
       padding: 20px 0;
     }
+    .qna-wrap .qna-page .qna-page-item{
+      display:inline-block;
+      width:24px;
+      height:24px;
+      padding:2px;
+      text-align: center;
+    }
+
+    .qna-wrap .qna-page .qna-page-item.active{
+      background-color:#333;
+      color:white;
+    }
+
 
 a {text-decoration: none; color:inherit;}
 

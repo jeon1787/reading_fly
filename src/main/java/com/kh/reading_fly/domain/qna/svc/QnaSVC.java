@@ -19,6 +19,7 @@ public interface QnaSVC {
    * @return
    */
   List<QnaDTO> findAll();
+  List<QnaDTO> findAll(int startRec, int endRec);
 
   /**
    * 상세 조회

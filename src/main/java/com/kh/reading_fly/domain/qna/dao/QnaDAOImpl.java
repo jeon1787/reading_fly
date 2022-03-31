@@ -83,6 +83,38 @@ public class QnaDAOImpl implements QnaDAO {
     return list;
   }
 
+  @Override
+  public List<QnaDTO> findAll(int startRec, int endRec) {
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("select t1.* ");
+    sql.append("from( ");
+    sql.append("    SELECT ");
+    sql.append("    ROW_NUMBER() OVER (ORDER BY qgroup DESC, qstep ASC) no, ");
+    sql.append(" qnum," );
+    sql.append(" qtitle, " );
+//    sql.append(" qemail, " );
+    sql.append(" qnickname, " );
+    sql.append(" qhit, " );
+    sql.append(" qcontent, " );
+    sql.append(" pqnum, " );
+    sql.append(" qgroup, " );
+    sql.append(" qstep, " );
+    sql.append(" qindent, " );
+    sql.append(" qstatus, " );
+    sql.append(" qcdate, " );
+    sql.append(" qudate " ) ;
+    sql.append("    FROM qna) t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+    List<QnaDTO> list = jdbcTemplate.query(
+        sql.toString(),
+        new BeanPropertyRowMapper<>(QnaDTO.class),
+        startRec, endRec
+    );
+    return list;
+  }
+
   //조회
   @Override
   public QnaDTO findByQNum(Long qNum) {

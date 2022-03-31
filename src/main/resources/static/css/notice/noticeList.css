@@ -1,15 +1,14 @@
 @charset "utf-8";
 
     from {
-    width: 1024px;
-    padding: 42px;
-      display:flex; justify-content:center;
-       /*outline: 1px solid red;*/
+      width: 1024px;
+      padding: 42px;
     }
+
     .notice-wrap * {
-      /* outline: 1px solid red;*/
       box-sizing: border-box;
     }
+
     .notice-wrap {
      width: 940px;
     }
@@ -38,7 +37,7 @@
 
    #notice-name,
    #notice-date{
-          text-align: center;
+     text-align: center;
    }
 
   .notice-wrap .notice-content table>tbody>tr>td:first-child,
@@ -57,6 +56,18 @@
       padding: 20px 0;
   }
 
+  .notice-wrap .notice-page .notice-page-item{
+      display:inline-block;
+      width:24px;
+      height:24px;
+      padding:2px;
+      text-align: center;
+  }
+
+  .notice-wrap .notice-page .notice-page-item.active{
+      background-color:#333;
+      color:white;
+  }
 
   .notice-wrap .notice-search {
       display: flex;
