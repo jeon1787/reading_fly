@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -40,15 +41,22 @@ public class BoardController {
   //전체목록
   @GetMapping({"",
                "/{reqPage}"})
-  public String list(Model model){
+  public String list(@PathVariable(required = false) Optional<Integer> reqPage,
+                     Model model){
     log.info("list() 호출됨!");
 
-    List<BoardDTO> list = boardSVC.findAll();
-    List<ItemForm> items =new ArrayList<>();
+    //요청 없으면 1페이지 출력
+    Integer page = reqPage.orElse(1);
+    //요청페이지의 시작레코드, 종료레코드 set
+    pc.getRc().setReqPage(page);
 
+    //총레코드수
+    pc.setTotalRec(boardSVC.totalCount());
+    List<BoardDTO> list = boardSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+
+    List<ItemForm> items =new ArrayList<>();
     for(BoardDTO boardDTO : list){
       ItemForm item = new ItemForm();
-
 //      item.setBnum(boardDTO.getBnum());
 //      item.setBtitle(boardDTO.getBtitle());
 //      item.setBhit(boardDTO.getBhit());
@@ -71,6 +79,7 @@ public class BoardController {
     }
 
     model.addAttribute("items", items);
+    model.addAttribute("pc", pc);
 
     return "board/listForm";
   }
