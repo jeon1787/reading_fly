@@ -163,7 +163,7 @@ public class QnaController {
 
     qnaSVC.deleteByQNum(id);
 
-    return "redirect:/qna";
+    return "redirect:/qna/list";
   }
   //수정양식
   @GetMapping("/{id}/edit")
