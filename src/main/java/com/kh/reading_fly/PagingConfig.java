@@ -1,5 +1,6 @@
 package com.kh.reading_fly;
 
+import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.common.paging.RecordCriteria;
 import org.springframework.context.annotation.Bean;
@@ -36,5 +37,19 @@ public class PagingConfig {
   @Bean
   public PageCriteria pc5(){
     return new PageCriteria(rc10(), PAGE_COUNT_5_PER_PAGE);
+  }
+
+  //FindCriteria 는 PageCriteria 를 상속함
+  
+  //페이지 10단위
+  @Bean
+  public FindCriteria fc10() {
+    return new FindCriteria(rc10(),PAGE_COUNT_10_PER_PAGE);
+  }
+
+  //페이지 5단위
+  @Bean
+  public FindCriteria fc5() {
+    return  new FindCriteria(rc5(),PAGE_COUNT_5_PER_PAGE);
   }
 }

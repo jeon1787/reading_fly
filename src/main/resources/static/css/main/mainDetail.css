@@ -73,6 +73,7 @@ nav > ul{
 nav > ul > li{
     margin: 10%;
     font-family: 'NanumAmSeuTeReuDam';
+    letter-spacing: .1rem;
 }
 
 nav > ul > li a{
@@ -128,5 +129,8 @@ nav > ul > li a:hover{
 .form{
     width: 1024px;
     padding: 42px;
+    font-size: 1.1rem;
+    letter-spacing: .1rem;
+    line-height: 1.4rem;
   }
   
