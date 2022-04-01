@@ -18,6 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 상세</title>
   <link rel="stylesheet" th:href="@{/css/board/detailForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer th:src="@{/js/board/detailForm.js}" th:inline="javascript"></script>
 </head>
 <body>
@@ -58,7 +59,8 @@
     <hr>
 
     <!--4. 게시글 본문-->
-    <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>
+    <textarea name="" id="" cols="30" rows="10" th:field="${detailForm.bcontent}"></textarea>
+<!--    <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>-->
     <hr>
 
     <!--5. 댓글-->

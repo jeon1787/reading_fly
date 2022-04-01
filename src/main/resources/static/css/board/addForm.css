@@ -1,0 +1,40 @@
+@charset "utf-8";
+/*div#container{
+  width: 800px;
+  border: 1px solid #ebecef;
+  border-radius: 6px;
+  padding: 29px 29px 0;
+}
+textarea{margin-bottom: 10px;}
+button{
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: none;
+  padding: 5px 20px;
+  border-radius: 6px;
+  font-weight: bolder;
+  font-size: medium;
+}*/
+/*------첨부파일 접었다 펴기------*/
+#checkbox{
+  display: none;
+}
+#accordion{
+
+}
+#accordion-item{
+  max-height: 0;
+  transition: all .35s;
+  overflow: hidden;
+  background-color: gray;
+}
+#checkbox:checked ~ #accordion-item{
+  max-height: 100px;
+}
+#checkbox:checked + #accordion i{
+  transform: rotate( -180deg );
+}
+
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.bbs-wrap .ck-editor__editable{min-height:20rem;}

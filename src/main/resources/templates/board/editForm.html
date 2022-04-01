@@ -6,24 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 수정</title>
-  <style>
-  div#container{
-    width: 800px;
-    border: 1px solid #ebecef;
-    border-radius: 6px;
-    padding: 29px 29px 0;
-  }
-  textarea{margin-bottom: 10px;}
-  button{
-    margin-bottom: 10px;
-    cursor: pointer;
-    border: none;
-    padding: 5px 20px;
-    border-radius: 6px;
-    font-weight: bolder;
-    font-size: medium;
-  }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/board/editForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
+  <script defer th:src="@{/js/board/editForm.js}"></script>
 </head>
 <body>
 <h3>게시글 수정하기</h3>
