@@ -19,6 +19,7 @@
 /* ckeditor style 지정 */
 #bcontent {display:none;}
 .ck-editor__editable{min-height:20rem;}
+.ck-editor__top{display:none;}/*상단툴바 제거*/
 
 /*
 
