@@ -37,4 +37,4 @@ button{
 
 /* ckeditor style 지정 */
 #bcontent {display:none;}
-.bbs-wrap .ck-editor__editable{min-height:20rem;}
+.ck-editor__editable{min-height:20rem;}
