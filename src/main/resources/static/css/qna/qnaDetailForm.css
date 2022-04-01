@@ -38,3 +38,7 @@
       display:flex;
       justify-content: flex-end;
     }
+
+    /* ckeditor style 저장*/
+    #qContent {display:none;}
+    .qna-wrap .ck-editor__editable{min-height:20rem;}

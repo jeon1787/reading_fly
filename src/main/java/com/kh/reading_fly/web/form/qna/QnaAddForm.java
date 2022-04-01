@@ -7,15 +7,13 @@ import javax.validation.constraints.Size;
 
 @Data
 public class QnaAddForm {
-  @NotBlank
-  @Size(min=5, max = 50)
+  @NotBlank(message = "제목을 입력해주세요")
+  @Size(min=1, max = 20, message = "최소 1자 최대 20자")
   private String qTitle;         //제목
   private String qEmail;         //EMAIL
-  @NotBlank
-  @Size(min=3, max = 15)
   private String qNickname;      //별칭
-  @NotBlank
-  @Size(min=5)
+  @NotBlank(message = "내용을 입력해주세요")
+  @Size(min=1, max = 1000, message = "최소 1자 최대 1000자")
   private String qContent;      //내용
 
 }
