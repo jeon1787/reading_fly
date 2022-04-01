@@ -1,5 +1,71 @@
 'use strict';
 
+//textArea => ck_editor 대체
+ClassicEditor
+      .create( document.querySelector( '#nContent' ), {
+       plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+         toolbar: {
+            items: [
+               'heading',
+               '|',
+               'underline',
+               'bold',
+               'italic',
+               'link',
+               'bulletedList',
+               'numberedList',
+               'todoList',
+               '|',
+               'outdent',
+               'indent',
+               '|',
+               'imageInsert',
+               'imageUpload',
+               'blockQuote',
+               'insertTable',
+               'mediaEmbed',
+               'markdown',
+               'undo',
+               'redo',
+               '|',
+               'highlight',
+               'fontFamily',
+               'fontColor',
+               'fontBackgroundColor',
+               'fontSize',
+               '|',
+               'htmlEmbed',
+               'specialCharacters'
+            ]
+         },
+         toolbar: [],/*상단툴바 제거*/
+         language: 'en',
+         image: {
+            toolbar: [
+               'imageTextAlternative',
+               'imageStyle:full',
+               'imageStyle:side'
+            ]
+         },
+         table: {
+            contentToolbar: [
+               'tableColumn',
+               'tableRow',
+               'mergeTableCells',
+               'tableCellProperties',
+               'tableProperties'
+            ]
+         },
+      })
+      .then( editor => {
+         window.editor = editor;
+         editor.isReadOnly = true;  //읽기모드적용
+      } )
+      .catch( error => {
+         console.error( error );
+      } );
+
+
   const $editBtn  = document.getElementById('editBtn');
   const $delBtn   = document.getElementById('delBtn');
   const $listBtn  = document.getElementById('listBtn');

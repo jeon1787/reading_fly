@@ -25,3 +25,7 @@
   .fieldError {
     color:red;
   }
+
+  /* ckeditor style 저장*/
+  #nContent {display:none;}
+  .notice-wrap .ck-editor__editable{min-height:20rem;}

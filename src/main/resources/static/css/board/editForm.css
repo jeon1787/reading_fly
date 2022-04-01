@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+
+  div#container{
+    width: 800px;
+    border: 1px solid #ebecef;
+    border-radius: 6px;
+    padding: 29px 29px 0;
+  }
+  button{
+    margin-bottom: 10px;
+    cursor: pointer;
+    border: none;
+    padding: 5px 20px;
+    border-radius: 6px;
+    font-weight: bolder;
+    font-size: medium;
+  }
+
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.ck-editor__editable{min-height:20rem;}
