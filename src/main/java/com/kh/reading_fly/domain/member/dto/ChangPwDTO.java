@@ -1,7 +1,12 @@
 package com.kh.reading_fly.domain.member.dto;
 
-import lombok.Data;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Data
 public class ChangPwDTO {
   

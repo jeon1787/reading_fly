@@ -180,10 +180,10 @@ nocache        -- 시퀀스 순차 증가 오류에 대응을 하지만 메모�
 nocycle;  --순환하지않음
 
 -- 3) 리뷰
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용1', 2, 1234567890123, 'user1'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용2', 3, 1234567890123, 'user2'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용3', 2, 4987654321090, 'user2'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용4', 1, 4987654321092, 'user3'); 
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용1', 2, 1234567890123, 'user1');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용2', 3, 1234567890123, 'user2');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용3', 2, 4987654321090, 'user2');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용4', 1, 4987654321092, 'user3');
 
 select *from review;
 
