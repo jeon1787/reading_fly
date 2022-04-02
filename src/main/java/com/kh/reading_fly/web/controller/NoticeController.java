@@ -1,6 +1,8 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
+import com.kh.reading_fly.domain.notice.dao.NoticeFilterCondition;
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.svc.NoticeSVC;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
@@ -34,8 +36,8 @@ public class NoticeController {
   private final NoticeSVC noticeSVC;
 
   @Autowired
-  @Qualifier("pc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
-  private PageCriteria pc;
+  @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
+  private FindCriteria fc;
 
   //  등록화면
   @GetMapping("")
@@ -135,25 +137,40 @@ public class NoticeController {
     return "redirect:/notices/all";
   }
   //  전체목록
-  @GetMapping({"/all","/all/{reqPage}"})
+  @GetMapping({"/all",
+      "/all/{reqPage}",
+      "/all/{reqPage}/{searchType}/{keyword}"})
   public String list(
       @PathVariable(required = false) Optional<Integer> reqPage,
+      @PathVariable(required = false) Optional<String> searchType,
+      @PathVariable(required = false) Optional<String> keyword,
       Model model , HttpSession session){
 
-    log.info("/list 요청됨");
-    //요청없으면 1
-    Integer page = reqPage.orElse(1);
+    log.info("/list 요청됨{},{},{},{}",reqPage,searchType,keyword);
 
-    //요청페이지
-    pc.getRc().setReqPage(page);
+    //FindCriteria 값 설정
+    fc.getRc().setReqPage(reqPage.orElse(1)); //요청페이지, 요청없으면 1
+    fc.setSearchType(searchType.orElse(""));  //검색유형
+    fc.setKeyword(keyword.orElse(""));        //검색어
 
-    //총레코드수
-    pc.setTotalRec(noticeSVC.totalCount());
-    Long a = pc.getTotalRec();
-    log.info("total={}", a);
-    log.info("getStartRec={}", pc.getRc().getStartRec());
-    log.info("getEndRec={}", pc.getRc().getEndRec());
-    List<NoticeDTO> list = noticeSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+    List<NoticeDTO> list = null;
+    //검색어 있음
+    if(searchType.isPresent() && keyword.isPresent()){
+      NoticeFilterCondition filterCondition = new NoticeFilterCondition(
+          fc.getRc().getStartRec(), fc.getRc().getEndRec(),
+          searchType.get(),
+          keyword.get());
+      fc.setTotalRec(noticeSVC.totalCount(filterCondition));
+      fc.setSearchType(searchType.get());
+      fc.setKeyword(keyword.get());
+      list = noticeSVC.findAll(filterCondition);
+
+      //검색어 없음
+    }else {
+      //총레코드수
+      fc.setTotalRec(noticeSVC.totalCount());
+      list = noticeSVC.findAll(fc.getRc().getStartRec(), fc.getRc().getEndRec());
+    }
 
     List<NoticeItem> notices = new ArrayList<>();
     for (NoticeDTO notice : list) {
@@ -167,7 +184,7 @@ public class NoticeController {
     }
 
     model.addAttribute("notices", notices);
-    model.addAttribute("pc",pc);
+    model.addAttribute("fc",fc);
 
     return "notice/noticeList";
   }
