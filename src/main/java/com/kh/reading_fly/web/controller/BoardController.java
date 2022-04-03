@@ -16,11 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -141,11 +143,17 @@ public class BoardController {
 
   //작성처리
   @PostMapping("/add")
-  public String addBoard(@ModelAttribute AddForm addForm,
+  public String addBoard(@Valid @ModelAttribute AddForm addForm,
+                         BindingResult bindingResult,      // 폼객체에 바인딩될때 오류내용이 저장되는 객체
                          HttpSession session,
                          RedirectAttributes redirectAttributes
   ){
     log.info("addBoard() 호출됨!");
+
+    if(bindingResult.hasErrors()){
+      log.info("/board/add/bindingResult={}",bindingResult);
+      return "board/addForm";
+    }
 
     BoardDTO boardDTO = new BoardDTO();
 //    boardDTO.setBtitle(addForm.getBtitle());
@@ -184,12 +192,18 @@ public class BoardController {
   
   //수정처리
   @PatchMapping("/{bnum}/edit")
-  public String editBoard(@ModelAttribute EditForm editForm,
+  public String editBoard(@Valid @ModelAttribute EditForm editForm,
+                          BindingResult bindingResult,      // 폼객체에 바인딩될때 오류내용이 저장되는 객체
                          @PathVariable Long bnum,
                          HttpSession session,
                          RedirectAttributes redirectAttributes
   ){
     log.info("editBoard() 호출됨!");
+
+    if(bindingResult.hasErrors()){
+      log.info("/board/add/bindingResult={}",bindingResult);
+      return "board/editForm";
+    }
 
     BoardDTO boardDTO = new BoardDTO();
 

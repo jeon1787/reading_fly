@@ -15,8 +15,10 @@
 <div id="container">
   <form th:method="patch" th:object="${editForm}">
     <div>제목<input type="text" th:field="*{btitle}" autofocus></div>
+    <div class="fieldError" th:errors="*{btitle}"></div>
     <div>내용</div>
     <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}"></textarea>
+    <div class="fieldError" th:errors="*{bcontent}"></div>
     <div>
       <button type="submit">저장</button>
       <button id="cancelBtn" type="button" th:data-bnum="*{bnum}">취소</button>
