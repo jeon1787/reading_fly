@@ -229,16 +229,14 @@ create table uploadfile(
   code char(1),                                 -- 카테고리코드('B','N','Q')
   store_filename VARCHAR2(50) not null,         -- 로컬파일명
   upload_filename VARCHAR2(50) not null,        -- 업로드파일명
-  fsize VARCHAR2(50) not null,                  -- 파일크기(단위byte)
+  fsize VARCHAR2(50) not null,                  -- 파일크기(단위 byte)
   ftype VARCHAR2(50) not null,                  -- 파일타입(mimetype)
   fcdate TIMESTAMP default systimestamp,        -- 첨부날자
   fudate TIMESTAMP default systimestamp         -- 첨부수정날자
 );
 
 -- 1) 파일첨부 기본키 생성
-alter table uploadfile
-add Constraint uploadfile_fnum_pk
-primary key (fnum); -- 기본키 생성
+alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum); -- 기본키 생성
 
 -- 2) 파일첨부 시퀀스
 create sequence uploadfile_fnum_seq

@@ -140,6 +140,7 @@ ClassicEditor
       .then(res=>{
         console.log(res);
         list_f(bnum);
+        reply.value = '';//댓글창 비우기
       })
       .catch(err => console.error('Err:',err));
     }
