@@ -128,7 +128,7 @@ public class ApiCommentController {
     log.info("delete() 호출됨!");
 
     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-    int result = commentSVC.remove1(cnum, loginMember.getId());
+    int result = commentSVC.remove(cnum, loginMember.getId());
     ApiResult<Object> apiResult = null;
 
     if(result == 1){

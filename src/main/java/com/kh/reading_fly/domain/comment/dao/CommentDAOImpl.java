@@ -18,12 +18,13 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CommentDAOImpl implements CommentDAO{
+public class CommentDAOImpl implements CommentDAO {
 
   private final JdbcTemplate jdbcTemplate;
 
   /**
    * 게시글번호로 댓글 전체 조회
+   *
    * @param cbnum 게시글번호
    * @return 전체 댓글
    */
@@ -45,6 +46,7 @@ public class CommentDAOImpl implements CommentDAO{
 
   /**
    * 댓글번호로 댓글 단건 조회
+   *
    * @param cnum 댓글번호
    * @return 단건 댓글
    */
@@ -63,11 +65,12 @@ public class CommentDAOImpl implements CommentDAO{
             cnum
     );
 
-    return (query.size() == 1)? query.get(0) : null;
+    return (query.size() == 1) ? query.get(0) : null;
   }//end of selectOne
 
   /**
    * 댓글등록
+   *
    * @param comment 댓글
    * @return 댓글
    */
@@ -117,6 +120,7 @@ public class CommentDAOImpl implements CommentDAO{
 
   /**
    * 댓글수정
+   *
    * @param comment 댓글
    * @return 댓글
    */
@@ -151,13 +155,13 @@ public class CommentDAOImpl implements CommentDAO{
   }//end of update
 
   /**
-   * 대댓글 없는 게시글 삭제
+   * 댓글 삭제
    * @param cnum
    * @param cid
    * @return
    */
   @Override
-  public int delete1(Long cnum, String cid) {
+  public int delete(Long cnum, String cid) {
 
     StringBuffer sql = new StringBuffer();
     sql.append(" delete from comments ");
@@ -166,16 +170,6 @@ public class CommentDAOImpl implements CommentDAO{
     int result = jdbcTemplate.update(sql.toString(), cnum, cid);//성공시 1 실패시 0
 
     return result;
-  }
+  }//end of delete
 
-  /**
-   * 대댓글 있는 게시글 삭제(대댓글 구현시 구현)
-   * @param cnum
-   * @param cid
-   * @return
-   */
-  @Override
-  public int delete2(Long cnum, String cid) {
-    return 0;
-  }
 }

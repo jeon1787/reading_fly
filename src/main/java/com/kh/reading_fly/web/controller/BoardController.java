@@ -2,6 +2,7 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
+import com.kh.reading_fly.domain.comment.svc.CommentSVC;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
@@ -33,6 +34,7 @@ import java.util.Optional;
 public class BoardController {
 
   private final BoardSVC boardSVC;
+  private final CommentSVC commentSVC;
 
   @Autowired
   @Qualifier("pc10")
@@ -213,8 +215,23 @@ public class BoardController {
     log.info("del() 호출됨!");
 
     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-    boardSVC.remove2(bnum, loginMember.getId());
 
-    return "redirect:/board";
+    log.info("댓글유무={}", commentSVC.findAll(bnum).size());
+
+    //댓글 없는 게시글 완전 삭제
+    if(commentSVC.findAll(bnum).size() == 0){
+      log.info("게시글 완전 삭제");
+      boardSVC.removeBoard(bnum, loginMember.getId());
+
+      return "redirect:/board";
+
+    //댓글 있는 게시글 본문 삭제
+    }else{
+      log.info("게시글 본문 삭제");
+      boardSVC.removeContentOfBoard(bnum, loginMember.getId());
+
+      return "redirect:/board/{bnum}/detail";
+    }
   }
+
 }
