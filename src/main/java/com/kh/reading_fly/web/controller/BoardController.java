@@ -4,6 +4,8 @@ import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
 import com.kh.reading_fly.domain.comment.svc.CommentSVC;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
+import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
+import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
 import com.kh.reading_fly.web.form.board.EditForm;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,6 +40,7 @@ public class BoardController {
 
   private final BoardSVC boardSVC;
   private final CommentSVC commentSVC;
+  private final UploadFileSVC uploadFileSVC;
 
   @Autowired
   @Qualifier("pc10")
@@ -61,18 +65,11 @@ public class BoardController {
     List<ItemForm> items =new ArrayList<>();
     for(BoardDTO boardDTO : list){
       ItemForm item = new ItemForm();
-//      item.setBnum(boardDTO.getBnum());
-//      item.setBtitle(boardDTO.getBtitle());
-//      item.setBhit(boardDTO.getBhit());
-//      item.setNickname(boardDTO.getNickname());
-//copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
+      //copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
       BeanUtils.copyProperties(boardDTO, item);
-
+      //날짜 포맷
       LocalDate boardDate = boardDTO.getBudate().toLocalDate();
-//      log.info("boardDate={}", boardDate);
       LocalDate today = LocalDate.now();
-//      log.info("today={}", today);
-
       if(boardDate.equals(today)){//오늘 작성된 글이면
         item.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
       }else{//오늘 이전에 작성된 글이면
@@ -93,23 +90,14 @@ public class BoardController {
   public String detail(@PathVariable Long bnum, Model model){
     log.info("detail() 호출됨!");
 
+    //1) 게시글 조회
     BoardDTO boardDTO = boardSVC.findByBnum(bnum);
     DetailForm detailForm = new DetailForm();
-
-//    detailForm.setBnum(boardDTO.getBnum());
-//    detailForm.setBtitle(boardDTO.getBtitle());
-//    detailForm.setBcontent(boardDTO.getBcontent());
-//    detailForm.setBhit(boardDTO.getBhit());
-//    detailForm.setBid(boardDTO.getBid());
-//    detailForm.setNickname(boardDTO.getNickname());
-//copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
+    //copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
     BeanUtils.copyProperties(boardDTO, detailForm);
-
+    //날짜 포맷
     LocalDate boardDate = boardDTO.getBudate().toLocalDate();
-//    log.info("boardDate={}", boardDate);
     LocalDate today = LocalDate.now();
-//    log.info("today={}", today);
-
     if(boardDate.equals(today)){//오늘 작성된 글이면
       detailForm.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
     }else{//오늘 이전에 작성된 글이면
@@ -119,7 +107,13 @@ public class BoardController {
     model.addAttribute("detailForm", detailForm);
     log.info("detailForm={}", detailForm);
 
-    log.info("detail() 호출됨!끝");
+    //2) 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("B", boardDTO.getBnum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
+
     return "board/detailForm";
   }
 
@@ -150,23 +144,29 @@ public class BoardController {
   ){
     log.info("addBoard() 호출됨!");
 
+    //1) error message
     if(bindingResult.hasErrors()){
       log.info("/board/add/bindingResult={}",bindingResult);
       return "board/addForm";
     }
 
+    //2) BoardDTO 생성
     BoardDTO boardDTO = new BoardDTO();
-//    boardDTO.setBtitle(addForm.getBtitle());
-//    boardDTO.setBcontent(addForm.getBcontent());
     BeanUtils.copyProperties(addForm, boardDTO);
-    
     //보안을 위해 세션에서 id 값을 받아온다 만약 비로그인상태거나 세션이 만료된 상태면 인터셉터에서 처리한다
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     boardDTO.setBid(loginMember.getId());
 
-    BoardDTO writedBoardDTO = boardSVC.write(boardDTO);
-    redirectAttributes.addAttribute("bnum", writedBoardDTO.getBnum());
+    //3) 파일첨부유무별 게시글 저장
+    BoardDTO writedBoardDTO;
+    if(addForm.getFiles().size() == 0) {
+      writedBoardDTO = boardSVC.write(boardDTO);//게시글 저장
+    }else{
+      writedBoardDTO = boardSVC.write(boardDTO, addForm.getFiles());//게시글 저장 - 파일첨부시
+    }
 
+    //4) 리다이렉트
+    redirectAttributes.addAttribute("bnum", writedBoardDTO.getBnum());
     return "redirect:/board/{bnum}/detail";
   }
   
@@ -177,15 +177,18 @@ public class BoardController {
   ){
     log.info("edit() 호출됨!");
 
+    //1) 게시글 조회
     BoardDTO boardDTO = boardSVC.findByBnum(bnum);
-
     EditForm editForm = new EditForm();
-//    editForm.setBnum(boardDTO.getBnum());
-//    editForm.setBtitle(boardDTO.getBtitle());
-//    editForm.setBcontent(boardDTO.getBcontent());
     BeanUtils.copyProperties(boardDTO, editForm);
-
     model.addAttribute("editForm", editForm);
+
+    //2) 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("B", boardDTO.getBnum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
 
     return "board/editForm";
   }
@@ -194,30 +197,35 @@ public class BoardController {
   @PatchMapping("/{bnum}/edit")
   public String editBoard(@Valid @ModelAttribute EditForm editForm,
                           BindingResult bindingResult,      // 폼객체에 바인딩될때 오류내용이 저장되는 객체
-                         @PathVariable Long bnum,
-                         HttpSession session,
-                         RedirectAttributes redirectAttributes
+                          @PathVariable Long bnum,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes
   ){
     log.info("editBoard() 호출됨!");
 
+    //1) error message
     if(bindingResult.hasErrors()){
       log.info("/board/add/bindingResult={}",bindingResult);
       return "board/editForm";
     }
 
+    //2) BoardDTO 생성
     BoardDTO boardDTO = new BoardDTO();
-
     boardDTO.setBnum(bnum);
-//    boardDTO.setBtitle(editForm.getBtitle());
-//    boardDTO.setBcontent(editForm.getBcontent());
     BeanUtils.copyProperties(editForm, boardDTO);
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     boardDTO.setBid(loginMember.getId());
 
-    BoardDTO modifiedBoardDTO = boardSVC.modify(boardDTO);
+    //3) 파일첨부유무별 게시글 수정
+    BoardDTO modifiedBoardDTO;
+    if(editForm.getFiles().size() == 0) {
+      modifiedBoardDTO = boardSVC.modify(boardDTO);//게시글 수정
+    }else{
+      modifiedBoardDTO = boardSVC.modify(boardDTO, editForm.getFiles());//게시글 수정 - 파일첨부시
+    }
 
+    //4)리다이렉트
     redirectAttributes.addAttribute("bnum", modifiedBoardDTO.getBnum());
-
     return "redirect:/board/{bnum}/detail";
   }
 

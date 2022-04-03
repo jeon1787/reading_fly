@@ -20,6 +20,7 @@
   <link rel="stylesheet" th:href="@{/css/board/detailForm.css}">
   <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer th:src="@{/js/board/detailForm.js}" th:inline="javascript"></script>
+  <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -62,6 +63,19 @@
     <br>
     <textarea name="" id="" cols="30" rows="10" th:field="${detailForm.bcontent}"></textarea>
 <!--    <div id="content" th:text="${detailForm.bcontent}" style="white-space:pre-wrap;">본문</div>-->
+
+    <!--5. 파일첨부-->
+    <input type="checkbox" id="checkbox">
+    <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+    <div id="accordion-item">
+      <div th:each="file : ${attachFiles}">
+        <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
+        <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+          <img th:src="@{|/attach/view/${file.fnum}|}" th:width="30px" th:height="30px">
+        </th:block>
+      </div>
+    </div>
+
     <br>
     <hr>
 

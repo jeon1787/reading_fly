@@ -30,20 +30,20 @@ public class BoardDAOImplTest {
     }
   }
 
-  @Test
-  @DisplayName("게시글 삭제")//Test 성공
-  void delete(){
-    //when
-    Long bnum = 2L;
-    String bid = "user1";
-
-    //try
-    int resultNum = boardDAO.delete2(bnum, bid);
-
-    //then
-//    BoardDTO result = boardDAO.selectOne(bnum);//실패이유 selectOne 은 bstatus 가져오지 않음
-//    log.info("status={}",result.getBstatus());
-//    Assertions.assertThat(result.getBstatus()).isEqualTo("D");
-    Assertions.assertThat(resultNum).isEqualTo(1);//성공시 1, 실패시 0
-  }
+//  @Test
+//  @DisplayName("게시글 삭제")//Test 성공
+//  void delete(){
+//    //when
+//    Long bnum = 2L;
+//    String bid = "user1";
+//
+//    //try
+//    int resultNum = boardDAO.deleteContentOfBoard(bnum, bid);
+//
+//    //then
+////    BoardDTO result = boardDAO.selectOne(bnum);//실패이유 selectOne 은 bstatus 가져오지 않음
+////    log.info("status={}",result.getBstatus());
+////    Assertions.assertThat(result.getBstatus()).isEqualTo("D");
+//    Assertions.assertThat(resultNum).isEqualTo(1);//성공시 1, 실패시 0
+//  }
 }

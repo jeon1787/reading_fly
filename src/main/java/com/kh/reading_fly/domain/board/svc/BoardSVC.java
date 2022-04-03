@@ -1,6 +1,7 @@
 package com.kh.reading_fly.domain.board.svc;
 
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -34,11 +35,27 @@ public interface BoardSVC {
   BoardDTO write(BoardDTO board);
 
   /**
+   * 등록 - 파일첨부시
+   * @param board
+   * @param files
+   * @return
+   */
+  BoardDTO write(BoardDTO board, List<MultipartFile> files);
+
+  /**
    * 수정
    * @param board
    * @return
    */
   BoardDTO modify(BoardDTO board);
+
+  /**
+   * 수정 - 파일첨부시
+   * @param board
+   * @param files
+   * @return
+   */
+  BoardDTO modify(BoardDTO board, List<MultipartFile> files);
 
   /**
    * 댓글 없는 게시글 삭제
