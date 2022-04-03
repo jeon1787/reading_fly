@@ -31,15 +31,15 @@ public class UploadFileSVCImpl implements UploadFileSVC{
   /**
    * 업로드 파일 처리 - 단건
    * @param code 분류코드
-   * @param fnum 첨부파일번호
+   * @param rnum 원글번호
    * @param file 첨부파일
    * @return 성공여부
    */
   @Override
-  public boolean addFile(String code, Long fnum, MultipartFile file) {
+  public boolean addFile(String code, Long rnum, MultipartFile file) {
     try {
       UploadFileDTO uploadFileDTO = new UploadFileDTO();
-      uploadFileDTO.setFnum(fnum);
+      uploadFileDTO.setRnum(rnum);
       uploadFileDTO.setCode(code);
 
       String originalFileName = file.getOriginalFilename();//업로드 파일명
@@ -69,18 +69,18 @@ public class UploadFileSVCImpl implements UploadFileSVC{
   /**
    * 업로드 파일 처리 - 여러건
    * @param code 분류코드
-   * @param fnum 첨부파일번호
+   * @param rnum 원글번호
    * @param files 첨부파일
    * @return 성공여부
    */
   @Override
-  public boolean addFile(String code, Long fnum, List<MultipartFile> files) {
+  public boolean addFile(String code, Long rnum, List<MultipartFile> files) {
     try {
       List<UploadFileDTO> uploadFiles = new ArrayList<>();
 
       for (MultipartFile file : files) {
         UploadFileDTO uploadFileDTO = new UploadFileDTO();
-        uploadFileDTO.setFnum(fnum);
+        uploadFileDTO.setRnum(rnum);
         uploadFileDTO.setCode(code);
 
         String originalFileName = file.getOriginalFilename();//업로드 파일명

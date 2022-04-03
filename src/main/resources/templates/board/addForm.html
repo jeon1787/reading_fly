@@ -26,17 +26,21 @@
 <div class="form">
   <h3>게시글 작성하기</h3>
   <div id="container">
-    <form th:method="post" th:object="${addForm}">
+    <form th:method="post" th:object="${addForm}" enctype="multipart/form-data">
       <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
       <div class="fieldError" th:errors="*{btitle}"></div>
       <div>내용</div>
       <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
       <div class="fieldError" th:errors="*{bcontent}"></div>
+
+      <!--파일첨부-->
       <input type="checkbox" id="checkbox">
       <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
       <div id="accordion-item">
-        <input type="file" multiple>
+        <input type="file" th:field="*{files}" multiple>
       </div>
+
+      <!--버튼-->
       <div>
         <button type="submit">등록</button>
         <button type="button" onclick="location.href='/board'">목록</button>
