@@ -16,36 +16,41 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항 등록</title>
+  <title>게시글 작성</title>
   <link rel="stylesheet" href="../css/notice/noticeAddForm.css" th:href="@{/css/notice/noticeAddForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer src="/js/notice/noticeAddForm.js"></script>
 </head>
 <body>
 <main>
-<div class="wrap">
-  <div class="content">
-    <h3>공지사항 등록</h3>
-    <hr>
-    <form th:action th:method="post" th:object="${noticeAddForm}">
-      <ul>
-        <li>
-          <span>제목</span>
-          <input type="text" id="nTitle" th:field="*{nTitle}">
-        </li>
-        <li>
-          <span>내용</span>
-          <textarea id="nContent" cols="30" rows="10" th:field="*{nContent}"></textarea>
-        </li>
-        <li>
-          <button type="button" id="writeBtn">등록</button>
-          <button type="button" id="cancelBtn">취소</button>
-          <button type="button" id="listBtn">목록</button>
-        </li>
-      </ul>
-    </form>
+  <div class="notice-wrap">
+    <div class="notice-title"><h3>게시글 작성</h3></div>
+    <div class="class-body">
+      <form id="writeForm" action="" method="post" th:object="${noticeAddForm}">
+        <!--              <input type="hidden" th:field="*{qEmail}">-->
+        <!--              <input type="hidden" th:field="*{qNickname}">-->
+        <div class="notice-content">
+          <div><lable>제목</lable></div>
+          <div><input type="text" name="" id="" class="w100" th:field="*{nTitle}">
+            <div class="fieldError" th:errors="*{nTitle}"></div>
+          </div>
+          <!--                <div><lable>작성자</lable></div>-->
+          <!--                <div><span th:text="|*{nickname} ( *{email} )|"></span>-->
+          <!--                <div><span th:if="${!session.isEmpty()}" th:text="${session.loginMember.nickname}"></span>-->
+          <div><lable>내용</lable></div>
+          <div><textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
+            <div class="fieldError" th:errors="*{nContent}"></div>
+            <div class="notice-btngrp">
+              <button type="button" id="writeBtn">등록</button>
+              <button type="button" id="listBtn">목록</button>
+            </div>
+          </div>
+          <!--                  <div><lable>첨부</lable></div>-->
+          <!--                  <div><input type="file" name="" id="" class="w100" multiple></div>-->
+          <!--                </div>-->
+      </form>
+    </div>
   </div>
-</div>
 </main>
 </body>
-
 </html>

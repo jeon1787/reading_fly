@@ -1,42 +1,84 @@
 'use strict';
 
-  const $modifyBtn = document.getElementById('modifyBtn');
-  const $cancelBtn = document.getElementById('cancelBtn');
-  const $nEditTitle = document.getElementById('nEditTitle');
-  const $nEditContent = document.getElementById('nEditContent');
+//textArea => ck_editor 대체
+ClassicEditor
+      .create( document.querySelector( '#nContent' ), {
+       plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
+         toolbar: {
+            items: [
+               'heading',
+               '|',
+               'underline',
+               'bold',
+               'italic',
+               'link',
+               'bulletedList',
+               'numberedList',
+               'todoList',
+               '|',
+               'outdent',
+               'indent',
+               '|',
+               'imageInsert',
+               'imageUpload',
+               'blockQuote',
+               'insertTable',
+               'mediaEmbed',
+               'markdown',
+               'undo',
+               'redo',
+               '|',
+               'highlight',
+               'fontFamily',
+               'fontColor',
+               'fontBackgroundColor',
+               'fontSize',
+               '|',
+               'htmlEmbed',
+               'specialCharacters'
+            ]
+         },
+         language: 'en',
+         image: {
+            toolbar: [
+               'imageTextAlternative',
+               'imageStyle:full',
+               'imageStyle:side'
+            ]
+         },
+         table: {
+            contentToolbar: [
+               'tableColumn',
+               'tableRow',
+               'mergeTableCells',
+               'tableCellProperties',
+               'tableProperties'
+            ]
+         },
+      })
+      .then( editor => {
 
-  $modifyBtn.addEventListener('click', e=>{
+         window.editor = editor;
+      } )
+      .catch( error => {
+         console.error( error );
+      } );
 
-    if($nEditTitle.value == "") {
-      alert('제목을 입력해주세요');
-      return;
-    }
 
-    if($nEditContent.value == "") {
-      alert('내용을 입력해주세요');
-      return;
-    }
+    const $saveBtn = document.getElementById('saveBtn');
+    const $cancelBtn = document.getElementById('cancelBtn');
 
-    if($nEditTitle.value.length > 20) {
-      alert('글자수 제한을 초과해서 입력 불가');
-      return;
-    }
+    $saveBtn.addEventListener('click', e=>{
+      if(!confirm('저장하시겠습니까?')) return;
 
-    if($nEditContent.value.length > 1000) {
-      alert('글자수 제한을 초과해서 입력 불가');
-      return;
-    }
+      const $form = e.target.closest('form');
+      const nNum = $form.dataset.nNum;
+      $form.action = `/notices/${nNum}`;
+      $form.submit();
+    });
 
-    if(!confirm('저장하시겠습니까?')) return;
-
-    const $form = e.target.closest('form');
-    const nNum = $form.dataset.nNum;
-    $form.action = `/notices/${nNum}`;
-    $form.submit();
-  });
-
-  $cancelBtn.addEventListener('click', e=>{
-  if(!confirm('변경사항이 저장되지 않을 수 있습니다')) return;
+    $cancelBtn.addEventListener('click', e=>{
+    if(!confirm('변경사항이 저장되지 않을 수 있습니다')) return;
 
       const $form = e.target.closest('form');
       const nNum = $form.dataset.nNum;

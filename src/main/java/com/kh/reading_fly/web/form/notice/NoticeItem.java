@@ -11,5 +11,6 @@ public class NoticeItem {
   private Long nNum;
   private String nTitle;
   private String nCDate;
+  private String nUDate;
   private Long nHit;
 }

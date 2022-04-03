@@ -16,6 +16,21 @@ public class BoardDAOImplTest {
   private BoardDAO boardDAO;
 
   @Test
+  @DisplayName("다수의 원글 작성")
+  void saveOrigins() {
+
+    for(int i=1; i<=244; i++) {
+      BoardDTO board = new BoardDTO();
+
+      board.setBtitle("게시글제목"+i);
+      board.setBid("user1");
+      board.setBcontent("게시글본문"+i);
+
+      BoardDTO saveOriginId = boardDAO.create(board);
+    }
+  }
+
+  @Test
   @DisplayName("게시글 삭제")//Test 성공
   void delete(){
     //when

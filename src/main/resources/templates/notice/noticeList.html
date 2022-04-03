@@ -16,69 +16,74 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공지사항</title>
+  <title>Q&A</title>
   <link rel="stylesheet" th:href="@{/css/notice/noticeList.css}">
   <script defer src="/js/notice/noticeList.js"></script>
 </head>
 <body>
 <main>
-<div class="wrap">
-  <div class="content">
-    <h3>공지사항</h3>
-    <hr>
-    <div class="cont">
-      <div class="col ct">No</div>
-      <div class="col ct">제목</div>
-      <div class="col ct">글쓴이</div>
-      <div class="col ct">작성시간</div>
-      <div class="col ct">조회수</div>
+  <div class="notice-wrap">
+    <div class="notice-title"><h3>공지사항</h3></div>
+    <div class="notice-body">
+      <div class="notice-content">
+        <table>
+          <thead>
+          <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+            <th>조회수</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="item : ${notices}">
+            <td th:text="${item.nNum}"></td>
+            <td>
+              <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.nTitle}">제목1</a>
+            </td>
+            <td id="notice-name">관리자</td>
+            <td id="notice-date" th:text="${item.nUDate}">작성일1</td>
+            <td th:text="${item.nHit}">5</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notice-btngrp">
+        <button type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">문의하기</button>
+      </div>
 
-      <th:block th:each="item : ${notices}">
-        <div class="col ct" th:text="${item.nNum}">1</div>
-        <div class="col le" >
-          <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.nTitle}">제목1</a>
-          <!--          <a class="question" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.q_title}">제목1</a>-->
-          <!--          if(a_title != null) {-->
-          <!--          <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.a_title}">답변제목</a>-->
-          <!--   질문 답변 참고       }-->
-        </div>
-        <div class="col ct">관리자</div>
-        <div class="col ct" th:text="${item.nCDate}">2022/02/22</div>
-        <div class="col ct" th:text="${item.nHit}">10</div>
-      </th:block>
+      <div class="notice-page">
+        <!--이전페이지정보-->
+        <th:block th:if="${fc.prev}">
+          <a class="notice-page-item" href="" th:href="@{/notices/all/1}"><<</i></a>
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${fc.startPage-1})}"><</a>
+        </th:block>
 
-      <th:block th:remove="all">
-        <div class="col">1</div>
-        <div class="col">제목1</div>
-        <div class="col">2022/02/22</div>
-        <div class="col">10</div>
-        <div class="col">NO</div>
-        <div class="col">제목2</div>
-        <div class="col">2022/02/22</div>
-        <div class="col">20</div>
-        <div class="col">NO</div>
-        <div class="col">제목3</div>
-        <div class="col">2022/02/21</div>
-        <div class="col">5</div>
-        <div class="col">NO</div>
-        <div class="col">제목3</div>
-        <div class="col">2022/02/21</div>
-        <div class="col">5</div>
-        <div class="col">NO</div>
-        <div class="col">제목3</div>
-        <div class="col">2022/02/21</div>
-        <div class="col">5</div>
-        <div class="col">NO</div>
-        <div class="col">제목3</div>
-        <div class="col">2022/02/21</div>
-        <div class="col">5</div>
-      </th:block>
-    </div>
-    <div class="btn-grp">
-      <button type="button" id="writeBtn" th:if="${session.id == 'admin'}">작성</button>
+        <!--페이지표시-->
+        <th:block th:each="pnum : ${#numbers.sequence(fc.startPage,fc.endPage)}">
+          <th:block th:if="${pnum != 0}">
+            <a class="notice-page-item" th:classappend="${fc.rc.reqPage == pnum} ? 'active'" href="" th:href="@{/notices/all/{reqPage}(reqPage=${pnum})}" th:text="${pnum}">1</a>
+          </th:block>
+        </th:block>
+        <!--다음페이지정보-->
+        <th:block th:if="${fc.next}">
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${fc.endPage+1})}">></i></a>
+          <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${fc.finalEndPage})}">>></a>
+        </th:block>
+      </div>
+
+      <div class="notice-search">
+        <select id="searchType" name="searchType" th:field="${fc.searchType}">
+          <option value="TC">제목+내용</option>
+          <option value="T">제목</option>
+          <option value="C">내용</option>
+        </select>
+        <input type="text" id="keyword" name="keyword" th:field="${fc.keyword}">
+        <button id="searchBtn">검색</button>
+      </div>
     </div>
   </div>
-</div>
 </main>
 </body>
 

@@ -33,4 +33,20 @@ public interface CommentDAO {
    * @return 댓글
    */
   CommentDTO update(CommentDTO comment);
+
+  /**
+   * 대댓글 없는 게시글 삭제
+   * @param cnum
+   * @param cid
+   * @return
+   */
+  int delete1(Long cnum, String cid);
+
+  /**
+   * 대댓글 있는 게시글 삭제
+   * @param cnum
+   * @param cid
+   * @return
+   */
+  int delete2(Long cnum, String cid);
 }

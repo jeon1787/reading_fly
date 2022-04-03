@@ -1,5 +1,6 @@
 package com.kh.reading_fly.domain.notice.svc;
 
+import com.kh.reading_fly.domain.notice.dao.NoticeFilterCondition;
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.dao.NoticeDAO;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class NoticeSVCImpl implements NoticeSVC{
    * @return
    */
   @Override
-  public NoticeDTO write(NoticeDTO notice) {
+  public Long write(NoticeDTO notice) {
 
     return noticeDAO.create(notice);
   }
@@ -34,7 +35,17 @@ public class NoticeSVCImpl implements NoticeSVC{
    */
   @Override
   public List<NoticeDTO> findAll() {
-    return noticeDAO.selectAll();
+    return noticeDAO.findAll();
+  }
+
+  @Override
+  public List<NoticeDTO> findAll(int startRec, int endRec) {
+    return noticeDAO.findAll(startRec,endRec);
+  }
+
+  @Override
+  public List<NoticeDTO> findAll(NoticeFilterCondition filterCondition) {
+    return noticeDAO.findAll(filterCondition);
   }
 
   /**
@@ -77,5 +88,16 @@ public class NoticeSVCImpl implements NoticeSVC{
   @Override
   public int increaseHit(Long nNum) {
     return noticeDAO.updateHit(nNum);
+  }
+
+  //전체건수
+  @Override
+  public int totalCount() {
+    return noticeDAO.totalCount();
+  }
+
+  @Override
+  public int totalCount(NoticeFilterCondition filterCondition) {
+    return noticeDAO.totalCount(filterCondition);
   }
 }

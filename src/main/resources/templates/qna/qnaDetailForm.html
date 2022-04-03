@@ -9,7 +9,7 @@
          ~{::script},
         _,
         _,
-        ~{::form},
+        ~{::main},
         _
       )}">
 <head>
@@ -18,10 +18,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글보기</title>
   <link rel="stylesheet" href="" th:href="@{/css/qna/qnaDetailForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer src="" th:src="@{/js/qna/qnaDetailForm.js}"></script>
 </head>
 <body>
-<form>
+<main>
   <div class="qna-wrap">
     <div class="qna-title"><h3>게시글 보기</h3></div>
     <div class="class-body">
@@ -40,11 +41,11 @@
           <div><textarea name="" id="" rows="10" class="w100" th:field="*{qContent}" th:readonly="readonly"></textarea></div>
         </div>
         <div class="qna-btngrp">
-          <button type="button" id="replyBtn">답글</button>
+          <button type="button" id="replyBtn" th:block th:if="${s_email == 'admin@test.com'}">답글</button>
           <!--글작성자와 세션아이디체크해서 동이한경우만 수행-->
 <!--          session?.loginMember?.nickname-->
 <!--          <button type="button" id="editBtn" th:if="${session.id == 'admin'}">수정</button>-->
-          <th:block th:if="*{qNickname} eq ${session?.loginMember?.nickname}">
+          <th:block th:if="*{qNickname} eq ${s_nickname} or ${s_email == 'admin@test.com'} ">
             <button type="button" id="editBtn">수정</button>
             <button type="button" id="delBtn">삭제</button>
           </th:block>
@@ -57,6 +58,6 @@
       </form>
     </div>
   </div>
-</form>
+</main>
 </body>
 </html>

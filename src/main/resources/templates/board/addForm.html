@@ -1,42 +1,46 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>게시글 작성</title>
-  <style>
-  div#container{
-    width: 800px;
-    border: 1px solid #ebecef;
-    border-radius: 6px;
-    padding: 29px 29px 0;
-  }
-  textarea{margin-bottom: 10px;}
-  button{
-    margin-bottom: 10px;
-    cursor: pointer;
-    border: none;
-    padding: 5px 20px;
-    border-radius: 6px;
-    font-weight: bolder;
-    font-size: medium;
-  }
-  </style>
+  <link rel="stylesheet" th:href="@{/css/board/addForm.css}">
+  <script defer th:src="@{/js/common/ckeditor.js}"></script>
+  <script defer th:src="@{/js/board/addForm.js}"></script>
+  <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h3>게시글 작성하기</h3>
-<div id="container">
-  <form th:method="post" th:object="${addForm}">
-    <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
-    <div>내용</div>
-    <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
-    <div>
-      <button type="submit">등록</button>
-      <button type="button" onclick="location.href='/board'">목록</button>
-    </div>
-  </form>
+<div class="form">
+  <h3>게시글 작성하기</h3>
+  <div id="container">
+    <form th:method="post" th:object="${addForm}">
+      <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
+      <div>내용</div>
+      <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
+      <input type="checkbox" id="checkbox">
+      <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+      <div id="accordion-item">
+        <input type="file" multiple>
+      </div>
+      <div>
+        <button type="submit">등록</button>
+        <button type="button" onclick="location.href='/board'">목록</button>
+      </div>
+    </form>
+  </div>
 </div>
 </body>
 </html>

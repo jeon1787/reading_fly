@@ -1,6 +1,7 @@
 package com.kh.reading_fly.domain.qna.svc;
 
 import com.kh.reading_fly.domain.qna.dao.QnaDAO;
+import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,16 @@ public class QnaSVCImpl implements QnaSVC {
   @Override
   public List<QnaDTO> findAll() {
     return qnaDAO.findAll();
+  }
+
+  @Override
+  public List<QnaDTO> findAll(int startRec, int endRec) {
+    return qnaDAO.findAll(startRec,endRec);
+  }
+
+  @Override
+  public List<QnaDTO> findAll(QnaFilterCondition filterCondition) {
+    return qnaDAO.findAll(filterCondition);
   }
 
   //상세조회
@@ -59,5 +70,10 @@ public class QnaSVCImpl implements QnaSVC {
   @Override
   public int totalCount() {
     return qnaDAO.totalCount();
+  }
+
+  @Override
+  public int totalCount(QnaFilterCondition filterCondition) {
+    return qnaDAO.totalCount(filterCondition);
   }
 }

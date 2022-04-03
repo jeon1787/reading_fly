@@ -21,7 +21,22 @@ public class CommentSVCImpl implements CommentSVC{
   }
 
   @Override
+  public CommentDTO findByCnum(Long cnum) {
+    return commentDAO.selectOne(cnum);
+  }
+
+  @Override
   public CommentDTO write(CommentDTO comment) {
     return commentDAO.create(comment);
+  }
+
+  @Override
+  public CommentDTO modify(CommentDTO comment) {
+    return commentDAO.update(comment);
+  }
+
+  @Override
+  public int remove1(Long cnum, String cid) {
+    return commentDAO.delete1(cnum, cid);
   }
 }

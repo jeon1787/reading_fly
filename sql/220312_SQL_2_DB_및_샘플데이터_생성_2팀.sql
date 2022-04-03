@@ -7,7 +7,8 @@ drop table book_shelf cascade constraints;  -- 책장
 drop table document cascade constraints;    -- 도서기록
 drop table review cascade constraints;      -- 리뷰
 drop table board cascade constraints;       -- 게시판
-drop table upload_file cascade constraints; -- 게시판_파일첨부
+drop table upload_file cascade constraints; -- 게시판_파일첨부(구)
+drop table uploadfile cascade constraints; -- 게시판_파일첨부(신)
 drop table comments cascade constraints;     -- 게시판_댓글
 
 -- 시퀸스 삭제
@@ -15,7 +16,8 @@ drop sequence book_shelf_snum_seq;        -- 책장 시퀸스 삭제
 drop sequence document_dnum_seq;          -- 도서기록 시퀸스 삭제
 drop sequence review_rnum_seq;            -- 리뷰 시퀸스 삭제
 drop sequence board_bnum_seq;             -- 게시판 시퀸스 삭제
-drop sequence upload_file_fnum_seq;       -- 게시판_파일첨부 시퀸스 삭제
+drop sequence upload_file_fnum_seq;       -- 게시판_파일첨부 시퀸스 삭제(구)
+drop sequence uploadfile_fnum_seq;       -- 게시판_파일첨부 시퀸스 삭제(신)
 drop sequence comments_cnum_seq;          -- 게시판_댓글 시퀸스 삭제
 
 
@@ -178,10 +180,10 @@ nocache        -- 시퀀스 순차 증가 오류에 대응을 하지만 메모�
 nocycle;  --순환하지않음
 
 -- 3) 리뷰
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용1', 2, 1234567890123, 'user1'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용2', 3, 1234567890123, 'user2'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용3', 2, 4987654321090, 'user2'); 
-insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용4', 1, 4987654321092, 'user3'); 
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용1', 2, 1234567890123, 'user1');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용2', 3, 1234567890123, 'user2');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용3', 2, 4987654321090, 'user2');
+insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.nextval, '리뷰내용4', 1, 4987654321092, 'user3');
 
 select *from review;
 
@@ -220,30 +222,39 @@ insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, 
 select *from board;
 
 
--- 게시판_파일첨부
-create table upload_file(
+-- 파일첨부
+create table uploadfile(
   fnum NUMBER(15) not null,                     -- 첨부파일번호
-  store_fname VARCHAR2(50) not null,            -- 로컬파일명
-  upload_fname VARCHAR2(50) not null,           -- 업로드파일명
-  fsize VARCHAR2(50) not null,                  -- 파일크기
-  ftype VARCHAR2(50) not null,                  -- 파일타입
+  rnum NUMBER(15) not null,                     -- 참조번호(게시글번호 등)
+  code char(1),                                 -- 카테고리코드('B','N','Q')
+  store_filename VARCHAR2(50) not null,         -- 로컬파일명
+  upload_filename VARCHAR2(50) not null,        -- 업로드파일명
+  fsize VARCHAR2(50) not null,                  -- 파일크기(단위 byte)
+  ftype VARCHAR2(50) not null,                  -- 파일타입(mimetype)
   fcdate TIMESTAMP default systimestamp,        -- 첨부날자
-  fudate TIMESTAMP  default systimestamp,       -- 첨부수정날자
-  fbnum NUMBER(15) not null                     -- 게시글번호
+  fudate TIMESTAMP default systimestamp         -- 첨부수정날자
 );
 
--- 1) 게시판_파일첨부 기본키 생성
-alter table upload_file add Constraint upload_file_fnum_pk primary key (fnum);                                              -- 기본키 생성
-alter table upload_file add constraint upload_file_fbnum_fk foreign key(fbnum) references board(bnum) on delete cascade;    -- fbnum의 외래키 = 게시판의 기본키(bnum)
+-- 1) 파일첨부 기본키 생성
+alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum); -- 기본키 생성
 
--- 2) 게시판_파일첨부 시퀀스
-create sequence upload_file_fnum_seq
+-- 2) 파일첨부 시퀀스
+create sequence uploadfile_fnum_seq
 start with 1 --시작값
 increment by 1 --증감치
 minvalue 0    -- 최소값
 maxvalue 9999999999 --최대값
 nocache        -- 시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미리 할당하지 않음에 대량으로 필요할 시 병목 현상 발생
 nocycle;  --순환하지않음
+
+-- 3) 파일첨부 제약조건
+alter table uploadfile add constraint uploadfile_code_ck check(code in ('B','N','Q'));
+--alter table uploadfile modify fnum constraint uploadfile_fnum_nn not null;
+--alter table uploadfile modify rnum constraint uploadfile_rnum_nn not null;
+--alter table uploadfile modify store_filename constraint uploadfile_store_filename_nn not null;
+--alter table uploadfile modify upload_filename constraint uploadfile_upload_filename_nn not null;
+--alter table uploadfile modify fsize constraint uploadfile_fsize_nn not null;
+--alter table uploadfile modify ftype constraint uploadfile_ftype_nn not null;
 
 
 -- 게시판_댓글

@@ -8,5 +8,11 @@ public interface CommentSVC {
 
   List<CommentDTO> findAll(Long cbnum);
 
+  CommentDTO findByCnum(Long cnum);
+
   CommentDTO write(CommentDTO comment);
+
+  CommentDTO modify(CommentDTO comment);
+
+  int remove1(Long cnum, String cid);
 }

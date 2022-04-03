@@ -83,6 +83,79 @@ public class QnaDAOImpl implements QnaDAO {
     return list;
   }
 
+  @Override
+  public List<QnaDTO> findAll(int startRec, int endRec) {
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("select t1.* ");
+    sql.append("from( ");
+    sql.append("    SELECT ");
+    sql.append("    ROW_NUMBER() OVER (ORDER BY qgroup DESC, qstep ASC) no, ");
+    sql.append(" qnum," );
+    sql.append(" qtitle, " );
+//    sql.append(" qemail, " );
+    sql.append(" qnickname, " );
+    sql.append(" qhit, " );
+    sql.append(" qcontent, " );
+    sql.append(" pqnum, " );
+    sql.append(" qgroup, " );
+    sql.append(" qstep, " );
+    sql.append(" qindent, " );
+    sql.append(" qstatus, " );
+    sql.append(" qcdate, " );
+    sql.append(" qudate " ) ;
+    sql.append("    FROM qna) t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+    List<QnaDTO> list = jdbcTemplate.query(
+        sql.toString(),
+        new BeanPropertyRowMapper<>(QnaDTO.class),
+        startRec, endRec
+    );
+    return list;
+  }
+
+  //검색
+  @Override
+  public List<QnaDTO> findAll(QnaFilterCondition qnaFilterCondition) {
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("select t1.* ");
+    sql.append("from( ");
+    sql.append("  SELECT ");
+    sql.append("  ROW_NUMBER() OVER (ORDER BY qgroup DESC, qstep ASC) no, ");
+    sql.append("      qnum, ");
+    sql.append("      qtitle, ");
+    sql.append("      qnickname, ");
+    sql.append("      qhit, ");
+    sql.append("      qcontent, ");
+    sql.append("      pqnum, ");
+    sql.append("      qgroup, ");
+    sql.append("      qstep, ");
+    sql.append("      qindent, ");
+    sql.append("      qstatus, ");
+    sql.append("      qcdate, ");
+    sql.append("      qudate ");
+    sql.append("  FROM qna ");
+    sql.append("  WHERE ");
+
+
+    //분류
+    sql = dynamicQuery(qnaFilterCondition, sql);
+
+    sql.append(") t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+    List<QnaDTO> list = jdbcTemplate.query(
+        sql.toString(),
+        new BeanPropertyRowMapper<>(QnaDTO.class),
+        qnaFilterCondition.getStartRec(),
+        qnaFilterCondition.getEndRec()
+    );
+
+    return list;
+  }
+
   //조회
   @Override
   public QnaDTO findByQNum(Long qNum) {
@@ -250,5 +323,45 @@ public class QnaDAOImpl implements QnaDAO {
     return cnt;
   }
 
+  @Override
+  public int totalCount(QnaFilterCondition filterCondition) {
 
+    StringBuffer sql = new StringBuffer();
+
+    sql.append("select count(*) ");
+    sql.append("  from qna  ");
+    sql.append(" where  ");
+
+    sql = dynamicQuery(filterCondition, sql);
+
+    Integer cnt = 0;
+
+    cnt = jdbcTemplate.queryForObject(
+        sql.toString(), Integer.class
+    );
+
+    return cnt;
+  }
+
+  private StringBuffer dynamicQuery(QnaFilterCondition filterCondition, StringBuffer sql) {
+
+    //검색유형
+    switch (filterCondition.getSearchType()){
+      case "TC":  //제목 + 내용
+        sql.append("    (  qtitle    like '%"+ filterCondition.getKeyword()+"%' ");
+        sql.append("    or qcontent like '%"+ filterCondition.getKeyword()+"%' )");
+        break;
+      case "T":   //제목
+        sql.append("       qtitle    like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "C":   //내용
+        sql.append("       qcontent like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "N":   //별칭
+        sql.append("       qnickname like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      default:
+    }
+    return sql;
+  }
 }

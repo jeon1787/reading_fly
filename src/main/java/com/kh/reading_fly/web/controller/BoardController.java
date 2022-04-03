@@ -2,14 +2,17 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
+import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
 import com.kh.reading_fly.web.form.board.EditForm;
 import com.kh.reading_fly.web.form.board.ItemForm;
-import com.kh.reading_fly.web.form.login.LoginMember;
+import com.kh.reading_fly.web.form.member.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -30,17 +34,29 @@ public class BoardController {
 
   private final BoardSVC boardSVC;
 
+  @Autowired
+  @Qualifier("pc10")
+  private PageCriteria pc;
+
   //전체목록
-  @GetMapping
-  public String list(Model model){
+  @GetMapping({"",
+               "/{reqPage}"})
+  public String list(@PathVariable(required = false) Optional<Integer> reqPage,
+                     Model model){
     log.info("list() 호출됨!");
 
-    List<BoardDTO> list = boardSVC.findAll();
-    List<ItemForm> items =new ArrayList<>();
+    //요청 없으면 1페이지 출력
+    Integer page = reqPage.orElse(1);
+    //요청페이지의 시작레코드, 종료레코드 set
+    pc.getRc().setReqPage(page);
 
+    //총레코드수
+    pc.setTotalRec(boardSVC.totalCount());
+    List<BoardDTO> list = boardSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+
+    List<ItemForm> items =new ArrayList<>();
     for(BoardDTO boardDTO : list){
       ItemForm item = new ItemForm();
-
 //      item.setBnum(boardDTO.getBnum());
 //      item.setBtitle(boardDTO.getBtitle());
 //      item.setBhit(boardDTO.getBhit());
@@ -63,6 +79,7 @@ public class BoardController {
     }
 
     model.addAttribute("items", items);
+    model.addAttribute("pc", pc);
 
     return "board/listForm";
   }
