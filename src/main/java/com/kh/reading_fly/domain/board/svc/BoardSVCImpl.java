@@ -2,6 +2,7 @@ package com.kh.reading_fly.domain.board.svc;
 
 import com.kh.reading_fly.domain.board.dao.BoardDAO;
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
+import com.kh.reading_fly.domain.comment.dao.CommentDAO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -82,8 +83,8 @@ public class BoardSVCImpl implements BoardSVC{
    * @return
    */
   @Override
-  public int remove1(Long bnum, String bid) {
-    return boardDAO.delete1(bnum, bid);
+  public int removeBoard(Long bnum, String bid) {
+    return boardDAO.deleteBoard(bnum, bid);
   }
 
   /**
@@ -92,8 +93,8 @@ public class BoardSVCImpl implements BoardSVC{
    * @return
    */
   @Override
-  public int remove2(Long bnum, String bid) {
-    return boardDAO.delete2(bnum, bid);
+  public int removeContentOfBoard(Long bnum, String bid) {
+    return boardDAO.deleteContentOfBoard(bnum, bid);
   }
 
   /**

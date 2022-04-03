@@ -46,7 +46,7 @@ public interface BoardSVC {
    * @param bid
    * @return
    */
-  int remove1(Long bnum, String bid);
+  int removeBoard(Long bnum, String bid);
 
   /**
    * 댓글 있는 게시글 삭제
@@ -54,7 +54,7 @@ public interface BoardSVC {
    * @param bid
    * @return
    */
-  int remove2(Long bnum, String bid);
+  int removeContentOfBoard(Long bnum, String bid);
 
   /**
    * 조회수 증가

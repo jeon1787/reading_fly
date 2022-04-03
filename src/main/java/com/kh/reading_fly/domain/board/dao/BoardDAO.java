@@ -46,7 +46,7 @@ public interface BoardDAO {
    * @param bid
    * @return
    */
-  int delete1(Long bnum, String bid);
+  int deleteBoard(Long bnum, String bid);
 
   /**
    * 댓글 있는 게시글 삭제
@@ -54,7 +54,7 @@ public interface BoardDAO {
    * @param bid
    * @return
    */
-  int delete2(Long bnum, String bid);
+  int deleteContentOfBoard(Long bnum, String bid);
 
   /**
    * 조회수 증가

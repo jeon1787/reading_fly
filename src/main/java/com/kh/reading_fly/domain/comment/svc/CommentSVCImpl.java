@@ -36,7 +36,7 @@ public class CommentSVCImpl implements CommentSVC{
   }
 
   @Override
-  public int remove1(Long cnum, String cid) {
-    return commentDAO.delete1(cnum, cid);
+  public int remove(Long cnum, String cid) {
+    return commentDAO.delete(cnum, cid);
   }
 }
