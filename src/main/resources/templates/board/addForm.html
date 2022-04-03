@@ -28,8 +28,10 @@
   <div id="container">
     <form th:method="post" th:object="${addForm}">
       <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
+      <div class="fieldError" th:errors="*{btitle}"></div>
       <div>내용</div>
       <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
+      <div class="fieldError" th:errors="*{bcontent}"></div>
       <input type="checkbox" id="checkbox">
       <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
       <div id="accordion-item">
