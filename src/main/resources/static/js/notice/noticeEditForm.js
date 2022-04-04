@@ -85,3 +85,32 @@ ClassicEditor
       const url = `/notices/${nNum}/detail`;
       location.href = url;
     });
+
+    //첨부파일삭제
+    const $files = document.querySelector('#accordion-item');
+    $files?.addEventListener('click', e=>{
+      if(e.target.tagName != 'I') return;
+      if(!confirm('삭제하시겠습니까?')) return;
+
+      const $i = e.target;
+      const url = `/attach/${$i.dataset.fid}`;
+      fetch(url,{
+        method:'DELETE'
+      }).then(res=>res.json())
+        .then(res=>{
+          if(res.rtcd == '00'){
+            //첨부파일 정보 화면에서 제거
+            removeAttachFileFromView(e);
+            console.log('들어오냐');
+          }else{
+            console.log(res.rtmsg);
+            console.log('여기?');
+          }
+        })
+        .catch(err=>console.log(err));
+    });
+    function removeAttachFileFromView(e){
+        const $parent = document.getElementById('attachFiles');
+        const $child = e.target.closest('.attachFile');
+        $parent.removeChild($child);
+    }

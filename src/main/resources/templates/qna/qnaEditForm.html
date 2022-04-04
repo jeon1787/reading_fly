@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="" th:href="@{/css/qna/qnaEditForm.css}">
   <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer src="" th:src="@{/js/qna/qnaEditForm.js}"></script>
+  <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <main>
@@ -47,8 +48,21 @@
             <textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
             <div class="fieldError" th:errors="*{qContent}"></div>
           </div>
-          <div><label>첨부</label></div>
-          <div><input type="file"></div>
+
+          <!--파일첨부-->
+          <input type="checkbox" id="checkbox">
+          <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+          <div id="accordion-item">
+            <input type="file" th:field="*{files}" multiple>
+            <div th:each="file : ${attachFiles}">
+              <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
+              <i class="fa-solid fa-trash-can" th:data-fid="${file.fnum}"></i>
+              <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+                <img th:src="@{|/attach/view/${file.fnum}|}" th:width="30px" th:height="30px">
+              </th:block>
+            </div>
+          </div>
+
         </div>
         <div class="qna-btngrp">
           <button type="button" id="cancelBtn">취소</button>
