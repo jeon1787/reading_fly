@@ -194,7 +194,7 @@ public class BoardDAOImpl implements BoardDAO{
    * @return
    */
   @Override
-  public int delete1(Long bnum, String bid){
+  public int deleteBoard(Long bnum, String bid){
 
     StringBuffer sql = new StringBuffer();
     sql.append(" delete from board ");
@@ -211,7 +211,7 @@ public class BoardDAOImpl implements BoardDAO{
    * @return
    */
   @Override
-  public int delete2(Long bnum, String bid) {
+  public int deleteContentOfBoard(Long bnum, String bid) {
 
     StringBuffer sql = new StringBuffer();
     sql.append(" update board ");

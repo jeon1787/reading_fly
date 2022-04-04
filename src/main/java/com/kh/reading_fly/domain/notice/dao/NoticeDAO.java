@@ -11,6 +11,12 @@ public interface NoticeDAO {
   //전체조회
   List<NoticeDTO> findAll();
   List<NoticeDTO> findAll(int startRec, int endRec);
+  /**
+   * 검색
+   * @param filterCondition 분류,시작레코드번호,종료레코드번호,검색유형,검색어
+   * @return
+   */
+  List<NoticeDTO>  findAll(NoticeFilterCondition filterCondition);
 
   //상세
   NoticeDTO selectOne(Long nNum);
@@ -26,4 +32,5 @@ public interface NoticeDAO {
 
   //게시글 전체건수
   int totalCount();
+  int totalCount(NoticeFilterCondition filterCondition);
 }

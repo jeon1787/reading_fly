@@ -18,6 +18,12 @@ public interface QnaDAO {
    */
   List<QnaDTO> findAll();
   List<QnaDTO> findAll(int startRec, int endRec);
+  /**
+   * 검색
+   * @param filterCondition 분류,시작레코드번호,종료레코드번호,검색유형,검색어
+   * @return
+   */
+  List<QnaDTO>  findAll(QnaFilterCondition filterCondition);
 
   /**
    * 상세 조회
@@ -61,5 +67,6 @@ public interface QnaDAO {
    * @return 게시글 전체건수
    */
   int totalCount();
+  int totalCount(QnaFilterCondition filterCondition);
 }
 

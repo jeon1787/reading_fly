@@ -1,6 +1,8 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
+import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
@@ -30,8 +32,8 @@ public class QnaController {
   private final QnaSVC qnaSVC;
 
   @Autowired
-  @Qualifier("pc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
-  private PageCriteria pc;
+  @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
+  private FindCriteria fc;
 
   //작성양식
   @GetMapping("/add")
@@ -109,25 +111,44 @@ public class QnaController {
 //  }
 
   //목록
-  @GetMapping({"/list","/list/{reqPage}"})
+  @GetMapping({"/list",
+      "/list/{reqPage}",
+      "/list/{reqPage}/{searchType}/{keyword}"})
   public String listAndReqPage(
       @PathVariable(required = false) Optional<Integer> reqPage,
+      @PathVariable(required = false) Optional<String> searchType,
+      @PathVariable(required = false) Optional<String> keyword,
       Model model) {
 
     log.info("/list 요청됨");
     //요청없으면 1
     Integer page = reqPage.orElse(1);
 
-    //요청페이지
-    pc.getRc().setReqPage(page);
+    log.info("/list 요청됨{},{},{},{}",reqPage,searchType,keyword);
 
+    //FindCriteria 값 설정
+    fc.getRc().setReqPage(reqPage.orElse(1)); //요청페이지, 요청없으면 1
+    fc.setSearchType(searchType.orElse(""));  //검색유형
+    fc.setKeyword(keyword.orElse(""));        //검색어
 
-    //총레코드수
-    pc.setTotalRec(qnaSVC.totalCount());
-    List<QnaDTO> list = qnaSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+    List<QnaDTO> list = null;
+    //검색어 있음
+    if(searchType.isPresent() && keyword.isPresent()){
+      QnaFilterCondition filterCondition = new QnaFilterCondition(
+          fc.getRc().getStartRec(), fc.getRc().getEndRec(),
+          searchType.get(),
+          keyword.get());
+      fc.setTotalRec(qnaSVC.totalCount(filterCondition));
+      fc.setSearchType(searchType.get());
+      fc.setKeyword(keyword.get());
+      list = qnaSVC.findAll(filterCondition);
 
-
-//    List<Qna> list = qnaSVC.findAll();
+      //검색어 없음
+    }else {
+      //총레코드수
+      fc.setTotalRec(qnaSVC.totalCount());
+      list = qnaSVC.findAll(fc.getRc().getStartRec(), fc.getRc().getEndRec());
+    }
 
     List<QnaListForm> partOfList = new ArrayList<>();
     for (QnaDTO qna : list) {
@@ -137,7 +158,7 @@ public class QnaController {
     }
 
     model.addAttribute("list", partOfList);
-    model.addAttribute("pc",pc);
+    model.addAttribute("fc",fc);
 
     return "qna/qnaList";
   }

@@ -8,9 +8,9 @@ create table notice(
   nnum NUMBER(15) not null,         -- 공지사항번호
   ntitle VARCHAR2(60) not null,     -- 공지사항제목
   ncontent CLOB not null,           -- 공지사항내용
-  nhit NUMBER(5) default 0          -- 조회수 
+  nhit NUMBER(5) default 0,          -- 조회수 
   ncdate TIMESTAMP default systimestamp, -- 공지사항작성일
-  nudate TIMESTAMP default systimestamp, -- 공지사항수정일
+  nudate TIMESTAMP default systimestamp -- 공지사항수정일
 );
 
 -- 1) 공지사항 기본키 생성
@@ -58,3 +58,5 @@ select * from notice;
 update notice
   set nhit = nhit + 1
  where nnum = 1;
+ 
+ commit;
