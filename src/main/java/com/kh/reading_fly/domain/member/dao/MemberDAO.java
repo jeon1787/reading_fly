@@ -29,8 +29,18 @@ public interface MemberDAO {
   // 로그인 인증
   MemberDTO login(String id, String pw);
 
+  // 로그인 인증 확인 - 비밀번호 암호화용
+  boolean isLogin(String id, String pw);
+
   //비밀번호 일치여부 체크
   boolean isMember(String id, String pw);
+
+
+  // 암호화 비밀번호 비교
+  String matchesId(String id);
+
+
+
 
   //관리자 코드 확인
   String admin(String id);
