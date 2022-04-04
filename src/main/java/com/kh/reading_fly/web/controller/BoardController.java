@@ -1,8 +1,10 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.board.dao.BoardFilterCondition;
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
 import com.kh.reading_fly.domain.comment.svc.CommentSVC;
+import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
 import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,7 +28,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -43,24 +45,43 @@ public class BoardController {
   private final UploadFileSVC uploadFileSVC;
 
   @Autowired
-  @Qualifier("pc10")
-  private PageCriteria pc;
+  @Qualifier("fc10")
+  private FindCriteria fc;
 
   //전체목록
   @GetMapping({"",
-               "/{reqPage}"})
+               "/{reqPage}",
+               "/{reqPage}/{searchType}/{keyword}"})
   public String list(@PathVariable(required = false) Optional<Integer> reqPage,
+                     @PathVariable(required = false) Optional<String> searchType,
+                     @PathVariable(required = false) Optional<String> keyword,
                      Model model){
     log.info("list() 호출됨!");
 
-    //요청 없으면 1페이지 출력
-    Integer page = reqPage.orElse(1);
-    //요청페이지의 시작레코드, 종료레코드 set
-    pc.getRc().setReqPage(page);
+    //FindCriteria 값 설정
+    fc.getRc().setReqPage(reqPage.orElse(1)); //요청페이지, 요청없으면 1, 시작레코드, 종료레코드 set
+    fc.setSearchType(searchType.orElse(""));  //검색유형
+    fc.setKeyword(keyword.orElse(""));        //검색어
 
-    //총레코드수
-    pc.setTotalRec(boardSVC.totalCount());
-    List<BoardDTO> list = boardSVC.findAll(pc.getRc().getStartRec(), pc.getRc().getEndRec());
+    List<BoardDTO> list = null;
+
+    //검색어 있음
+    if(searchType.isPresent() && keyword.isPresent()){
+      BoardFilterCondition filterCondition = new BoardFilterCondition(
+              fc.getRc().getStartRec(), fc.getRc().getEndRec(),
+              searchType.get(),
+              keyword.get());
+      fc.setTotalRec(boardSVC.totalCount(filterCondition));
+      fc.setSearchType(searchType.get());
+      fc.setKeyword(keyword.get());
+      list = boardSVC.findAll(filterCondition);
+
+    //검색어 없음
+    }else {
+      //총레코드수
+      fc.setTotalRec(boardSVC.totalCount());
+      list = boardSVC.findAll(fc.getRc().getStartRec(), fc.getRc().getEndRec());
+    }
 
     List<ItemForm> items =new ArrayList<>();
     for(BoardDTO boardDTO : list){
@@ -80,7 +101,7 @@ public class BoardController {
     }
 
     model.addAttribute("items", items);
-    model.addAttribute("pc", pc);
+    model.addAttribute("fc",fc);
 
     return "board/listForm";
   }
