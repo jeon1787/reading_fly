@@ -69,8 +69,8 @@ public class BookTestController {
 
 
     log.info("detail() 호출됨!끝");
-//    return "booktest/detailForm";
-    return "booktest/test/testdetailForm";
+    return "booktest/detailForm";
+//    return "booktest/test/testdetailForm";
   }
 
   //작성모드

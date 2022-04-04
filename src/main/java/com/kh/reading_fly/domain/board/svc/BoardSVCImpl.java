@@ -1,6 +1,7 @@
 package com.kh.reading_fly.domain.board.svc;
 
 import com.kh.reading_fly.domain.board.dao.BoardDAO;
+import com.kh.reading_fly.domain.board.dao.BoardFilterCondition;
 import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.comment.dao.CommentDAO;
 import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
@@ -34,7 +35,7 @@ public class BoardSVCImpl implements BoardSVC{
   }
 
   /**
-   * 전체조회(페이징)
+   * 전체조회 - 페이징
    * @param startRec
    * @param endRec
    * @return
@@ -42,6 +43,16 @@ public class BoardSVCImpl implements BoardSVC{
   @Override
   public List<BoardDTO> findAll(int startRec, int endRec) {
     return boardDAO.selectAll(startRec, endRec);
+  }
+
+  /**
+   * 전체조회 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  @Override
+  public List<BoardDTO> findAll(BoardFilterCondition filterCondition) {
+    return boardDAO.findAll(filterCondition);
   }
 
   /**
@@ -161,5 +172,15 @@ public class BoardSVCImpl implements BoardSVC{
   @Override
   public int totalCount() {
     return boardDAO.totalCount();
+  }
+
+  /**
+   * 전체건수 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  @Override
+  public int totalCount(BoardFilterCondition filterCondition) {
+    return boardDAO.totalCount(filterCondition);
   }
 }

@@ -32,6 +32,26 @@
     color:red;
   }
 
+  /*------첨부파일 접었다 펴기------*/
+    #checkbox{
+      display: none;
+    }
+    #accordion{
+
+    }
+    #accordion-item{
+      max-height: 0;
+      transition: all .35s;
+      overflow: hidden;
+      background-color: gray;
+    }
+    #checkbox:checked ~ #accordion-item{
+      max-height: 100px;
+    }
+    #checkbox:checked + #accordion i{
+      transform: rotate( -180deg );
+    }
+
   /* ckeditor style 저장*/
   #qContent {display:none;}
   .qna-wrap .ck-editor__editable{min-height:20rem;}
