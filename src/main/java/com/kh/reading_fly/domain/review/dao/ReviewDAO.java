@@ -5,11 +5,21 @@ import com.kh.reading_fly.domain.review.dto.ReviewDTO;
 import java.util.List;
 
 public interface ReviewDAO {
+  
+  //목록, 단건, 삭제, 등록, 수정
 
-  // isbn 번호로 리뷰 전체 조회
+  /**
+   * 전체조회 by ISBN
+   * @param risbn 도서번호
+   * @return
+   */
   List<ReviewDTO> reSelectAll(Long risbn);
 
-  // 리뷰 수정의 취소 경우 화면 조회
+  /**
+   * 단건조회 by rnum
+   * @param rnum 리뷰번호
+   * @return
+   */
   ReviewDTO reSelectOne(Long rnum);
 
   // 리뷰 등록
