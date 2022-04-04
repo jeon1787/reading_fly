@@ -3,9 +3,11 @@ package com.kh.reading_fly.web.form.notice;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Setter
 @Getter
@@ -20,4 +22,6 @@ public class NoticeEditForm {
   private String nContent;
 
   private int nHit;
+
+  private List<MultipartFile> files;  // 첨부파일
 }

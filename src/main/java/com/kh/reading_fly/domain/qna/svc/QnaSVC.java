@@ -2,6 +2,7 @@ package com.kh.reading_fly.domain.qna.svc;
 
 import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,6 +14,14 @@ public interface QnaSVC {
    * @return 게시글 번호
    */
   Long saveOrigin(QnaDTO qna);
+
+  /**
+   * 원글작성-첨부파일 있는경우
+   * @param qna
+   * @param files 첨파일
+   * @return 게시글 번호
+   */
+  Long saveOrigin(QnaDTO qna, List<MultipartFile> files);
 
   /**
    * 목록
@@ -52,6 +61,15 @@ public interface QnaSVC {
    * @return 수정건수
    */
   int updateByQNum(Long qNum, QnaDTO qna);
+
+  /**
+   * 수정-첨부
+   * @param id 게시글 번호
+   * @param qna 수정내용
+   * @param files 첨부파일
+   * @return 수정건수
+   */
+  int updateByBbsId(Long id,QnaDTO qna, List<MultipartFile> files);
 
   /**
    * 답글작성

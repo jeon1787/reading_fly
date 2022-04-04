@@ -2,6 +2,8 @@ package com.kh.reading_fly.web.controller;
 
 import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
+import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
+import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
 import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
@@ -30,6 +32,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class QnaController {
   private final QnaSVC qnaSVC;
+  private final UploadFileSVC uploadFileSVC;
 
   @Autowired
   @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
@@ -84,31 +87,20 @@ public class QnaController {
 //    qna.setQEmail(loginMember.getEmail());
     qna.setQNickname(loginMember.getNickname());
 
+    Long originId = 0l;
+    //파일첨부유무
+    if(qnaAddForm.getFiles().size() == 0) {
+      originId = qnaSVC.saveOrigin(qna);
+    }else{
+      originId = qnaSVC.saveOrigin(qna, qnaAddForm.getFiles());
+    }
 
-    Long originId = qnaSVC.saveOrigin(qna);
     redirectAttributes.addAttribute("id", originId);
     // <=서버응답 302 get http://서버:port/bbs/10
     // =>클라이언트요청 get http://서버:port/bbs/10
 
     return "redirect:/qna/{id}";
   }
-  //목록
-//  @GetMapping
-//  public String list(Model model) {
-//
-//    List<QnaDTO> list = qnaSVC.findAll();
-//
-//    List<QnaListForm> partOfList = new ArrayList<>();
-//    for (QnaDTO qna : list) {
-//      QnaListForm qnaListForm = new QnaListForm();
-//      BeanUtils.copyProperties(qna, qnaListForm);
-//      partOfList.add(qnaListForm);
-//    }
-//
-//    model.addAttribute("list", partOfList);
-//
-//    return "qna/qnaList";
-//  }
 
   //목록
   @GetMapping({"/list",
@@ -176,6 +168,13 @@ public class QnaController {
     BeanUtils.copyProperties(detailQna, qnaDetailForm);
     model.addAttribute("qnaDetailForm", qnaDetailForm);
 
+    //2) 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("Q", detailQna.getQNum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
+
     return "qna/qnaDetailForm";
   }
   //삭제
@@ -196,6 +195,13 @@ public class QnaController {
     BeanUtils.copyProperties(qna,qnaEditForm);
     model.addAttribute("qnaEditForm",qnaEditForm);
 
+    //2) 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("Q", qnaEditForm.getQNum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
+
     return "qna/qnaEditForm";
   }
 
@@ -213,6 +219,13 @@ public class QnaController {
     QnaDTO qna = new QnaDTO();
     BeanUtils.copyProperties(qnaEditForm, qna);
     qnaSVC.updateByQNum(id, qna);
+
+    if(qnaEditForm.getFiles().size() == 0) {
+      qnaSVC.updateByQNum(id, qna);
+    }else{
+      qnaSVC.updateByBbsId(id, qna, qnaEditForm.getFiles());
+    }
+
 
     redirectAttributes.addAttribute("id",id);
 
