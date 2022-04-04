@@ -78,7 +78,7 @@ $listBtn?.addEventListener('click',e=>{
 });
 
 //첨부파일삭제
-    const $files = document.querySelector('#accordion-item');
+    const $files = document.querySelector('#attachFiles');
     $files?.addEventListener('click', e=>{
       if(e.target.tagName != 'I') return;
       if(!confirm('삭제하시겠습니까?')) return;
@@ -92,10 +92,8 @@ $listBtn?.addEventListener('click',e=>{
           if(res.rtcd == '00'){
             //첨부파일 정보 화면에서 제거
             removeAttachFileFromView(e);
-            console.log('들어오냐');
           }else{
             console.log(res.rtmsg);
-            console.log('여기?');
           }
         })
         .catch(err=>console.log(err));

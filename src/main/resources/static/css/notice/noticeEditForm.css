@@ -43,13 +43,13 @@ from { width: 1024px;
     #accordion{
 
     }
-    #accordion-item{
+    #attachFiles{
       max-height: 0;
       transition: all .35s;
       overflow: hidden;
       background-color: gray;
     }
-    #checkbox:checked ~ #accordion-item{
+    #checkbox:checked ~ #attachFiles{
       max-height: 100px;
     }
     #checkbox:checked + #accordion i{
