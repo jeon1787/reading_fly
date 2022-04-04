@@ -27,7 +27,7 @@
   <div class="notice-wrap">
     <div class="notice-title"><h3>게시글 수정</h3></div>
     <div class="class-body" >
-      <form th:action th:method="patch" th:object="${noticeEditForm}"
+      <form id="noticeEditFrom" th:action th:method="patch" th:object="${noticeEditForm}"
             th:data-n-num="*{nNum}">
         <input type="hidden" th:field="*{nNum}">
         <div class="notice-hit">
@@ -51,9 +51,9 @@
           <!--파일첨부-->
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
-          <div id="accordion-item">
+          <div id="attachFiles">
             <input type="file" th:field="*{files}" multiple>
-            <div th:each="file : ${attachFiles}">
+            <div class="attachFile" th:each="file : ${attachFiles}">
               <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
               <i class="fa-solid fa-trash-can" th:data-fid="${file.fnum}"></i>
               <th:block th:if="${#strings.contains(file.ftype,'image')}" >

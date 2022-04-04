@@ -70,7 +70,6 @@ ClassicEditor
 
     $saveBtn.addEventListener('click', e=>{
       if(!confirm('저장하시겠습니까?')) return;
-
       const $form = e.target.closest('form');
       const nNum = $form.dataset.nNum;
       $form.action = `/notices/${nNum}`;
@@ -87,7 +86,7 @@ ClassicEditor
     });
 
     //첨부파일삭제
-    const $files = document.querySelector('#accordion-item');
+    const $files = document.querySelector('#attachFiles');
     $files?.addEventListener('click', e=>{
       if(e.target.tagName != 'I') return;
       if(!confirm('삭제하시겠습니까?')) return;
@@ -99,12 +98,13 @@ ClassicEditor
       }).then(res=>res.json())
         .then(res=>{
           if(res.rtcd == '00'){
+
             //첨부파일 정보 화면에서 제거
             removeAttachFileFromView(e);
-            console.log('들어오냐');
+
           }else{
             console.log(res.rtmsg);
-            console.log('여기?');
+
           }
         })
         .catch(err=>console.log(err));
