@@ -12,12 +12,19 @@ public interface BoardDAO {
   List<BoardDTO> selectAll();
 
   /**
-   * 전체조회(페이징)
+   * 전체조회 - 페이징
    * @param startRec
    * @param endRec
    * @return
    */
   List<BoardDTO> selectAll(int startRec, int endRec);
+
+  /**
+   * 전체조회 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  List<BoardDTO>  findAll(BoardFilterCondition filterCondition);
 
   /**
    * 상세조회
@@ -68,4 +75,11 @@ public interface BoardDAO {
    * @return 게시글 전체건수
    */
   int totalCount();
+
+  /**
+   * 전체건수 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  int totalCount(BoardFilterCondition filterCondition);
 }

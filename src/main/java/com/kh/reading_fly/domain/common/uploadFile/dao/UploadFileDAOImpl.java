@@ -54,7 +54,7 @@ public class UploadFileDAOImpl implements UploadFileDAO{
     jdbcTemplate.update(new PreparedStatementCreator() {
       @Override
       public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-        PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"uploadfile_id"});
+        PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"fnum"});
         pstmt.setLong(1, uploadFileDTO.getRnum());
         pstmt.setString(2, uploadFileDTO.getCode());
         pstmt.setString(3, uploadFileDTO.getStore_filename());
