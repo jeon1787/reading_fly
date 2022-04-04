@@ -63,8 +63,11 @@ public class FindController {
       return "member/find/findIdPwForm";
     }
 
-    List<String> findids = memberSVC.findMemberId(findIdReq);
-    model.addAttribute("findids", findids);
+    String finds =fId;
+    model.addAttribute("findids", finds);
+
+//    List<String> findids = memberSVC.findMemberId(findIdReq);
+//    model.addAttribute("findids", findids);
     return "member/find/findIdResult";
 
 //    model.addAttribute("findids",
@@ -105,103 +108,106 @@ public class FindController {
     String tmpPw = PasswordGeneratorCreator.generator(10);
     memberSVC.changeMemberPW(findPwReq.getPwemail(), changPwReq.getPw(), tmpPw);
 
-    List<String> findpws = memberSVC.changeMemberPW(findPwReq);
-    model.addAttribute("findpws", findpws);
+    String finds =tmpPw;
+    model.addAttribute("findpws", finds);
+
+//    List<String> findpws = memberSVC.changeMemberPW(findPwReq);
+//    model.addAttribute("findpws", findpws);
     return "member/find/findPwResult";
 
   }
 
-
-
-
-
-  @GetMapping("/findida")
-  public String FindIdReq(@ModelAttribute FindIdReq findIdReq,
-                          BindingResult bindingResult) {
-    return "member/find/t/findIdForm";
-  }
-
-  @GetMapping("/findpwa")
-  public String FindPwReq(@ModelAttribute FindPwReq findPwReq,
-                          BindingResult bindingResult) {
-    return "member/find/t/findPWForm";
-  }
-
-
-
-
-
-
-  @GetMapping("/findtest")
-  public String FindTest(@ModelAttribute FindTest findTest,
-                          BindingResult bindingResult) {
-    return "member/find/findIdPwForm copy";
-  }
-
-  @PostMapping("/findtest")
-  public String findTestResult(@Valid @ModelAttribute FindTest findTest,
-                       BindingResult bindingResult,
-                       Model model,
-                       HttpServletRequest request, HttpServletResponse response
-  ) {
-
-    if (bindingResult.hasErrors()) {
-      log.info("bindingResult={}", bindingResult);
-//      return "/member/find/findIdPwForm";
-      return "member/find/findIdPwForm copy";
-    }
-
-
-    String fId = memberSVC.findIdMember(findTest.getIemail(), findTest.getIname());
-
-    if (fId == null) {
-      bindingResult.reject("error.findida", "회원정보가 없습니다");
-//      return "redirect:/find/findidpw";
-      return "member/find/findIdNullResult";
-//      return "/member/find/findIdPwForm";      // 에러 : Neither BindingResult nor plain target object for bean name 'findPwReq' available as request attribute
-
-    }
-
-//    if(!memberSVC.isExistId(fId)) {
-//      log.info("findidaError={}", bindingResult);
-//      bindingResult.reject("error.login", "회원정보가 없습니다");
-//      return "redirect:/find/findidpw";
+//
+//
+//
+//
+//  @GetMapping("/findida")
+//  public String FindIdReq(@ModelAttribute FindIdReq findIdReq,
+//                          BindingResult bindingResult) {
+//    return "member/find/t/findIdForm";
+//  }
+//
+//  @GetMapping("/findpwa")
+//  public String FindPwReq(@ModelAttribute FindPwReq findPwReq,
+//                          BindingResult bindingResult) {
+//    return "member/find/t/findPWForm";
+//  }
+//
+//
+//
+//
+//
+//
+//  @GetMapping("/findtest")
+//  public String FindTest(@ModelAttribute FindTest findTest,
+//                          BindingResult bindingResult) {
+//    return "member/find/findIdPwForm copy";
+//  }
+//
+//  @PostMapping("/findtest")
+//  public String findTestResult(@Valid @ModelAttribute FindTest findTest,
+//                       BindingResult bindingResult,
+//                       Model model,
+//                       HttpServletRequest request, HttpServletResponse response
+//  ) {
+//
+//    if (bindingResult.hasErrors()) {
+//      log.info("bindingResult={}", bindingResult);
+////      return "/member/find/findIdPwForm";
+//      return "member/find/findIdPwForm copy";
+//    }
+//
+//
+//    String fId = memberSVC.findIdMember(findTest.getIemail(), findTest.getIname());
+//
+//    if (fId == null) {
+//      bindingResult.reject("error.findida", "회원정보가 없습니다");
+////      return "redirect:/find/findidpw";
+//      return "member/find/findIdNullResult";
+////      return "/member/find/findIdPwForm";      // 에러 : Neither BindingResult nor plain target object for bean name 'findPwReq' available as request attribute
+//
+//    }
+//
+////    if(!memberSVC.isExistId(fId)) {
+////      log.info("findidaError={}", bindingResult);
+////      bindingResult.reject("error.login", "회원정보가 없습니다");
+////      return "redirect:/find/findidpw";
+//////      return "member/find/findIdPwForm";
+////    }
+//
+//    if (memberSVC.isDeleteId(fId)) {
+//      bindingResult.reject("error.findida", "이며 탈퇴된 회원입니다");
+////      model.addAttribute("findIdReq",findIdReq);
+//      model.addAttribute("fId", fId);
+//      return "member/find/findIdDelResult";
 ////      return "member/find/findIdPwForm";
 //    }
-
-    if (memberSVC.isDeleteId(fId)) {
-      bindingResult.reject("error.findida", "이며 탈퇴된 회원입니다");
-//      model.addAttribute("findIdReq",findIdReq);
-      model.addAttribute("fId", fId);
-      return "member/find/findIdDelResult";
-//      return "member/find/findIdPwForm";
-    }
-
-
-    ChangPwReq changPwReq = memberSVC.findMemberTestPw(findTest);
-
-    MemberDTO memberDTO = memberSVC.findByID(findTest.getPid());
-
-    String tmpPw = PasswordGeneratorCreator.generator(10);
-
-    memberSVC.changeMemberPW(findTest.getPemail(), changPwReq.getPw(), tmpPw);
-
-    List<String> findpws = memberSVC.changeMemberTestPW(findTest);
-    model.addAttribute("findpws", findpws);
-    return "member/find/findPwResult";
 //
 //
+//    ChangPwReq changPwReq = memberSVC.findMemberTestPw(findTest);
 //
+//    MemberDTO memberDTO = memberSVC.findByID(findTest.getPid());
 //
+//    String tmpPw = PasswordGeneratorCreator.generator(10);
 //
+//    memberSVC.changeMemberPW(findTest.getPemail(), changPwReq.getPw(), tmpPw);
 //
+//    List<String> findpws = memberSVC.changeMemberTestPW(findTest);
 //    model.addAttribute("findpws", findpws);
-//    return "member/findedId_Result";
-
-  }
-
-
-
+//    return "member/find/findPwResult";
+////
+////
+////
+////
+////
+////
+////    model.addAttribute("findpws", findpws);
+////    return "member/findedId_Result";
+//
+//  }
+//
+//
+//
 
 
 

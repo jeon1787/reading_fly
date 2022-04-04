@@ -24,7 +24,7 @@
 
   <div class="form">
 
-    <form th:action="@{/login}" method="POST" class="loginForm" th:object="${loginForm}">
+    <form th:action method="POST" class="loginForm" th:object="${loginForm}">
       
       <h3>로 그 인</h3>
       <p>
@@ -64,6 +64,14 @@
         </tr>
 
       </table>
+
+<!--          <div class="toggle"></div>-->
+<!--          <label class="switch">-->
+<!--            <input type="checkbox" name="autologincheck">-->
+<!--            <span class="slider round"></span>-->
+<!--          </label>-->
+<!--          <span class="switch__text">자동 로그인</span>-->
+
 
       <br>
       <div class="login_btn_group"> 

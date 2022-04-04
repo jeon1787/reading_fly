@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class MemberDTO {
 
   private String id;                      // 아이디 id VARCHAR2(40) not null
-  private String pw;                      // 비밀번호 pw VARCHAR2(30) not null
+  private String pw;                      // 비밀번호 pw VARCHAR2(70) not null  비밀번호 암호화 적용
   private String name;                    // 이름 name VARCHAR2(20) not null
   private String email;                   // 이메일 email VARCHAR2(50) not null
   private String nickname;                // 닉네임 nickname VARCHAR2(30) not null

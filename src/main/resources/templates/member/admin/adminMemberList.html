@@ -49,7 +49,7 @@
             <tr th:each="member : ${memberAll}">
               <th:block th:if="${memberStat.first}">
                 <td class="first-row" th:text="${memberStat.count}"></td>
-                <td class="first-row" ><a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>              
+                <td class="first-row" ><a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>
                 <td class="first-row" th:text="${member.name}"></td>
                 <td class="first-row" th:text="${member.email}"></td>
                 <td class="first-row" th:text="${member.nickname}"></td>
@@ -58,7 +58,7 @@
               </th:block>
               <th:block th:unless="${memberStat.first}">
                 <td class="second-row" th:text="${memberStat.count}"></td>
-                <td class="second-row"> <a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>            
+                <td class="second-row"> <a th:href="@{|/admin/member/${member.id}/|}" th:text="${member.id}"></a></td>
                 <td  class="second-row" th:text="${member.name}"></td>
                 <td  class="second-row" th:text="${member.email}"></td>
                 <td  class="second-row" th:text="${member.nickname}"></td>

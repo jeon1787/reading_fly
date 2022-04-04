@@ -29,6 +29,9 @@ public interface MemberSVC {
   // 로그인 인증
   MemberDTO login(String id, String pw);
 
+  // 로그인 인증 확인
+  MemberDTO isLogin(String id, String pw);
+
   //비밀번호 일치여부 체크
   boolean isMember(String id, String pw);
 
