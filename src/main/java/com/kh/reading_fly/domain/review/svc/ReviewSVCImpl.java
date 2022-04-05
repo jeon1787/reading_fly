@@ -18,26 +18,26 @@ public class ReviewSVCImpl implements ReviewSVC{
 
   @Override
   public List<ReviewDTO> reSelectAll(Long risbn) {
-    return reviewDAO.reSelectAll(risbn);
+    return reviewDAO.selectAll(risbn);
   }
 
   @Override
   public ReviewDTO reSelectOne(Long rnum) {
-    return reviewDAO.reSelectOne(rnum);
+    return reviewDAO.selectOne(rnum);
   }
 
   @Override
   public ReviewDTO reCreate(ReviewDTO reviewDTO) {
-    return reviewDAO.reCreate(reviewDTO);
+    return reviewDAO.create(reviewDTO);
   }
 
   @Override
   public ReviewDTO reUpdate(ReviewDTO reviewDTO) {
-    return reviewDAO.reUpdate(reviewDTO);
+    return reviewDAO.update(reviewDTO);
   }
 
   @Override
   public int reDelete(Long rnum, String rid) {
-    return reviewDAO.reDelete(rnum, rid);
+    return reviewDAO.delete(rnum, rid);
   }
 }

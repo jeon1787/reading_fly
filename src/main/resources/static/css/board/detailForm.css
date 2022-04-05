@@ -7,6 +7,7 @@
 .wrap{
   width: 940px;
 }
+
 .form .button-area{
   display: flex;
   justify-content: space-between;
@@ -17,6 +18,14 @@
   width: 100%;
 }
 */
+/*
+.wrap{
+  width: 1080px;
+}
+*/
+.wrap{
+  padding: 42px;
+}
 
 /*------첨부파일 접었다 펴기------*/
 #checkbox{
