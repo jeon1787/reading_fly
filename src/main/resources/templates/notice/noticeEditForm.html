@@ -28,7 +28,7 @@
     <div class="notice-title"><h3>게시글 수정</h3></div>
     <div class="class-body" >
       <form  th:action th:method="patch" th:object="${noticeEditForm}"
-            th:data-n-num="*{nNum}">
+            th:data-n-num="*{nNum}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{nNum}">
         <div class="notice-hit">
           <span class="notice-hit-content notice-hit-tit">조회수</span>

@@ -38,7 +38,12 @@
           </thead>
           <tbody>
           <tr th:each="item : ${list}">
-            <td th:text="${item.qNum}"></td>
+            <th:block th:if="${item.qIndent} == 0">
+              <td th:text="${item.qNum}"></td>
+            </th:block>
+            <th:block th:if="${item.qIndent} > 0">
+              <td></td>
+            </th:block>
             <td>
               <!--들여쓰기-->
               <th:block th:if="${item.qIndent} > 0">

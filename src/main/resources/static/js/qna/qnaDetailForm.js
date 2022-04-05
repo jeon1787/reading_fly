@@ -85,8 +85,3 @@ $delBtn?.addEventListener('click',e=>{
     location.href = url;
   }
 });
-//목록
-const $listBtn = document.getElementById('listBtn');
-$listBtn?.addEventListener('click',e=>{
-  location.href="/qna/list";
-});
