@@ -15,18 +15,22 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     log.info("loginCheckInterceptor호출");
+
     String redirectUrl = null;
     String requestURI = request.getRequestURI();
+    log.info("requestURI={}", requestURI);
 
-    if(request.getQueryString() != null) {
+    if(request.getQueryString() != null){
       String queryString = URLEncoder.encode(request.getQueryString(), "UTF-8");
       StringBuffer str = new StringBuffer();
-      str.append(requestURI).append("?").append(queryString);
-      redirectUrl = str.toString();
-
-    }else {
+      redirectUrl = str.append(requestURI)
+          .append("&")
+          .append(queryString)
+          .toString();
+    }else{
       redirectUrl = requestURI;
     }
+
     log.info("LoginCheckInterceptor.preHandle 실행:{}",redirectUrl);
 
     HttpSession session = request.getSession(false);

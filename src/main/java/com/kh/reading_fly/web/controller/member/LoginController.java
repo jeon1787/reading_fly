@@ -42,6 +42,8 @@ public class LoginController {
                       @RequestParam(required = false,defaultValue="/") String redirectUrl,
                       HttpServletRequest request,HttpServletResponse response
   ){
+
+    log.info("redirect1={}",redirectUrl);
     if(bindingResult.hasErrors()){
       log.info("loginError={}", bindingResult);
       return "member/login/loginForm";
@@ -55,7 +57,9 @@ public class LoginController {
     }
 
     //오브젝트 체크 :로그인
-    MemberDTO memberDTO = memberSVC.login(loginForm.getId(), loginForm.getPw());
+//    MemberDTO memberDTO = memberSVC.login(loginForm.getId(), loginForm.getPw());
+
+    MemberDTO memberDTO = memberSVC.isLogin(loginForm.getId(), loginForm.getPw());  // 비밀번호 암호화(스프링시큐리티) 적용
 
     if(memberSVC.isDeleteId(loginForm.getId())) {
       bindingResult.reject("error.login", "탈퇴된 회원입니다");
@@ -89,23 +93,23 @@ public class LoginController {
     session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 //    session.setAttribute("loginMember", loginMember );
 
-    // 자동로그인
-    if(loginForm.isAutologincheck()) {
-      Cookie cookie = new Cookie("loginCookie", session.getId());
-      cookie.setPath("/");
-      cookie.setMaxAge(60*60*24*7);	//7일
-      response.addCookie(cookie);
-    }
+    // 자동로그인  - 컨트롤러 및 인터셉터 등 정보 부족으로 미구현
+//    if(loginForm.isAutologincheck()) {
+//      Cookie cookie = new Cookie("loginCookie", session.getId());
+//      cookie.setPath("/");
+//      cookie.setMaxAge(60*60*24*7);	//7일
+//      response.addCookie(cookie);
+//    }
 
-    // 관리자 여부 확인
-    int code =  Integer.parseInt(memberSVC.admin(loginForm.getId()));
-    if(code == 2) {
-      session.setAttribute("loginAdmin", loginMember );
-    }
-    if(code == 3) {
-      session.setAttribute("loginMember", loginMember );
-    }
-    log.info("redirect={}",redirectUrl);
+//    // 관리자 여부 확인
+//    int code =  Integer.parseInt(memberSVC.admin(loginForm.getId()));
+//    if(code == 2) {
+//      session.setAttribute("loginAdmin", loginMember );
+//    }
+//    if(code == 3) {
+//      session.setAttribute("loginMember", loginMember );
+//    }
+    log.info("redirect2={}",redirectUrl);
 //    return "redirect:/";
     return "redirect:"+redirectUrl;
   }

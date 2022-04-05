@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.thymeleaf.util.StringUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class BoardDAOImpl implements BoardDAO{
   }
 
   /**
-   * 전체조회(페이징)
+   * 전체조회 - 페이징
    * @param startRec 시작레코드
    * @param endRec 종료레코드
    * @return 페이지별 게시글 목록
@@ -89,6 +90,54 @@ public class BoardDAOImpl implements BoardDAO{
             new BeanPropertyRowMapper<>(BoardDTO.class),
             startRec,
             endRec
+    );
+
+    return list;
+  }
+
+  /**
+   * 전체조회 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  @Override
+  public List<BoardDTO> findAll(BoardFilterCondition filterCondition) {
+    //sql 작성
+    StringBuffer sql = new StringBuffer();
+    sql.append(" SELECT ");
+    sql.append("   t1.* ");
+    sql.append(" FROM( ");
+    sql.append("     SELECT ");
+    sql.append("       ROW_NUMBER() OVER (ORDER BY bcdate DESC) AS num, ");
+    sql.append("       bnum, ");
+    sql.append("       btitle, ");
+    sql.append("       bcdate, ");
+    sql.append("       budate, ");
+    sql.append("       bhit, ");
+    sql.append("       nickname ");
+    sql.append("     FROM ");
+    sql.append("       Board ");
+    sql.append("     INNER JOIN ");
+    sql.append("       Member ");
+    sql.append("     ON ");
+    sql.append("       Board.bid = Member.id ");
+
+    //검색유형,검색어 존재시
+    if(!StringUtils.isEmpty(filterCondition.getSearchType()) &&
+       !StringUtils.isEmpty(filterCondition.getKeyword())){
+      //sql문 검색 조건 추가
+      sql = dynamicQuery(filterCondition, sql);
+    }
+
+    sql.append("     )t1 ");
+    sql.append(" WHERE t1.num BETWEEN ? AND ? ");
+
+    //sql 실행
+    List<BoardDTO> list = jdbcTemplate.query(
+            sql.toString(),
+            new BeanPropertyRowMapper<>(BoardDTO.class),
+            filterCondition.getStartRec(),
+            filterCondition.getEndRec()
     );
 
     return list;
@@ -194,7 +243,7 @@ public class BoardDAOImpl implements BoardDAO{
    * @return
    */
   @Override
-  public int delete1(Long bnum, String bid){
+  public int deleteBoard(Long bnum, String bid){
 
     StringBuffer sql = new StringBuffer();
     sql.append(" delete from board ");
@@ -211,7 +260,7 @@ public class BoardDAOImpl implements BoardDAO{
    * @return
    */
   @Override
-  public int delete2(Long bnum, String bid) {
+  public int deleteContentOfBoard(Long bnum, String bid) {
 
     StringBuffer sql = new StringBuffer();
     sql.append(" update board ");
@@ -241,6 +290,10 @@ public class BoardDAOImpl implements BoardDAO{
     return result;
   }
 
+  /**
+   * 전체건수
+   * @return 게시글 전체건수
+   */
   @Override
   public int totalCount() {
     String sql = "select count(*) from board";
@@ -248,5 +301,53 @@ public class BoardDAOImpl implements BoardDAO{
     Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
 
     return cnt;
+  }
+
+  /**
+   * 전체건수 - 검색
+   * @param filterCondition 시작레코드번호, 종료레코드번호, 검색유형, 검색어
+   * @return
+   */
+  @Override
+  public int totalCount(BoardFilterCondition filterCondition) {
+    //sql문 작성
+    StringBuffer sql = new StringBuffer();
+    sql.append("select count(*) ");
+    sql.append("  from board  ");
+
+    //sql문 검색 조건 추가
+    sql = dynamicQuery(filterCondition, sql);
+
+    //sql문 실행
+    Integer cnt = jdbcTemplate.queryForObject(
+            sql.toString(), Integer.class
+    );
+
+    return cnt;
+  }
+
+  //sql문 검색 조건 추가
+  private StringBuffer dynamicQuery(BoardFilterCondition filterCondition, StringBuffer sql) {
+
+    sql.append(" WHERE ");
+
+    //검색유형
+    switch (filterCondition.getSearchType()){
+      case "TC":  //제목 + 내용
+        sql.append(" btitle like '%"+ filterCondition.getKeyword()+"%' ");
+        sql.append(" OR DBMS_LOB.INSTR(bcontent,'"+ filterCondition.getKeyword()+"') > 0 ");
+        break;
+      case "T":   //제목
+        sql.append(" btitle like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "C":   //내용
+        sql.append(" DBMS_LOB.INSTR(board.bcontent,'"+ filterCondition.getKeyword()+"') > 0 ");
+        break;
+      case "N":   //닉네임
+        sql.append(" nickname like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      default:
+    }
+    return sql;
   }
 }

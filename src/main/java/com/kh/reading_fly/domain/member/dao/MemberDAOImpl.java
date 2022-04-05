@@ -8,12 +8,14 @@ import com.kh.reading_fly.web.form.member.find.FindPwReq;
 import com.kh.reading_fly.web.form.member.find.FindTest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -29,6 +31,10 @@ public class MemberDAOImpl implements MemberDAO{
 
   private final JdbcTemplate jdbcTemplate;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
+
   // 회원가입
   @Override
   public String insertMember(MemberDTO memberDTO) {
@@ -43,7 +49,7 @@ public class MemberDAOImpl implements MemberDAO{
               sql.toString(), new String[] {"id"}
       );
         pstmt.setString(1,memberDTO.getId());
-        pstmt.setString(2,memberDTO.getPw());
+        pstmt.setString(2,passwordEncoder.encode(memberDTO.getPw()));
         pstmt.setString(3, memberDTO.getName());
         pstmt.setString(4, memberDTO.getNickname());
         pstmt.setString(5, memberDTO.getEmail());
@@ -107,6 +113,29 @@ public class MemberDAOImpl implements MemberDAO{
     return list.size() == 1 ? list.get(0) : null;
   }
 
+  @Override
+  public boolean isLogin(String id, String pw) {
+    boolean isLogin = false;
+
+    StringBuffer sql = new StringBuffer();
+    sql.append("select count(id) ");
+    sql.append("  from member ");
+    sql.append(" where id = ? ");
+    sql.append("   and pw = ? ");
+
+    if(passwordEncoder.matches(pw, matchesId(id))) {
+//      return false;
+            return true;
+    }
+
+    Integer count =jdbcTemplate.queryForObject(sql.toString(), Integer.class, id, pw);
+
+    if(count == 1) isLogin = true;
+
+
+    return isLogin;
+  }
+
   //비밀번호 일치여부 체크
   @Override
   public boolean isMember(String id, String pw) {
@@ -116,11 +145,28 @@ public class MemberDAOImpl implements MemberDAO{
     StringBuffer sql = new StringBuffer();
     sql.append("select count(*) from member ");
     sql.append(" where id = ? and pw =? and leave_fl = 0 ");
+
+    if(passwordEncoder.matches(pw, matchesId(id))) {
+//      return false;
+      return true;
+    }
+
+
     Integer count = jdbcTemplate.queryForObject(
             sql.toString(), Integer.class, id, pw
     );
     log.info(String.valueOf(count));
     return (count == 1) ? true : false;
+  }
+
+  @Override
+  public String matchesId(String id) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select pw from member ");
+    sql.append(" where id = ? ");
+    String pw =
+        jdbcTemplate.queryForObject(sql.toString(), String.class, id);
+    return pw;
   }
 
   //관리자 코드 확인
@@ -222,8 +268,9 @@ public class MemberDAOImpl implements MemberDAO{
     StringBuffer sql = new StringBuffer();
     sql.append("update member set pw = ? ");
     sql.append(" where id = ? and leave_fl = 0  ");
+
     jdbcTemplate.update( sql.toString(),
-        memberDTO.getPw(), id);
+        passwordEncoder.encode(memberDTO.getPw()), id);
   }
 
   // id 찾기
@@ -352,7 +399,9 @@ public class MemberDAOImpl implements MemberDAO{
     sql.append("   and pw = ? ");   	//이전 비밀번호
 
 
-    jdbcTemplate.update(sql.toString(), tmpPw, email, pw);
+
+
+    jdbcTemplate.update(sql.toString(), passwordEncoder.encode(tmpPw), email, pw);
 
   }
 

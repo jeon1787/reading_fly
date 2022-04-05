@@ -68,7 +68,6 @@ ClassicEditor
 
   const $editBtn  = document.getElementById('editBtn');
   const $delBtn   = document.getElementById('delBtn');
-  const $listBtn  = document.getElementById('listBtn');
 
   $editBtn.addEventListener('click',e=>{
     const noticeId = e.target.closest('form').dataset.nNum;
@@ -84,7 +83,3 @@ ClassicEditor
       $form.submit();
   });
 
-  $listBtn.addEventListener('click',()=>{
-    const url = `/notices/all`;
-    location.href = url;
-  });

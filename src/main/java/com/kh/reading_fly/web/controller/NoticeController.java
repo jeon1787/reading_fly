@@ -1,7 +1,10 @@
 package com.kh.reading_fly.web.controller;
 
+import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
+import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
+import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
 import com.kh.reading_fly.domain.notice.dao.NoticeFilterCondition;
 import com.kh.reading_fly.domain.notice.dto.NoticeDTO;
 import com.kh.reading_fly.domain.notice.svc.NoticeSVC;
@@ -34,6 +37,7 @@ import java.util.Optional;
 public class NoticeController {
 
   private final NoticeSVC noticeSVC;
+  private final UploadFileSVC uploadFileSVC;
 
   @Autowired
   @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
@@ -63,10 +67,17 @@ public class NoticeController {
     notice.setNTitle(noticeAddForm.getNTitle());
     notice.setNContent(noticeAddForm.getNContent());
 
-    Long writedNotice = noticeSVC.write(notice);
-    redirectAttributes.addAttribute("nNum",writedNotice);
+    // 파일첨부유무별 게시글 저장
+    Long originId = 0L;
+    if(noticeAddForm.getFiles().size() == 0) {
+      originId = noticeSVC.write(notice);//게시글 저장
+    }else{
+      originId = noticeSVC.write(notice, noticeAddForm.getFiles());//게시글 저장 - 파일첨부시
+    }
 
-    return "redirect:/notices/{nNum}/detail";  //http://서버:9080/notices/공지사항번호
+    redirectAttributes.addAttribute("id",originId);
+
+    return "redirect:/notices/{id}/detail";  //http://서버:9080/notices/공지사항번호
   }
   //  상세화면
   @GetMapping("/{nNum}/detail")
@@ -80,6 +91,7 @@ public class NoticeController {
 
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
 
+
     NoticeDetailForm noticeDetailForm = new NoticeDetailForm();
     noticeDetailForm.setNNum(notice.getNNum());
     noticeDetailForm.setNTitle(notice.getNTitle());
@@ -88,6 +100,15 @@ public class NoticeController {
     noticeDetailForm.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     noticeDetailForm.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
     model.addAttribute("noticeDetailForm",noticeDetailForm);
+
+    //2) 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("N", noticeDetailForm.getNNum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
+
+    model.addAttribute("fc",fc);
 
     return "notice/noticeDetailForm";
   }
@@ -103,6 +124,13 @@ public class NoticeController {
     noticeEditForm.setNContent(notice.getNContent());
 
     model.addAttribute("noticeEditForm", noticeEditForm);
+
+    // 첨부파일 조회
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("N", noticeEditForm.getNNum());
+    if(attachFiles.size() > 0){
+      log.info("attachFiles={}",attachFiles);
+      model.addAttribute("attachFiles", attachFiles);
+    }
 
     return "notice/noticeEditForm";
   }
@@ -125,6 +153,14 @@ public class NoticeController {
     notice.setNTitle(noticeEditForm.getNTitle());
     notice.setNContent(noticeEditForm.getNContent());
     NoticeDTO modifiedNotice = noticeSVC.modify(notice);
+
+    //3) 파일첨부유무별 게시글 수정
+    NoticeDTO modifiedNoticeDTO;
+    if(noticeEditForm.getFiles().size() == 0) {
+      modifiedNoticeDTO = noticeSVC.modify(notice);//게시글 수정
+    }else{
+      modifiedNoticeDTO = noticeSVC.modify(notice, noticeEditForm.getFiles());//게시글 수정 - 파일첨부시
+    }
 
     redirectAttributes.addAttribute("nNum", modifiedNotice.getNNum());
 

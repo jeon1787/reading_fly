@@ -24,7 +24,7 @@ drop sequence comments_cnum_seq;          -- 게시판_댓글 시퀸스 삭제
 -- 회원
 create table member(
   id VARCHAR2(40) not null,                            -- 아이디
-  pw VARCHAR2(30) not null,                            -- 비밀번호
+  pw VARCHAR2(70) not null,                            -- 비밀번호/  비밀번호 암호화 적용
   name VARCHAR2(20) not null,                          -- 이름
   email VARCHAR2(50) not null,                         -- 이메일
   nickname VARCHAR2(30) not null,                      -- 닉네임

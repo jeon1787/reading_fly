@@ -1,9 +1,11 @@
 package com.kh.reading_fly.web.form.qna;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class QnaEditForm {
@@ -16,4 +18,6 @@ public class QnaEditForm {
   @Size(min=1, max = 1000, message = "최소 1자 최대 1000자")
   private String qContent;      //내용
   private int qHit;             //조회수
+
+  private List<MultipartFile> files;  // 첨부파일
 }

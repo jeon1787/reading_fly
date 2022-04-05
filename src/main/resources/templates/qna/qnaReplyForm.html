@@ -27,7 +27,7 @@
   <div class="qna-wrap">
     <div class="qna-title"><h3>게시글 답글 작성</h3></div>
     <div class="class-body">
-      <form id="writeForm" action="" method="post" th:object="${qnaReplyForm}">
+      <form id="writeForm" action="" method="post" th:object="${qnaReplyForm}" enctype="multipart/form-data">
         <!--              <input type="hidden" th:field="*{email}">-->
         <input type="hidden" th:field="*{qNickname}">
         <div class="qna-content">
