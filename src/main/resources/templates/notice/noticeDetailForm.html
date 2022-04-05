@@ -27,7 +27,7 @@
   <div class="notice-wrap">
     <div class="notice-title"><h3>게시글 보기</h3></div>
     <div class="class-body">
-      <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}">
+      <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{nNum}">
         <!--        <input type="hidden" id="noticeId" name="noticeId" value="xxx">-->
         <div class="notice-info">
@@ -62,7 +62,7 @@
           <button type="button" id="delBtn" th:block th:if="${s_email == 'admin@test.com'}">삭제</button>
           </th:block>
           <!-------------------------------------------->
-          <button type="button" id="listBtn" onclick="location.href = `/notices/all`;">목록</button>
+          <button type="button" id="listBtn" th:onclick="|location.href='@{/notices/all/{reqPage}(reqPage=${fc.rc.reqPage})}'|">목록</button>
         </div>
       </form>
     </div>

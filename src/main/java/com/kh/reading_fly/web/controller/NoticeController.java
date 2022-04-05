@@ -108,6 +108,7 @@ public class NoticeController {
       model.addAttribute("attachFiles", attachFiles);
     }
 
+    model.addAttribute("fc",fc);
 
     return "notice/noticeDetailForm";
   }

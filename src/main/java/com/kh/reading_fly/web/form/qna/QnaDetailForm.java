@@ -13,4 +13,5 @@ public class QnaDetailForm {
   private LocalDateTime qUDate;  //날짜
   private String qContent;      //내용
   private int qHit;              //조회수
+  private int qIndent;           //답글 들여쓰기추가
 }

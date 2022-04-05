@@ -14,4 +14,5 @@ public class NoticeDetailForm {
   private Long  nHit;            //조회수
   private String nCDate;  //생성일시
   private String nUDate;  //수정일시
+
 }

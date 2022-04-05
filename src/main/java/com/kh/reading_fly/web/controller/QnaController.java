@@ -175,6 +175,8 @@ public class QnaController {
       model.addAttribute("attachFiles", attachFiles);
     }
 
+    model.addAttribute("fc",fc);
+
     return "qna/qnaDetailForm";
   }
   //삭제
