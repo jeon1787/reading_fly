@@ -17,24 +17,13 @@
             <a href="" th:href="@{./bookapi.html}"><i class="fa-solid fa-magnifying-glass"></i></a>
         </div>
         <!--로그인시-->
-        <div class="upper-right" th:if="${!session?.isEmpty()}">
-            <span>홍길동1</span>
-            <div class="dropdown">
-                <span class="dropbtn">MY PAGE</span>
-                <div class="dropdown-content">
-                    <a th:href="${/member/edit}}">회원정보 변경</a>
-                    <a th:href="${/member/memberpw}">비밀번호 변경</a>
-                    <a th:href="${/member/out}">회원탈퇴</a>
-                </div>
-            </div>
-            <span class="log"><a th:href="@{/logout}">log-out</a></span>
-        </div>
+        <th:block th:if="${!session.isEmpty()}">
+            <div class="upper-right" th:replace="~{fragment/uppermost::afterLoginUpm}"></div>
+        </th:block>
         <!--비로그인시-->
-        <div class="upper-right" th:unless="${!session?.isEmpty()}">
-            <span>방문을 환영합니다!</span>
-            <span><a th:href="@{/login}">log-in</a></span>
-            <span><a th:href="@{/signup}">sign-up</a></span>
-        </div>
+        <th:block th:unless="${!session.isEmpty()}">
+            <div class="upper-right" th:replace="~{fragment/uppermost::beforeLoginUpm}"></div>
+        </th:block>
 
     </div>
 </div>

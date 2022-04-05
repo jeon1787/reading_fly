@@ -23,8 +23,13 @@ public class ReviewDAOImpl implements ReviewDAO{
 
   private final JdbcTemplate jdbcTemplate;
 
+  /**
+   * 전체조회 by ISBN
+   * @param risbn 도서번호
+   * @return
+   */
   @Override
-  public List<ReviewDTO> reSelectAll(Long risbn) {
+  public List<ReviewDTO> selectAll(Long risbn) {
     StringBuffer sql = new StringBuffer();
     sql.append(" select row_number() over (order by rcdate) as num, rnum, risbn, rcontent, rstar, rcdate, rudate, rid, nickname ");
     sql.append(" from review, member ");
@@ -37,8 +42,13 @@ public class ReviewDAOImpl implements ReviewDAO{
     return list;
   }
 
+  /**
+   * 단건조회 by rnum
+   * @param rnum 리뷰번호
+   * @return
+   */
   @Override
-  public ReviewDTO reSelectOne(Long rnum) {
+  public ReviewDTO selectOne(Long rnum) {
     StringBuffer sql = new StringBuffer();
 
     sql.append(" select rnum, risbn, rcontent, rstar,rcdate, rudate, rid, nickname ");
@@ -51,8 +61,13 @@ public class ReviewDAOImpl implements ReviewDAO{
     return (query.size() == 1)? query.get(0) : null;
   }
 
+  /**
+   * 리뷰 등록
+   * @param reviewDTO
+   * @return
+   */
   @Override
-  public ReviewDTO reCreate(ReviewDTO reviewDTO) {
+  public ReviewDTO create(ReviewDTO reviewDTO) {
     StringBuffer sql = new StringBuffer();
 //    sql.append(" insert into review (rnum, rcontent, rstar, risbn, rid) ");
 //    sql.append(" values (review_rnum_seq.nextval, ?, ?, ?, ?) ");
@@ -87,11 +102,16 @@ public class ReviewDAOImpl implements ReviewDAO{
     }, keyHolder);
 
     Long rnum = Long.valueOf(keyHolder.getKeys().get("rnum").toString());
-    return reSelectOne(rnum);
+    return selectOne(rnum);
   }
 
+  /**
+   * 리뷰 수정
+   * @param reviewDTO
+   * @return
+   */
   @Override
-  public ReviewDTO reUpdate(ReviewDTO reviewDTO) {
+  public ReviewDTO update(ReviewDTO reviewDTO) {
     StringBuffer sql = new StringBuffer();
     sql.append(" update review ");
     sql.append(" set rcontent = ? , ");
@@ -128,11 +148,17 @@ public class ReviewDAOImpl implements ReviewDAO{
     }, keyHolder);
 
     Long rnum = Long.valueOf(keyHolder.getKeys().get("rnum").toString());
-    return reSelectOne(rnum);
+    return selectOne(rnum);
   }
 
+  /**
+   * 리뷰 삭제
+   * @param rnum
+   * @param rid
+   * @return
+   */
   @Override
-  public int reDelete(Long rnum, String rid) {
+  public int delete(Long rnum, String rid) {
     StringBuffer sql = new StringBuffer();
     sql.append(" delete from review ");
     sql.append("  where rnum =? and rid = ? ");

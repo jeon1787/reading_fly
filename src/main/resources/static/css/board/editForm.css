@@ -17,6 +17,10 @@
     font-size: medium;
   }
   */
+.wrap{
+  padding: 42px;
+}
+
 /*------첨부파일 접었다 펴기------*/
 #checkbox{
   display: none;

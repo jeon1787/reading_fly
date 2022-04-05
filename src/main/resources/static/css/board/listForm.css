@@ -1,8 +1,15 @@
 @charset "utf-8";
+/*
 .form{
   width: 1024px;
   padding: 42px;
 }
+*/
+.wrap{
+  padding: 42px;
+}
+
+
 /*
 .form h3{
   margin: 0px 0px 30px 0px;
