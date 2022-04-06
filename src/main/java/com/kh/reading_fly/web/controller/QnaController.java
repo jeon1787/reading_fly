@@ -4,7 +4,6 @@ import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
 import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
-import com.kh.reading_fly.domain.qna.QnaStatus;
 import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
