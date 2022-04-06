@@ -1,6 +1,5 @@
 package com.kh.reading_fly.domain.qna.dao;
 
-import com.kh.reading_fly.domain.qna.QnaStatus;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
