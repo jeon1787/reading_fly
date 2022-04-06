@@ -1,6 +1,6 @@
 package com.kh.reading_fly.domain.qna.dto;
 
-import com.kh.reading_fly.domain.qna.QnaStatus;
+
 import lombok.Data;
 
 import java.time.LocalDateTime;
