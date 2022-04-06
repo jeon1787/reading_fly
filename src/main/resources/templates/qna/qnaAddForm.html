@@ -24,7 +24,7 @@
 </head>
 <body>
 <main>
-  <div class="qna-wrap">
+  <div class="qna-wrap" th:data-page="${fc.rc.reqPage}">
     <div class="qna-title"><h3>게시글 작성</h3></div>
     <div class="class-body">
       <form id="writeForm" action="" method="post" th:object="${qnaAddForm}" enctype="multipart/form-data">
@@ -32,31 +32,31 @@
         <input type="hidden" th:field="*{qNickname}">
         <div class="qna-content">
           <div><lable>제목</lable></div>
-          <div><input type="text" name="" id="" class="w100" th:field="*{qTitle}">
+          <div>
+            <input type="text" name="" id="" class="w100" th:field="*{qTitle}">
             <div class="fieldError" th:errors="*{qTitle}"></div>
           </div>
           <div><lable>작성자</lable></div>
-          <!--                <div><span th:text="|*{nickname} ( *{email} )|"></span>-->
-          <div><span th:if="${!session.isEmpty()}" th:text="${session.loginMember.nickname}"></span>
+          <div>
+            <span th:if="${!session.isEmpty()}" th:text="${session.loginMember.nickname}"></span>
             <div><lable>내용</lable></div>
             <div><textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
               <div class="fieldError" th:errors="*{qContent}"></div>
             </div>
-            <!--파일첨부-->
-            <input type="checkbox" id="checkbox">
-            <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
-            <div id="accordion-item">
-              <input type="file" th:field="*{files}" multiple>
-            </div>
-
-<!--            <div><lable>첨부</lable></div>-->
-<!--            <div><input type="file" name="" id="" class="w100" multiple></div>-->
-<!--          </div>-->
+          </div>
+          </div>
+        <!--파일첨부-->
+        <input type="checkbox" id="checkbox">
+        <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+          <div id="accordion-item">
+          <input type="file" th:field="*{files}" multiple>
+        </div>
+        <!--버튼-->
+        <div class="qna-btngrp">
+          <button type="button" id="writeBtn">등록</button>
+          <button type="button" id="cancelBtn" th:onclick="|location.href='@{/qna/list/{reqPage}(reqPage=${fc.rc.reqPage})}'|">취소</button>
+        </div>
       </form>
-    </div>
-    <div class="qna-btngrp">
-      <button type="button" id="writeBtn">등록</button>
-      <button type="button" id="listBtn">목록</button>
     </div>
   </div>
 </main>

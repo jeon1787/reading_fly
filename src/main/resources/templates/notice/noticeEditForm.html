@@ -47,7 +47,7 @@
             <textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
             <div class="fieldError" th:errors="*{nContent}"></div>
           </div>
-
+        </div>
           <!--파일첨부-->
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
@@ -61,9 +61,7 @@
               </th:block>
             </div>
           </div>
-
-        </div>
-
+        <!--버튼-->
         <div class="notice-btngrp">
           <button type="button" id="cancelBtn">취소</button>
           <button type="button" id="saveBtn">저장</button>

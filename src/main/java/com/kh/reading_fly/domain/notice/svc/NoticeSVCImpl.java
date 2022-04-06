@@ -51,7 +51,6 @@ public class NoticeSVCImpl implements NoticeSVC{
     return rnum;
   }
 
-
   /**
    * 전체조회
    * @return
@@ -111,7 +110,6 @@ public class NoticeSVCImpl implements NoticeSVC{
 
     return modifiedNotice;
   }
-
 
   /**
    * 삭제

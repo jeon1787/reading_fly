@@ -79,6 +79,7 @@ public interface QnaSVC {
    * @return 답글번호
    */
   Long saveReply(Long pQNum, QnaDTO replyQna);
+  Long saveReply(Long pQNum,QnaDTO replyQna, List<MultipartFile> files);
 
   /**
    * 전체건수
@@ -87,4 +88,11 @@ public interface QnaSVC {
    */
   int totalCount();
   int totalCount(QnaFilterCondition filterCondition);
+
+  /**
+   * Q&A원글 상태 변경
+   * @param qNum
+   * @return
+   */
+  int updateStatus(Long qNum);
 }

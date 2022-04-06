@@ -1,5 +1,6 @@
 package com.kh.reading_fly.domain.qna.dao;
 
+import com.kh.reading_fly.domain.qna.QnaStatus;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,9 +20,7 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class QnaDAOImpl implements QnaDAO {
-
   private  final JdbcTemplate jdbcTemplate;
-
 
   //원글작성
   @Override
@@ -29,9 +28,7 @@ public class QnaDAOImpl implements QnaDAO {
 
     //SQL작성
     StringBuffer sql = new StringBuffer();
-//    sql.append("insert into qna (qnum,qtitle,qemail,qnickname,qcontent,qgroup) ");
     sql.append("insert into qna (qnum,qtitle,qnickname,qcontent,qgroup) ");
-//    sql.append("values(qna_qnum_seq.nextval,?,?,?,?,qna_qnum_seq.currval) ");
     sql.append("values(qna_qnum_seq.nextval,?,?,?,qna_qnum_seq.currval) ");
 
     //SQL실행
@@ -62,7 +59,6 @@ public class QnaDAOImpl implements QnaDAO {
     sql.append("SELECT " );
     sql.append(" qnum," );
     sql.append(" qtitle, " );
-//    sql.append(" qemail, " );
     sql.append(" qnickname, " );
     sql.append(" qhit, " );
     sql.append(" qcontent, " );
@@ -93,7 +89,6 @@ public class QnaDAOImpl implements QnaDAO {
     sql.append("    ROW_NUMBER() OVER (ORDER BY qgroup DESC, qstep ASC) no, ");
     sql.append(" qnum," );
     sql.append(" qtitle, " );
-//    sql.append(" qemail, " );
     sql.append(" qnickname, " );
     sql.append(" qhit, " );
     sql.append(" qcontent, " );
@@ -139,7 +134,6 @@ public class QnaDAOImpl implements QnaDAO {
     sql.append("  FROM qna ");
     sql.append("  WHERE ");
 
-
     //분류
     sql = dynamicQuery(qnaFilterCondition, sql);
 
@@ -163,7 +157,6 @@ public class QnaDAOImpl implements QnaDAO {
     sql.append("SELECT " );
     sql.append(" qnum," );
     sql.append(" qtitle, " );
-//    sql.append(" qemail, " );
     sql.append(" qnickname, " );
     sql.append(" qhit, " );
     sql.append(" qcontent, " );
@@ -231,9 +224,7 @@ public class QnaDAOImpl implements QnaDAO {
     QnaDTO qna = addInfoOfParentToChild(pQNum,replyQna );
 
     StringBuffer sql = new StringBuffer();
-//    sql.append("insert into qna (qnum,qtitle,qemail,qnickname,qcontent,pqnum,qgroup,qstep,qindent) ");
     sql.append("insert into qna (qnum,qtitle,qnickname,qcontent,pqnum,qgroup,qstep,qindent) ");
-//    sql.append("values(qna_qnum_seq.nextval, ?, ? ,?,?,?,?,?,?) ");
     sql.append("values(qna_qnum_seq.nextval, ?, ? ,?,?,?,?,?) ");
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -246,7 +237,6 @@ public class QnaDAOImpl implements QnaDAO {
         );
 
         pstmt.setString(1, qna.getQTitle());
-//        pstmt.setString(2, qna.getQEmail());
         pstmt.setString(2, qna.getQNickname());
         pstmt.setString(3, qna.getQContent());
         pstmt.setLong(4,qna.getPQNum());
@@ -339,6 +329,18 @@ public class QnaDAOImpl implements QnaDAO {
     cnt = jdbcTemplate.queryForObject(
         sql.toString(), Integer.class
     );
+
+    return cnt;
+  }
+
+  @Override
+  public int updateStatus(Long qNum) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("update qna ");
+    sql.append("   set qStatus = 'A' ");
+    sql.append(" where qNum = ? ");
+
+    int cnt = jdbcTemplate.update(sql.toString(), qNum);
 
     return cnt;
   }

@@ -1,5 +1,6 @@
 package com.kh.reading_fly.web.form.qna;
 
+import com.kh.reading_fly.domain.qna.QnaStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -14,4 +15,5 @@ public class QnaDetailForm {
   private String qContent;      //내용
   private int qHit;              //조회수
   private int qIndent;           //답글 들여쓰기추가
+  private String qStatus;     //게시글 상태(Q:원글, A:답글)
 }
