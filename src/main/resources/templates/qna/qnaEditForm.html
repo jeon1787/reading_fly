@@ -29,7 +29,6 @@
     <div class="class-body" >
       <form id="editForm" action="" th:action="@{|/qna/*{qNum}/edit|}" method="post" th:object="${qnaEditForm}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{qNum}">
-        <!--              <input type="hidden" th:field="*{email}">-->
         <input type="hidden" th:field="*{qNickname}">
         <div class="qna-hit">
           <span class="qna-hit-content qna-hit-tit">조회수</span>
@@ -48,7 +47,7 @@
             <textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
             <div class="fieldError" th:errors="*{qContent}"></div>
           </div>
-
+        </div>
           <!--파일첨부-->
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
@@ -62,15 +61,11 @@
               </th:block>
             </div>
           </div>
-
-        </div>
+        <!--버튼-->
         <div class="qna-btngrp">
           <button type="button" id="cancelBtn">취소</button>
           <button type="submit" id="saveBtn">저장</button>
           <button type="button" id="listBtn">목록</button>
-        </div>
-        <div class="qna-attach">
-          첨부파일
         </div>
       </form>
     </div>

@@ -29,7 +29,7 @@
         <table>
           <thead>
           <tr>
-            <th>번호</th>
+            <th>No</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -61,6 +61,7 @@
           </tbody>
         </table>
       </div>
+      <!--버튼-->
       <div class="qna-btngrp">
         <button type="botton" id="writeBtn">문의하기</button>
       </div>
@@ -84,7 +85,7 @@
           <a class="qna-page-item" href="" th:href="@{/qna/list/{reqPage}(reqPage=${fc.finalEndPage})}">>></a>
         </th:block>
       </div>
-
+      <!--검색-->
       <div class="qna-search">
         <select id="searchType" name="searchType" th:field="${fc.searchType}">
           <option th:value="TC">제목+내용</option>
@@ -99,5 +100,4 @@
   </div>
 </main>
 </body>
-
 </html>

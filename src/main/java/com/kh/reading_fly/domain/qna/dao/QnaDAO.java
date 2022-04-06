@@ -68,5 +68,12 @@ public interface QnaDAO {
    */
   int totalCount();
   int totalCount(QnaFilterCondition filterCondition);
+
+  /**
+   * Q&A원글 상태 변경
+   * @param qNum
+   * @return
+   */
+  int updateStatus(Long qNum);
 }
 

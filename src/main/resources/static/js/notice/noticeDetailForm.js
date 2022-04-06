@@ -65,15 +65,18 @@ ClassicEditor
          console.error( error );
       } );
 
-
   const $editBtn  = document.getElementById('editBtn');
   const $delBtn   = document.getElementById('delBtn');
+  const $listBtn  = document.getElementById('listBtn');
 
+//수정
   $editBtn.addEventListener('click',e=>{
     const noticeId = e.target.closest('form').dataset.nNum;
     const url = `/notices/${noticeId}`;
     location.href = url;
   });
+
+  //삭제
   $delBtn.addEventListener('click', e => {
     if(!confirm('삭제하시겠습니까?')) return;
 
@@ -82,4 +85,3 @@ ClassicEditor
       $form.action = `/notices/${nNum}`;
       $form.submit();
   });
-

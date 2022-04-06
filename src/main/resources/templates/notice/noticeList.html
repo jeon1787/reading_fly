@@ -16,7 +16,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Q&A</title>
+  <title>공지사항</title>
   <link rel="stylesheet" th:href="@{/css/notice/noticeList.css}">
   <script defer src="/js/notice/noticeList.js"></script>
 </head>
@@ -29,7 +29,7 @@
         <table>
           <thead>
           <tr>
-            <th>번호</th>
+            <th>No</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -49,8 +49,9 @@
           </tbody>
         </table>
       </div>
+      <!--버튼-->
       <div class="notice-btngrp">
-        <button type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">문의하기</button>
+        <button type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">글쓰기</button>
       </div>
 
       <div class="notice-page">
@@ -72,7 +73,7 @@
           <a class="notice-page-item" href="" th:href="@{/notices/all/{reqPage}(reqPage=${fc.finalEndPage})}">>></a>
         </th:block>
       </div>
-
+      <!--검색-->
       <div class="notice-search">
         <select id="searchType" name="searchType" th:field="${fc.searchType}">
           <option value="TC">제목+내용</option>

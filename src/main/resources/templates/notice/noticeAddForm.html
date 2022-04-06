@@ -24,7 +24,7 @@
 </head>
 <body>
 <main>
-  <div class="notice-wrap">
+  <div class="notice-wrap" th:data-page="${fc.rc.reqPage}">
     <div class="notice-title"><h3>게시글 작성</h3></div>
     <div class="class-body">
       <form id="writeForm" action="" method="post" th:object="${noticeAddForm}" enctype="multipart/form-data">
@@ -34,23 +34,22 @@
             <div class="fieldError" th:errors="*{nTitle}"></div>
           </div>
           <div><lable>내용</lable></div>
-          <div><textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
+          <div>
+            <textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
             <div class="fieldError" th:errors="*{nContent}"></div>
-            <div class="notice-btngrp">
-              <button type="button" id="writeBtn">등록</button>
-              <button type="button" id="listBtn">목록</button>
-            </div>
-            <!--파일첨부-->
-            <input type="checkbox" id="checkbox">
-            <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
-            <div id="accordion-item">
-              <input type="file" th:field="*{files}" multiple>
-            </div>
-
           </div>
-<!--                            <div><lable>첨부</lable></div>-->
-<!--                            <div><input type="file" name="" id="" class="w100" multiple></div>-->
-<!--                          </div>-->
+        </div>
+        <!--파일첨부-->
+        <input type="checkbox" id="checkbox">
+        <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+        <div id="accordion-item">
+          <input type="file" th:field="*{files}" multiple>
+        </div>
+        <!--버튼-->
+        <div class="notice-btngrp">
+          <button type="button" id="writeBtn">등록</button>
+          <button type="button" id="cancelBtn">취소</button>
+        </div>
       </form>
     </div>
   </div>

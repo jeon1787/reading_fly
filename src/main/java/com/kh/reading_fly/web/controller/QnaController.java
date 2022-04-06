@@ -4,6 +4,7 @@ import com.kh.reading_fly.domain.common.paging.FindCriteria;
 import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
 import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
+import com.kh.reading_fly.domain.qna.QnaStatus;
 import com.kh.reading_fly.domain.qna.dao.QnaFilterCondition;
 import com.kh.reading_fly.domain.qna.dto.QnaDTO;
 import com.kh.reading_fly.domain.qna.svc.QnaSVC;
@@ -40,22 +41,16 @@ public class QnaController {
 
   //작성양식
   @GetMapping("/add")
-//  public String addForm(Model model) {
-//    model.addAttribute("addForm", new AddForm());
-//    return "bbs/addForm";
-//  }
   public String addForm(
       Model model,
       HttpSession session) {
 
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
 
     QnaAddForm qnaAddForm = new QnaAddForm();
-//    qnaAddForm.setQEmail(loginMember.getEmail());
     qnaAddForm.setQNickname(loginMember.getNickname());
     model.addAttribute("qnaAddForm", qnaAddForm);
-
+    model.addAttribute("fc",fc);
     return "qna/qnaAddForm";
   }
 
@@ -75,11 +70,7 @@ public class QnaController {
 
     //세션 가져오기
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
-    //세션 정보가 없으면 로그인페이지로 이동
-//    if(loginMember == null){
-//      return "redirect:/login";
-//    }
+
     String nickname = loginMember.getNickname();
     log.info("nickname={}", nickname);
 
@@ -228,7 +219,6 @@ public class QnaController {
       qnaSVC.updateByBbsId(id, qna, qnaEditForm.getFiles());
     }
 
-
     redirectAttributes.addAttribute("id",id);
 
     return "redirect:/qna/{id}";
@@ -245,8 +235,6 @@ public class QnaController {
 
     //세션에서 로그인정보 가져오기
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
-//    qnaReplyForm.setQEmail(loginMember.getEmail());
     qnaReplyForm.setQNickname(loginMember.getNickname());
 
     model.addAttribute("qnaReplyForm", qnaReplyForm);
@@ -265,6 +253,7 @@ public class QnaController {
     if(bindingResult.hasErrors()) {
       return "qna/qnaReplyForm";
     }
+    qnaSVC.updateStatus(id);
 
     QnaDTO replyQna = new QnaDTO();
     BeanUtils.copyProperties(qnaReplyForm,replyQna);
@@ -273,7 +262,14 @@ public class QnaController {
     appendInfoOfParentQna(id, replyQna);
 
     //답글저장(return 답글번호)
-    Long replyQNum = qnaSVC.saveReply(id, replyQna);
+    Long replyQNum = 0L;
+
+    if(qnaReplyForm.getFiles().size() == 0) {
+      replyQNum = qnaSVC.saveReply(id, replyQna);
+
+    }else{
+      replyQNum = qnaSVC.saveReply(id, replyQna, qnaReplyForm.getFiles());
+    }
 
     redirectAttributes.addAttribute("id",replyQNum);
 

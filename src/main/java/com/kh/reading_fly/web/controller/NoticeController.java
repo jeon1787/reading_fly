@@ -35,7 +35,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/notices")
 public class NoticeController {
-
   private final NoticeSVC noticeSVC;
   private final UploadFileSVC uploadFileSVC;
 
@@ -45,7 +44,8 @@ public class NoticeController {
 
   //  등록화면
   @GetMapping("")
-  public String addForm(@ModelAttribute NoticeAddForm noticeAddForm) {
+  public String addForm(@ModelAttribute NoticeAddForm noticeAddForm, Model model) {
+    model.addAttribute("fc",fc);
     return "notice/noticeAddForm";
   }
 
@@ -82,15 +82,7 @@ public class NoticeController {
   //  상세화면
   @GetMapping("/{nNum}/detail")
   public String detailForm(@PathVariable Long nNum, Model model, HttpSession session){
-//    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//
-//    if(loginMember.getId() != null ) {
-//      String id = loginMember.getId();
-//      session.setAttribute("id",id);
-//    }
-
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
-
 
     NoticeDetailForm noticeDetailForm = new NoticeDetailForm();
     noticeDetailForm.setNNum(notice.getNNum());
@@ -115,7 +107,6 @@ public class NoticeController {
   //  수정화면
   @GetMapping("/{nNum}")
   public String editForm(@PathVariable Long nNum, Model model){
-
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
 
     NoticeEditForm noticeEditForm = new NoticeEditForm();
@@ -166,12 +157,14 @@ public class NoticeController {
 
     return "redirect:/notices/{nNum}/detail";
   }
+
   //  삭제처리
   @DeleteMapping("{nNum}")
   public String del(@PathVariable Long nNum){
     noticeSVC.remove(nNum);
     return "redirect:/notices/all";
   }
+
   //  전체목록
   @GetMapping({"/all",
       "/all/{reqPage}",
@@ -213,7 +206,6 @@ public class NoticeController {
       NoticeItem item = new NoticeItem();
       item.setNNum(notice.getNNum());
       item.setNTitle(notice.getNTitle());
-//      item.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
       item.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
       item.setNHit(notice.getNHit());
       notices.add(item);

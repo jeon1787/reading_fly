@@ -64,7 +64,6 @@ ClassicEditor
          console.error( error );
       } );
 
-
     const $saveBtn = document.getElementById('saveBtn');
     const $cancelBtn = document.getElementById('cancelBtn');
 
