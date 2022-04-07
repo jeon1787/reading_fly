@@ -65,7 +65,7 @@ ClassicEditor
 //저장 버튼
 saveBtn.addEventListener('click', e=>{
   if(!confirm("저장하시겠습니까?")) return;
-  const $formTag = document.querySelector('.editor');
+  const $formTag = document.querySelector('.editForm');
   const bnum = e.target.dataset.bnum;
   const url = "/board/" + bnum + "/edit";
   $formTag.action = url;
