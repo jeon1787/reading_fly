@@ -65,7 +65,7 @@ ClassicEditor
          console.error( error );
       } );
 
-const $qna = document.querySelector('.qna-wrap');
+const $qna = document.querySelector('.wrap');
 const page = $qna.dataset.page;
 
 //답글

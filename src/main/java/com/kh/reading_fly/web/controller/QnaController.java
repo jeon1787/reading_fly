@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,6 +138,14 @@ public class QnaController {
     for (QnaDTO qna : list) {
       QnaListForm qnaListForm = new QnaListForm();
       BeanUtils.copyProperties(qna, qnaListForm);
+      //날짜 포맷
+      LocalDate boardDate = qna.getQUDate().toLocalDate();
+      LocalDate today = LocalDate.now();
+      if(boardDate.equals(today)){//오늘 작성된 글이면
+        qnaListForm.setQUDate(qna.getQUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+      }else{//오늘 이전에 작성된 글이면
+        qnaListForm.setQUDate(qna.getQUDate().toLocalDate().toString());
+      }
       partOfList.add(qnaListForm);
     }
 
@@ -156,6 +166,16 @@ public class QnaController {
     QnaDetailForm qnaDetailForm = new QnaDetailForm();
 
     BeanUtils.copyProperties(detailQna, qnaDetailForm);
+
+    //날짜 포맷
+    LocalDate qnaDate = detailQna.getQUDate().toLocalDate();
+    LocalDate today = LocalDate.now();
+    if(qnaDate.equals(today)){//오늘 작성된 글이면
+      qnaDetailForm.setQUDate(detailQna.getQUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+    }else{//오늘 이전에 작성된 글이면
+      qnaDetailForm.setQUDate(detailQna.getQUDate().toLocalDate().toString());
+    }
+
     model.addAttribute("qnaDetailForm", qnaDetailForm);
 
     //2) 첨부파일 조회

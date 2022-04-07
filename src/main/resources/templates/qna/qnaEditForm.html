@@ -24,31 +24,29 @@
 </head>
 <body>
 <main>
-  <div class="qna-wrap">
-    <div class="qna-title"><h3>게시글 수정</h3></div>
-    <div class="class-body" >
+  <div class="wrap">
+    <h3>게시글 수정</h3>
+    <div id="container">
       <form id="editForm" action="" th:action="@{|/qna/*{qNum}/edit|}" method="post" th:object="${qnaEditForm}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{qNum}">
         <input type="hidden" th:field="*{qNickname}">
-        <div class="qna-hit">
-          <span class="qna-hit-content qna-hit-tit">조회수</span>
-          <span class="qna-hit-content qna-hit-cnt" th:text="*{qHit}">10</span>
+
+        <!--게시글 제목-->
+        <div class="qna-title">
+          <div>제목</div>
+          <input class="title"  type="text" th:field="*{qTitle}" placeholder="제목을 입력하세요(0 ~ 20자)" autofocus >
+          <div class="fieldError" th:errors="*{qTitle}"></div>
         </div>
+
+        <!--게시글 본문-->
         <div class="qna-content">
-          <div><lable>제목</lable></div>
-          <div>
-            <input type="text" name="" id="" class="w100" th:field="*{qTitle}" >
-            <div class="fieldError" th:errors="*{qTitle}"></div>
-          </div>
-          <div><lable>작성자</lable></div>
-          <div><span th:text="*{qNickname}"></span></div>
-          <div><lable>내용</lable></div>
-          <div>
-            <textarea name="" id="" rows="10" class="w100" th:field="*{qContent}"></textarea>
-            <div class="fieldError" th:errors="*{qContent}"></div>
-          </div>
+          <div>내용</div>
+          <textarea name="" id="" cols="30" rows="10" th:field="*{qContent}" placeholder="내용을 입력하세요(0 ~ 1000자)"></textarea>
+          <div class="fieldError" th:errors="*{qContent}"></div>
         </div>
-          <!--파일첨부-->
+
+        <!--파일첨부-->
+        <div class="qna-file">
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
           <div id="attachFiles">
@@ -61,8 +59,10 @@
               </th:block>
             </div>
           </div>
+        </div>
+
         <!--버튼-->
-        <div class="qna-btngrp">
+        <div class="qna-button">
           <button type="button" id="cancelBtn">취소</button>
           <button type="submit" id="saveBtn">저장</button>
           <button type="button" id="listBtn">목록</button>

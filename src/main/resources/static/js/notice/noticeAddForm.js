@@ -64,7 +64,7 @@ ClassicEditor
          console.error( error );
       } );
 
-const $notice = document.querySelector('.notice-wrap');
+const $notice = document.querySelector('.wrap');
 const page = $notice.dataset.page;
 
 //등록

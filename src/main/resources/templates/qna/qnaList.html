@@ -55,7 +55,7 @@
               <a href="" th:href="@{|/qna/${item.qNum}|}" th:text="${item.qTitle}">제목</a>
             </td>
             <td id="qna-name" th:text="${item.qNickname}">작성자1</td>
-            <td id="qna-date" th:text="${#temporals.format(item.qUDate,'yyyy-MM-dd')}">작성일1</td>
+            <td id="qna-date" th:text="*{item.qUDate}">작성일1</td>
             <td th:text="${item.qHit}">5</td>
           </tr>
           </tbody>
