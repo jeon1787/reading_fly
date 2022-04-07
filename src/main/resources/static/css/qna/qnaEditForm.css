@@ -6,6 +6,7 @@ form {
 .wrap {
   width: 1000px;
   padding: 42px;
+  background-color: #ffffff;
 }
 /*제목*/
 .qna-title{
