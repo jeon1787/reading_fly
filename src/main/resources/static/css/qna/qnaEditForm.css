@@ -91,10 +91,6 @@ form {
   margin-left: 10px;
 }
 
-.fieldError {
-  color:red;
-}
-
 /*------첨부파일 접었다 펴기------*/
 .qna-file{
   margin: 0px 10px;
