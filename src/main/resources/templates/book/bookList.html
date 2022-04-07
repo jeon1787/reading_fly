@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>title</title>
+    <link rel="stylesheet" href="../../static/css/book/bookList.css" th:href="@{/css/book/bookList.css}">
+    <script defer th:src="@{/js/book/bookList.js}"></script>
+</head>
+<body>
+<div class="form">
+    <h3>책장</h3>
+    <div class="shelf-wrap">
+        <!--책장-->
+            <!--등록버튼-->
+            <img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">
+
+            <!--반복-->
+            <th:block th:each="book:${list}">
+                <div class="bookshelf-list">
+                    <img class="book-Img" id="bookImg" src="" th:src="${book.thumbnail}" width="130px" height="150px" data-isbn="{book.isbn}">
+                    <div class="book-title" th:text="${book.title}">책이름</div>
+                </div>
+            </th:block>
+    </div>
+</div>
+</body>
+</html>
