@@ -257,6 +257,7 @@ public class QnaController {
     qnaReplyForm.setQNickname(loginMember.getNickname());
 
     model.addAttribute("qnaReplyForm", qnaReplyForm);
+    model.addAttribute("fc",fc);
     return "qna/qnaReplyForm";
   }
 

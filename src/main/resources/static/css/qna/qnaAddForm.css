@@ -51,6 +51,10 @@ main textarea{
     resize: none;
 }
 
+/*에러 메세지 공통*/
+.fieldError{
+    color: skyblue;
+}
 
 form {
   width: 1024px;
