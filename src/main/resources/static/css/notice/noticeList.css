@@ -51,78 +51,60 @@ main textarea{
     resize: none;
 }
 
+from {
+  width: 1024px;
 
-    from {
-      width: 1024px;
-      padding: 42px;
-    }
+}
 
-    .notice-wrap * {
-      box-sizing: border-box;
-    }
+.wrap {
+  width: 1000px;
+   padding: 42px;
+  background-color: #ffffff;
+}
 
-    .notice-wrap {
-     width: 940px;
-    }
+table{
+  border-collapse: collapse;
+  margin: 0px auto;
+  margin-bottom: 20px;
+}
 
-    .notice-wrap .notice-title {
-     text-align: center;
-     padding: 20px 0;
-    }
+tr{
+  border-bottom: 1px solid #ebecef;
+  height: 40px;
+}
 
-    .notice-wrap .notice-content table {
-      width: 100%;
-      border-top: 2px solid #333;
-      border-bottom: 2px solid #333;
-      border-collapse: collapse;
-    }
+tbody tr:hover {
+  background-color: #ebecef;
+}
 
-    .notice-wrap .notice-content table th,
-    .notice-wrap .notice-content table td {
-      border-bottom: 1px solid #333;
+td,th{padding: 0px;}
+td.num{width: 80px; text-align: center;}
+td.title{width: 500px;}
+td.nickname{width: 130px; text-align: center;}
+td.date{width: 130px; text-align: center;}
+td.hit{width: 80px; text-align: center;}
+a{margin-left: 50px}
 
-    }
+.notice-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
 
-    .notice-wrap .notice-content table>thead>tr th:nth-child(2) {
-      width: 50%;
-    }
+.notice-page {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
-   #notice-name,
-   #notice-date{
-     text-align: center;
-   }
+.notice-page a{
+  margin: 0px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
 
-  .notice-wrap .notice-content table>tbody>tr>td:first-child,
-  .notice-wrap .notice-content table>tbody>tr>td:last-child {
-      text-align: center;
-  }
-
-  .notice-wrap .notice-btngrp {
-      display: flex;
-      justify-content: flex-end;
-  }
-
-  .notice-wrap .notice-page {
-      display: flex;
-      justify-content: center;
-      padding: 20px 0;
-  }
-
-  .notice-wrap .notice-page .notice-page-item{
-      display:inline-block;
-      width:24px;
-      height:24px;
-      padding:2px;
-      text-align: center;
-  }
-
-  .notice-wrap .notice-page .notice-page-item.active{
-      background-color:#333;
-      color:white;
-  }
-
-  .notice-wrap .notice-search {
-      display: flex;
-      justify-content: center;
-  }
-  a {text-decoration: none; color:inherit;}
+.notice-search {
+  display: flex;
+  justify-content: center;
+}
