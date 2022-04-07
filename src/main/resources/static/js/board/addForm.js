@@ -56,9 +56,24 @@ ClassicEditor
 			},
 		})
 		.then( editor => {
-
 			window.editor = editor;
 		} )
 		.catch( error => {
 			console.error( error );
 		} );
+
+//등록 버튼
+addBtn.addEventListener('click', e=>{
+  if(document.querySelector('.title').value.trim() == ''){
+    alert("제목을 입력하세요.");
+    return;
+  }
+  if(document.querySelector('.ck-content').textContent.trim() == ''){
+    alert("본문을 입력하세요.");
+    return;
+  }
+  const $formTag = document.querySelector('.editor');
+  const url = "/board/add";
+  $formTag.action = url;
+  $formTag.submit();
+})

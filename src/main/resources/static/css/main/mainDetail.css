@@ -14,13 +14,44 @@ body{
 }
 /*.form 글꼴*/
 .form{
-    font-size: 25px;
+    font-size: 20px;
     font-weight: normal;
+}
+
+/*.form 공통*/
+.form button{
+    font-family: 'Cafe24Oneprettynight';
+    font-size: 20px;
+    background-color: #f3f3f3;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.form button:hover{
+    background-color: gray;
+    color: white;
+}
+
+.form a{
+    text-decoration: none;
+    color: black;
+}
+
+.form a:hover{
+    text-decoration: underline;
+}
+
+.form textarea{
+    resize: none;
 }
 
 /*upper*/
 .upper {
-height: 70px;
+height: 100px;
 display: flex;
 justify-content: center;
 /*background-color: #edeeb4;*/
@@ -29,45 +60,69 @@ background-color: white;
 top: 0;
 }
 
-.upper > .upper-second{
+.upper a{
+    text-decoration: none;
+    color: black;
+}
+
+.upper a:hover{
+    text-decoration: underline;
+}
+
+.upper-second{
 width: 1280px;
-height: 50px;
 display: flex;
 justify-content: space-between;
+text-align: center;
 }
 
 .upper-left{
-width: 250px;
-}
-
-.upper-center{
-width: auto;
-display: flex;
-margin-top: 15px;
-padding: 1px;
-background-color: white;
-border: solid 0.5px black;
-border-radius: 5px;
-}
-
-.upper-center > input{
-text-align: center;
-border: none;
 width: 300px;
 }
 
+.upper-left>a{
+  display: block;
+  height: 100px;
+  width: 146px;
+  background-image: url("/img/mainDetail_logo.png");
+}
+
+.upper-center{
+width: 300px;
+height: 40px;
+display: flex;
+margin: 28px 0px;
+padding: 1px;
+background-color: white;
+border: solid 0.5px black;
+border-radius: 10px;
+line-height: 100px;
+}
+
+.upper-center > input{
+/*height: 70px;*/
+width: 280px;
+padding: 0px;
+text-align: center;
+border: none;
+border-radius: 10px;
+outline: none;
+}
+
 .upper-center > a{
-line-height: 35px;
+width: 20px;
+line-height: 40px;
 }
 
 .upper-right{
-width: 250px;
-height: 35px;
+width: 300px;
+height: 100px;
 display: flex;
 justify-content: space-between;
-line-height: 70px;
+line-height: 100px;
 }
 
+/*a태그 css제거*/
 .upper-right>span>a{
 text-decoration: none;
 color: black;
@@ -158,15 +213,19 @@ margin: 10%;
 }
 
 nav > ul > li a{
+/*text-shadow: -0.5px 0 #000, 0 0.5px #000, 0.5px 0 #000, 0 -0.5px #000;*/
 display: block;
-color: white;
+/*color: white;*/
+color: black;
 text-align: center;
 text-decoration: none;
 font-size: 30px;
 }
 
 nav > ul > li a:hover{
-color: dimgray;
+/*color: dimgray;*/
+color: white;
+text-shadow: -0.5px 0 #000, 0 0.5px #000, 0.5px 0 #000, 0 -0.5px #000;
 }
 
 /*nav - position*/

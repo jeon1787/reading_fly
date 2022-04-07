@@ -56,12 +56,28 @@ ClassicEditor
 			},
 		})
 		.then( editor => {
-
 			window.editor = editor;
 		} )
 		.catch( error => {
 			console.error( error );
 		} );
+
+//저장 버튼
+saveBtn.addEventListener('click', e=>{
+  if(!confirm("저장하시겠습니까?")) return;
+  const $formTag = document.querySelector('.editor');
+  const bnum = e.target.dataset.bnum;
+  const url = "/board/" + bnum + "/edit";
+  $formTag.action = url;
+  $formTag.submit();
+})
+
+//취소 버튼
+cancelBtn.addEventListener('click', e=>{
+  const bnum = e.target.dataset.bnum;
+  const url = `/board/${bnum}/detail`;
+  location.href = url;
+});
 
 //첨부파일삭제
 const $files = document.querySelector('#accordion-item');

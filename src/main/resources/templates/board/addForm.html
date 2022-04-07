@@ -16,7 +16,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시글 작성</title>
+  <title>게시판 글쓰기</title>
   <link rel="stylesheet" th:href="@{/css/board/addForm.css}">
   <script defer th:src="@{/js/common/ckeditor.js}"></script>
   <script defer th:src="@{/js/board/addForm.js}"></script>
@@ -24,10 +24,10 @@
 </head>
 <body>
 <div class="form">
-  <h3>게시글 작성하기</h3>
+  <h3>게시글 글쓰기</h3>
   <div id="container">
-    <form th:method="post" th:object="${addForm}" enctype="multipart/form-data">
-      <div>제목<input type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
+    <form class="editor" th:method="post" th:object="${addForm}" enctype="multipart/form-data">
+      <div>제목<input class="title" type="text" th:field="*{btitle}" placeholder="제목을 입력하세요" autofocus></div>
       <div class="fieldError" th:errors="*{btitle}"></div>
       <div>내용</div>
       <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}" placeholder="내용을 입력하세요"></textarea>
@@ -42,7 +42,7 @@
 
       <!--버튼-->
       <div>
-        <button type="submit">등록</button>
+        <button id="addBtn" type="button">등록</button>
         <button type="button" onclick="location.href='/board/1'">목록</button>
       </div>
     </form>

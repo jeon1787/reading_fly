@@ -3,41 +3,7 @@
 ClassicEditor
 		.create( document.querySelector( '#bcontent' ), {
 		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
-//			toolbar: {
-//				items: [
-//					'heading',
-//					'|',
-//					'underline',
-//					'bold',
-//					'italic',
-//					'link',
-//					'bulletedList',
-//					'numberedList',
-//					'todoList',
-//					'|',
-//					'outdent',
-//					'indent',
-//					'|',
-//					'imageInsert',
-//					'imageUpload',
-//					'blockQuote',
-//					'insertTable',
-//					'mediaEmbed',
-//					'markdown',
-//					'undo',
-//					'redo',
-//					'|',
-//					'highlight',
-//					'fontFamily',
-//					'fontColor',
-//					'fontBackgroundColor',
-//					'fontSize',
-//					'|',
-//					'htmlEmbed',
-//					'specialCharacters'
-//				]
-//			},
-            toolbar: [],/*상단툴바 제거*/
+            toolbar: [],//상단툴바 제거
 			language: 'en',
 			image: {
 				toolbar: [
@@ -58,11 +24,31 @@ ClassicEditor
 		})
 		.then( editor => {
 			window.editor = editor;
-			editor.isReadOnly = true;  //읽기모드적용
+			editor.isReadOnly = true;//읽기모드적용
 		} )
 		.catch( error => {
 			console.error( error );
 		} );
+
+//게시글 수정 버튼 클릭시
+const $editBtn = document.getElementById('editBtn');
+$editBtn?.addEventListener('click', e=>{
+  const bnum = e.target.dataset.bnum;
+  const url = `/board/${bnum}/edit`;
+  location.href = url;
+})
+
+//게시글 삭제 버튼 클릭시
+const $delBtn = document.getElementById('delBtn');
+$delBtn?.addEventListener('click', e=>{
+  //댓글이 달린경우 삭제가 안된다 알려야함
+  if(window.confirm("삭제하시겠습니까?")){
+    const bnum = e.target.dataset.bnum;
+    const url = `/board/${bnum}/del`;
+    location.href = url;
+  }
+})
+
 
   //dom 이벤트 : 댓글목록 불러오기
   document.addEventListener('DOMContentLoaded', e=>{
@@ -90,20 +76,53 @@ ClassicEditor
   //댓글목록 출력 함수
   function displayComments_f(comments){
     console.log("displayComments_f 호출됨!");
+    const id = document.querySelector('.form').dataset.id;
 
     let content = ``;
     comments.forEach(comment => {
+
+    //작성자 본인일시
+    if(id == comment.cid){
+      console.log("일치");
       content +=
        `<div class="comment">
-          <div class="comment-head">
+          <div class="comment-header">
             <input class="cnum" type="hidden" value="${comment.cnum}">
             <input class="cid" type="hidden" value="${comment.cid}">
             <span>${comment.nickname}</span>
-            <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
+            <span><button class="editBtn" href="">수정</button><button class="delBtn" href="">삭제</button></span>
           </div>
           <div class="comment-content" style="white-space:pre-wrap;">${comment.ccontent}</div>
-          <div><span>${comment.cudate}</span><a href="">대댓글쓰기</a></div>
+          <div class="comment-footer"><span>${comment.cudate}</span></div>
         </div>`;
+
+    //작성자가 아닐시
+    }else if(id != comment.cid){
+        console.log("불일치");
+        content +=
+         `<div class="comment">
+            <div class="comment-header">
+              <input class="cnum" type="hidden" value="${comment.cnum}">
+              <input class="cid" type="hidden" value="${comment.cid}">
+              <span>${comment.nickname}</span>
+              <span></span>
+            </div>
+            <div class="comment-content" style="white-space:pre-wrap;">${comment.ccontent}</div>
+            <div class="comment-footer"><span>${comment.cudate}</span></div>
+          </div>`;
+    }
+
+//      content +=
+//       `<div class="comment">
+//          <div class="comment-head">
+//            <input class="cnum" type="hidden" value="${comment.cnum}">
+//            <input class="cid" type="hidden" value="${comment.cid}">
+//            <span>${comment.nickname}</span>
+//            <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
+//          </div>
+//          <div class="comment-content" style="white-space:pre-wrap;">${comment.ccontent}</div>
+//          <div><span>${comment.cudate}</span></div>
+//        </div>`;
     });
 
     const $commentList = document.querySelector('.comment-list');
@@ -118,15 +137,17 @@ ClassicEditor
     //비로그인 상태 : 리다이렉트
     if(chk == "false"){
       console.log(chk);
-      const bnum = document.querySelector('.form').dataset.bnum;
-      location.href = `/login?redirectUrl=/board/${bnum}/detail`;
+      alert("로그인을 하신 후 이용해 주시기 바랍니다.");
+//      const bnum = document.querySelector('.form').dataset.bnum;
+//      location.href = `/login?redirectUrl=/board/${bnum}/detail`;
       return;
     //로그인 상태 : 댓글등록
     }else{
       const bnum = document.querySelector('.form').dataset.bnum;
+      const $commentTextarea = document.querySelector('.comment-textarea');
 
       const addForm = {};
-      addForm.ccontent = reply.value;
+      addForm.ccontent = $commentTextarea.value;
 
 
       fetch(`http://localhost:9080/api/comment/${bnum}`,{
@@ -140,7 +161,7 @@ ClassicEditor
       .then(res=>{
         console.log(res);
         list_f(bnum);
-        reply.value = '';//댓글창 비우기
+        $commentTextarea.value = '';//댓글창 비우기
       })
       .catch(err => console.error('Err:',err));
     }
@@ -149,8 +170,8 @@ ClassicEditor
   //댓글수정 버튼 클릭시
   const $commentArea = document.querySelector('.comment-area');
   $commentArea.addEventListener('click',e=>{
-    //1) a태그 이벤트 막기
-    e.preventDefault();
+//    //1) a태그 이벤트 막기
+//    e.preventDefault();
     const $comment = e.target.closest('.comment');
 
     //2) 수정 버튼 체크
@@ -162,7 +183,8 @@ ClassicEditor
 //    }
 
     //a태그, button태그 아니면 리턴
-    if(e.target.tagName != "A" && e.target.tagName != "BUTTON"){
+//    if(e.target.tagName != "A" && e.target.tagName != "BUTTON"){
+    if(e.target.tagName != "BUTTON"){
       console.log("리턴");
       return;
     }
@@ -298,14 +320,14 @@ ClassicEditor
   function displayComment_f(detailForm, $closeComment){
     $closeComment.innerHTML =
        `<div class="comment">
-          <div class="comment-head">
+          <div class="comment-header">
             <input class="cnum" type="hidden" value="${detailForm.cnum}">
             <input class="cid" type="hidden" value="${detailForm.cid}">
             <span>${detailForm.nickname}</span>
-            <span><a class="editBtn" href="">수정</a><a class="delBtn" href="">삭제</a></span>
+            <span><button class="editBtn" href="">수정</button><button class="delBtn" href="">삭제</button></span>
           </div>
           <div class="comment-content" style="white-space:pre-wrap;">${detailForm.ccontent}</div>
-          <div><span>${detailForm.cudate}</span><a href="">대댓글쓰기</a></div>
+          <div class="comment-footer"><span>${detailForm.cudate}</span></div>
         </div>`;
     return;
   }
@@ -324,35 +346,15 @@ ClassicEditor
 
     $comment.innerHTML =
     `<div class="comment">
-       <div class="comment-head">
+       <div class="comment-header">
          <input class="cnum" type="hidden" value="${cnum}">
          <input class="cid" type="hidden" value="${cid}">
          <span>${nickname}</span>
          <span>${cudate}</span>
        </div>
-       <textarea class="comment-content">${content}</textarea>
-       <div><button id="saveBtn">저장</button><button id="cancelBtn">취소</button></div>       </div>`;
+       <textarea class="comment-textarea">${content}</textarea>
+       <div class="comment-footer"><div class="btn-right"><button id="saveBtn">저장</button><button id="cancelBtn">취소</button></div></div>
+     </div>`;
     //alert("else");
     return;
   }//end of modifyMode
-
-  //댓글삭제 버튼 클릭시
-
-  //게시글 수정 버튼 클릭시
-  const $editBtn = document.getElementById('editBtn');
-  $editBtn?.addEventListener('click', e=>{
-    const bnum = e.target.dataset.bnum;
-    const url = `/board/${bnum}/edit`;
-    location.href = url;
-  })
-
-  //게시글 삭제 버튼 클릭시
-  const $delBtn = document.getElementById('delBtn');
-  $delBtn?.addEventListener('click', e=>{
-    //댓글이 달린경우 삭제가 안된다 알려야함
-    if(window.confirm('댓글이 있는 게시글은 본문만 삭제됩니다.\n정말 삭제하시겠습니까?')){
-      const bnum = e.target.dataset.bnum;
-      const url = `/board/${bnum}/del`;
-      location.href = url;
-    }
-  })
