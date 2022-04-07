@@ -87,8 +87,9 @@
 
       <div class="container comment-container">
         <form action="">
-          <div th:if="${!session?.isEmpty()}" th:text="${session?.loginMember?.nickname}">닉네임</div>
-          <div th:unless="${!session?.isEmpty()}">로그인이 필요한 서비스입니다.</div>
+<!--          <div th:if="${!session?.isEmpty()}" th:text="${session?.loginMember?.nickname}">닉네임</div>-->
+          <div th:text="${!session.isEmpty()} ? ${session?.loginMember?.nickname} : '로그인 후 이용해주세요'">닉네임</div>
+<!--          <div th:unless="${!session?.isEmpty()}">로그인이 필요한 서비스입니다.</div>-->
           <textarea class="comment-textarea" name="" cols="104" rows="10" placeholder="댓글을 입력하세요"></textarea>
           <div><button type="submit" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button></div>
         </form>
