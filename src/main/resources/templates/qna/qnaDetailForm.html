@@ -24,24 +24,31 @@
 </head>
 <body>
 <main>
-  <div class="qna-wrap" th:data-page="${fc.rc.reqPage}">
-    <div class="qna-title"><h3>게시글 보기</h3></div>
+  <div class="wrap" th:data-page="${fc.rc.reqPage}">
     <div class="class-body">
       <form action="" method="post" th:object="${qnaDetailForm}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{qNum}">
-        <div class="qna-info">
-          <div><span th:text="*{qNickname}"></span></div>
-          <sapn class="date" th:text="${#temporals.format(qnaDetailForm.qUDate,'yyyy-MM-dd')}"></sapn>
-          <span class="qna-hit-content bbs-hit-tit">조회수</span>
-          <span class="qna-hit-content bbs-hit-cnt" th:text="*{qHit}">10</span>
+        <div class="qna-title">
+          <div>게시글></div>
+          <h3>[[*{qTitle}]]</h3>
+          <div>
+            <span class="qna-info qna-nickname" th:text="*{qNickname}"></span>
+            <sapn class="qna-info qna-qudate" th:text="|작성일 *{qUDate}|"></sapn>
+            <span class="qna-info qna-nhit" th:text="|조회수 *{qHit}|"></span>
+          </div>
         </div>
+        <hr>
+
+<!--        <br>-->
+
+        <!--게시글 본문-->
         <div class="qna-content">
-          <div><lable>제목</lable></div>
-          <div><input type="text" name="" id="" class="w100" th:field="*{qTitle}" th:readonly="readonly"></div>
-          <div><lable>내용</lable></div>
           <div><textarea name="" id="" rows="10" class="w100" th:field="*{qContent}" th:readonly="readonly"></textarea></div>
         </div>
+<!--        <br>-->
+
           <!-- 파일첨부-->
+        <div class="qna-file">
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
           <div id="accordion-item">
@@ -52,16 +59,14 @@
               </th:block>
             </div>
           </div>
+        </div>
         <!-- 버튼-->
-<!--        *{qStatus}"-->
-        <div class="qna-btngrp">
+        <div class="qna-button">
           <th:block th:if="*{qIndent} == 0 and *{qStatus} == Q">
             <button type="button" id="replyBtn" th:block th:if="${s_email == 'admin@test.com'}">답글</button>
             <button type="button" id="editBtn" th:block th:if="*{qNickname} eq ${s_nickname} or ${s_email == 'admin@test.com'}" >수정</button>
             <button type="button" id="delBtn"  th:block th:if="*{qNickname} eq ${s_nickname} or ${s_email == 'admin@test.com'}">삭제</button>
           </th:block>
-
-
           <!-------------------------------------------->
           <button type="button" id="listBtn">목록</button>
         </div>

@@ -1,52 +1,125 @@
 @charset "utf-8";
 
- form { width: 1024px; }
-    .notice-wrap * {
-      /* outline:1px solid red; */
-      box-sizing: border-box;
-    }
-    .notice-wrap {  width: 940px; }
-    .notice-wrap .notice-title {
-      text-align: center; padding:20px 0;
-       outline:1px solid green;
-    }
-    .notice-wrap .notice-content{
-      display: grid;
-      grid-template-columns: 30px 1fr;
-      gap: 1px;
-    }
-    .notice-wrap .notice-content .w100{
-      width:100%; padding:3px;
-    }
-    .notice-wrap .notice-btngrp{
-      display:flex;
-      justify-content: flex-end;
-    }
-  .fieldError {
-    color:red;
-  }
+/*폰트*/
+/*카페24 고운밤*/
+@font-face {
+    font-family: 'Cafe24Oneprettynight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/*body 글꼴*/
+body{
+    margin: 0;
+    font-family: 'Cafe24Oneprettynight';
+    font-weight: bold;
+}
+/*.form 글꼴*/
+main{
+    font-size: 20px;
+    font-weight: normal;
+}
 
-  /*------첨부파일 접었다 펴기------*/
-  #checkbox{
-    display: none;
-  }
-  #accordion{
-
-  }
-  #accordion-item{
-    max-height: 0;
-    transition: all .35s;
-    overflow: hidden;
+/*.form 공통*/
+main button{
+    font-family: 'Cafe24Oneprettynight';
+    font-size: 20px;
+    background-color: #f3f3f3;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+main button:hover{
     background-color: gray;
-  }
-  #checkbox:checked ~ #accordion-item{
-    max-height: 100px;
-  }
-  #checkbox:checked + #accordion i{
-    transform: rotate( -180deg );
+    color: white;
+}
+
+main a{
+    text-decoration: none;
+    color: black;
+}
+
+main a:hover{
+    text-decoration: underline;
+}
+
+main textarea{
+    resize: none;
+}
+
+form {
+ width: 1024px;
   }
 
+.wrap {
+  width: 1000px;
+  padding: 42px;
+  background-color: #ffffff;
+  }
 
-  /* ckeditor style 저장*/
-  #nContent {display:none;}
-  .notice-wrap .ck-editor__editable{min-height:20rem;}
+/*제목*/
+.notice-title{
+  margin-bottom: 20px;
+}
+
+.title {
+ height: 30px;
+ width: 1023px;
+ box-sizing: border-box;
+}
+
+/*본문*/
+.notice-content{
+  margin-bottom: 20px;
+}
+
+/*버튼*/
+.notice-button{
+  display: flex;
+  justify-content: end;
+}
+
+.notice-button button{
+  margin-left: 10px;
+}
+
+/*------첨부파일 접었다 펴기------*/
+.notice-file{
+  margin: 0px 10px;
+  margin-bottom: 20px;
+}
+#checkbox{
+  display: none;
+}
+#accordion>label{
+  cursor:pointer;
+}
+
+#accordion-item{
+  max-height: 0;
+  transition: all .35s;
+  overflow: hidden;
+
+  margin: 0px 20px;
+  background-color: #F3F3F3;
+  border-radius: 5px;
+}
+
+#accordion-item>div{
+  padding: 10px 20px;
+}
+
+#checkbox:checked ~ #accordion-item{
+  max-height: 100px;
+}
+#checkbox:checked + #accordion i{
+  transform: rotate( -180deg );
+}
+
+/* ckeditor style 저장*/
+#nContent {display:none;}
+.ck-editor__editable{min-height:20rem;}
