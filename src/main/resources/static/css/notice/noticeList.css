@@ -1,5 +1,57 @@
 @charset "utf-8";
 
+/*폰트*/
+/*카페24 고운밤*/
+@font-face {
+    font-family: 'Cafe24Oneprettynight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+/*body 글꼴*/
+body{
+    margin: 0;
+    font-family: 'Cafe24Oneprettynight';
+    font-weight: bold;
+}
+/*.form 글꼴*/
+main{
+    font-size: 20px;
+    font-weight: normal;
+}
+
+/*.form 공통*/
+main button{
+    font-family: 'Cafe24Oneprettynight';
+    font-size: 20px;
+    background-color: #f3f3f3;
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    height: 30px;
+    width: 60px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+main button:hover{
+    background-color: gray;
+    color: white;
+}
+
+main a{
+    text-decoration: none;
+    color: black;
+}
+
+main a:hover{
+    text-decoration: underline;
+}
+
+main textarea{
+    resize: none;
+}
+
+
     from {
       width: 1024px;
       padding: 42px;
