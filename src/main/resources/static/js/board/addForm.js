@@ -72,7 +72,7 @@ addBtn.addEventListener('click', e=>{
     alert("본문을 입력하세요.");
     return;
   }
-  const $formTag = document.querySelector('.editor');
+  const $formTag = document.querySelector('.addForm');
   const url = "/board/add";
   $formTag.action = url;
   $formTag.submit();

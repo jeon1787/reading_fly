@@ -28,23 +28,33 @@
 }
 
 /*제목*/
+.board-title+hr{
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
+}
+
 .board-info{
   margin-right: 20px;
 }
 
+/*본문*/
+.board-content{
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
+}
 
 /*버튼*/
-.form .button-area{
+.form .board-button{
   display: flex;
   justify-content: end;
+  margin-bottom: 40px;/*변경사항 : br을 마진으로 변경*/
 }
-.form .button-area button{
+.form .board-button button{
   margin-left: 10px;
 }
 
 /*------첨부파일 접었다 펴기------*/
-.file-area{
+.board-file{
   margin: 0px 10px;
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
 }
 
 #checkbox{

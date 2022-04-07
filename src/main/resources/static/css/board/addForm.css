@@ -19,6 +19,13 @@ button{
   padding: 42px;
 }
 
+/*제목*/
+.board-title{
+  height: 30px;
+  width: 986px;
+  box-sizing: border-box;
+}
+
 /*------첨부파일 접었다 펴기------*/
 #checkbox{
   display: none;

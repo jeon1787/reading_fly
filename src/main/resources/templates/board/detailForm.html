@@ -31,7 +31,7 @@
   <div class="wrap">
 
     <!--게시글 제목-->
-    <div class="title-area">
+    <div class="board-title">
       <div>게시글 ></div>
       <h3 th:text="${detailForm.btitle}">제목</h3>
       <div>
@@ -41,14 +41,16 @@
       </div>
     </div>
     <hr>
-    <br>
+<!--    <br>-->
 
     <!--게시글 본문-->
-    <textarea name="" id="" cols="30" rows="10" th:field="${detailForm.bcontent}"></textarea>
-    <br>
+    <div class="board-content">
+      <textarea name="" id="" cols="30" rows="10" th:field="${detailForm.bcontent}"></textarea>
+    </div>
+<!--    <br>-->
 
-    <!--5. 파일첨부-->
-    <div class="file-area">
+    <!--파일첨부-->
+    <div class="board-file">
       <input type="checkbox" id="checkbox">
       <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
       <div id="accordion-item">
@@ -60,20 +62,20 @@
         </div>
       </div>
     </div>
-    <br>
+<!--    <br>-->
 
     <!--수정/삭제 버튼-->
-    <div class="button-area">
+    <div class="board-button">
         <th:block th:if="${!session.isEmpty()}">
           <button id="editBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">수정</button>
           <button id="delBtn" type="button" th:data-bnum="${detailForm.bnum}" th:if="${session.loginMember.id}==${detailForm.bid}">삭제</button>
         </th:block>
         <button onclick="location.href='/board/1'">목록</button>
     </div>
-    <br>
-    <br>
+<!--    <br>-->
+<!--    <br>-->
 
-    <!--5. 댓글-->
+    <!--댓글-->
     <div class="comment-area">
       <div class="comment-upper">댓글 ></div>
       <hr>
@@ -85,6 +87,7 @@
   <!--      </div>-->
       </div>
 
+      <!--댓글 작성란-->
       <div class="container comment-container">
         <form action="">
 <!--          <div th:if="${!session?.isEmpty()}" th:text="${session?.loginMember?.nickname}">닉네임</div>-->
