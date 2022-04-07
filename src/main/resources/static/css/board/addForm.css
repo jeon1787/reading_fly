@@ -73,7 +73,8 @@ button{
 }
 
 #checkbox:checked ~ #accordion-item{
-  max-height: 100px;
+  max-height: fit-content;
+  min-height: 42px;
 }
 #checkbox:checked + #accordion i{
   transform: rotate( -180deg );
