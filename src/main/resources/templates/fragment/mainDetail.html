@@ -23,11 +23,11 @@
 <div class="upper">
   <div class="upper-second">
     <div class="upper-left">
-      <a th:href="@{/restart}"><img src="img/mainDetail_logo.png"></a>
+      <a th:href="@{/restart}"></a>
     </div>
     <div class="upper-center">
       <input type="text" name="query" placeholder="도서명" size="50">
-      <button type="submit" onclick="location.href='./bookapi.html'"> 찾기 </button>
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
     </div>
     <!--로그인시-->
     <th:block th:if="${!session.isEmpty()}">

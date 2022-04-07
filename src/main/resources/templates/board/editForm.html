@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::link},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,42 +23,36 @@
   <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<h3>게시글 수정하기</h3>
-<div id="container">
-  <form th:method="patch" th:object="${editForm}" enctype="multipart/form-data">
-    <div>제목<input type="text" th:field="*{btitle}" autofocus></div>
-    <div class="fieldError" th:errors="*{btitle}"></div>
-    <div>내용</div>
-    <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}"></textarea>
-    <div class="fieldError" th:errors="*{bcontent}"></div>
+<div class="form">
+  <h3>게시글 수정하기</h3>
+  <div id="container">
+    <form class="editor" th:method="patch" th:object="${editForm}" enctype="multipart/form-data">
+      <div>제목<input type="text" th:field="*{btitle}" autofocus></div>
+      <div class="fieldError" th:errors="*{btitle}"></div>
+      <div>내용</div>
+      <textarea name="" id="" cols="30" rows="10" th:field="*{bcontent}"></textarea>
+      <div class="fieldError" th:errors="*{bcontent}"></div>
 
-    <!--파일첨부-->
-    <input type="checkbox" id="checkbox">
-    <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
-    <div id="accordion-item">
-      <input type="file" th:field="*{files}" multiple>
-      <div th:each="file : ${attachFiles}">
-        <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
-        <i class="fa-solid fa-trash-can" th:data-fid="${file.fnum}"></i>
-        <th:block th:if="${#strings.contains(file.ftype,'image')}" >
-          <img th:src="@{|/attach/view/${file.fnum}|}" th:width="30px" th:height="30px">
-        </th:block>
+      <!--파일첨부-->
+      <input type="checkbox" id="checkbox">
+      <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
+      <div id="accordion-item">
+        <input type="file" th:field="*{files}" multiple>
+        <div th:each="file : ${attachFiles}">
+          <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
+          <i class="fa-solid fa-trash-can" th:data-fid="${file.fnum}"></i>
+          <th:block th:if="${#strings.contains(file.ftype,'image')}" >
+            <img th:src="@{|/attach/view/${file.fnum}|}" th:width="30px" th:height="30px">
+          </th:block>
+        </div>
       </div>
-    </div>
 
-    <div>
-      <button type="submit">저장</button>
-      <button id="cancelBtn" type="button" th:data-bnum="*{bnum}">취소</button>
-    </div>
-  </form>
+      <div>
+        <button id="saveBtn" type="button" th:data-bnum="*{bnum}">저장</button>
+        <button id="cancelBtn" type="button" th:data-bnum="*{bnum}">취소</button>
+      </div>
+    </form>
+  </div>
 </div>
-<script>
-  //취소 버튼
-  cancelBtn.addEventListener('click', e=>{
-    const bnum = e.target.dataset.bnum;
-    const url = `/board/${bnum}/detail`;
-    location.href = url;
-  });
-</script>
 </body>
 </html>
