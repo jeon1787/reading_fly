@@ -18,6 +18,11 @@ body{
     font-weight: normal;
 }
 
+/*에러 메세지 공통*/
+.fieldError{
+    color: skyblue;
+}
+
 /*.form 공통*/
 .form button{
     font-family: 'Cafe24Oneprettynight';
