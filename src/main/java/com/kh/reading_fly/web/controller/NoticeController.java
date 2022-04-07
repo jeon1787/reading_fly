@@ -59,6 +59,7 @@ public class NoticeController {
       RedirectAttributes redirectAttributes,
       Model model){
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()){
       log.info("add/bindingResult={}",bindingResult);
       return "notice/noticeAddForm";

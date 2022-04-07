@@ -61,8 +61,10 @@ public class QnaController {
       @Valid @ModelAttribute QnaAddForm qnaAddForm,
       BindingResult bindingResult,
       HttpSession session,
-      RedirectAttributes redirectAttributes) {
+      RedirectAttributes redirectAttributes,
+      Model model) {
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()) {
       return "qna/qnaAddForm";
     }
@@ -267,9 +269,11 @@ public class QnaController {
       @PathVariable Long id,  //부모글의 qNum
       @Valid QnaReplyForm qnaReplyForm,
       BindingResult bindingResult,
-      RedirectAttributes redirectAttributes
+      RedirectAttributes redirectAttributes,
+      Model model
   ) {
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()) {
       return "qna/qnaReplyForm";
     }
