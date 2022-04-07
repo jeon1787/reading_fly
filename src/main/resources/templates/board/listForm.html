@@ -29,11 +29,11 @@
   <!--wrap-->
   <div class="wrap">
 
-    <!--1. 제목-->
+    <!--제목-->
     <h3>게시판</h3>
-    <hr>
+<!--    <hr>-->
 
-    <!--2. 전체목록-->
+    <!--전체목록-->
     <table>
       <!--테이블헤드-->
       <thead>
@@ -58,10 +58,12 @@
         </block>
       </tbody>
     </table>
-    <hr>
+<!--    <hr>-->
 
     <!--3. 글쓰기버튼-->
-    <button class="btn" id="writeBtn" type="button" onclick="location.href='/board/add'">글쓰기</button>
+    <div class="board-button">
+      <button class="btn" id="writeBtn" type="button" onclick="location.href='/board/add'">글쓰기</button>
+    </div>
 
     <!--페이징 버튼-->
     <div class="board-page">

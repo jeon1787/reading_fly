@@ -41,19 +41,18 @@
       </div>
     </div>
     <hr>
-<!--    <br>-->
 
     <!--게시글 본문-->
     <div class="board-content">
       <textarea name="" id="" cols="30" rows="10" th:field="${detailForm.bcontent}"></textarea>
     </div>
-<!--    <br>-->
 
     <!--파일첨부-->
     <div class="board-file">
       <input type="checkbox" id="checkbox">
       <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
       <div id="accordion-item">
+<!--        <div th:text="${#lists.size('attachFiles')}">첨부된 파일이 없습니다.</div>-->
         <div th:each="file : ${attachFiles}">
           <a href="" th:href="@{|/attach/down/${file.fnum}|}" th:text="${file.upload_filename}"></a>
           <th:block th:if="${#strings.contains(file.ftype,'image')}" >
@@ -62,7 +61,6 @@
         </div>
       </div>
     </div>
-<!--    <br>-->
 
     <!--수정/삭제 버튼-->
     <div class="board-button">
@@ -72,8 +70,6 @@
         </th:block>
         <button onclick="location.href='/board/1'">목록</button>
     </div>
-<!--    <br>-->
-<!--    <br>-->
 
     <!--댓글-->
     <div class="comment-area">

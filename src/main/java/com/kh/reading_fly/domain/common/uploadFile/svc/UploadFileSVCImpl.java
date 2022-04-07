@@ -154,6 +154,7 @@ public class UploadFileSVCImpl implements UploadFileSVC{
    */
   @Override
   public int deleteFileByFnum(Long fnum) {
+    log.info(String.valueOf(fnum));
     //물리적 파일 삭제
     UploadFileDTO uploadFileDTO = uploadFileDAO.findFileByFnum(fnum);
     deleteFile(uploadFileDTO.getCode(), uploadFileDTO.getStore_filename());

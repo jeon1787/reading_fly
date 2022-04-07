@@ -62,9 +62,26 @@ ClassicEditor
 			console.error( error );
 		} );
 
+//이벤트 막기(Capturing)
+document.body.addEventListener('click', e=>{
+  if(e.target.id == "saveBtn") return;
+  if(e.target == $files) return;
+  if(e.target.tagName == "A" || e.target.tagName == "BUTTON"){
+    if(!confirm("수정을 취소하시겠습니까?")){
+      //동일한 DOM 에 걸린 이벤트를 막기(a 태그)
+      if (e.preventDefault) e.preventDefault();
+      else e.returnValue = false;//IE 대응
+
+      //동일한 DOM 에 걸린 이벤트를 막기(button 태그)
+      if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+      else e.isImmediatePropagationEnabled = false;//IE 대응
+    }
+  }
+}, true)//이벤트 캡쳐링(Capturing)
+
 //저장 버튼
 saveBtn.addEventListener('click', e=>{
-  if(!confirm("저장하시겠습니까?")) return;
+  if(!confirm("수정사항을 저장하시겠습니까?")) return;
   const $formTag = document.querySelector('.editForm');
   const bnum = e.target.dataset.bnum;
   const url = "/board/" + bnum + "/edit";
@@ -74,6 +91,7 @@ saveBtn.addEventListener('click', e=>{
 
 //취소 버튼
 cancelBtn.addEventListener('click', e=>{
+//  if(!confirm("수정을 취소하시겠습니까?")) return;
   const bnum = e.target.dataset.bnum;
   const url = `/board/${bnum}/detail`;
   location.href = url;
