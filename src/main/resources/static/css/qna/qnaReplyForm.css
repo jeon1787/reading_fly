@@ -87,8 +87,9 @@ form {
   margin-left: 10px;
 }
 
-.fieldError {
-  color:red;
+/*에러 메세지 공통*/
+.fieldError{
+    color: skyblue;
 }
 
 /*------첨부파일 접었다 펴기------*/
