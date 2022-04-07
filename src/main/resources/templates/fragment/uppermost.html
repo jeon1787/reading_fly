@@ -39,7 +39,21 @@
         <a th:href="@{/member/out}">회원탈퇴</a>
       </div>
     </div>
-    <span class="log"><a th:href="@{logout}">LOG-OUT</a></span>
+    <span class="log"><a th:href="@{/logout}">LOG-OUT</a></span>
+  </div>
+
+  <!--관리자 계정 로그인-->
+  <div class="upper-right" th:fragment="adminLoginUpm">
+    <span th:text="${session?.loginMember?.nickname}">닉네임</span>
+    <div class="dropdown">
+      <span class="dropbtn">ADMIN PAGE</span>
+      <div class="dropdown-content">
+        <a th:href="@{/member/edit}">회원정보 변경</a>
+        <a th:href="@{/member/memberpw}">비밀번호 변경</a>
+        <a th:href="@{/admin/memberlist}">회원정보조회</a>
+      </div>
+    </div>
+    <span class="log"><a th:href="@{/logout}">LOG-OUT</a></span>
   </div>
 
 </body>
