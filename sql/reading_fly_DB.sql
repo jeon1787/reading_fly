@@ -363,7 +363,13 @@ nocycle; --순환하지않음
 insert into notice (nnum, ntitle, ncontent)
 values (notice_nnum_seq.nextval, '사이트 이용방법', '사용자의 독서 기록을 등록할 수 있도록 지원합니다.'); 
 insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '게시판 이용규칙', '욕설 폭언 등 상대방에게 불쾌감을 줄 수 있는 단어는 사용하지 마세요'); 
+values (notice_nnum_seq.nextval, '게시판 이용규칙', '욕설 폭언 등 상대방에게 불쾌감을 줄 수 있는 단어는 사용하지 마세요');
+insert into notice (nnum, ntitle, ncontent)
+values (notice_nnum_seq.nextval, '개인정보처리방침 개정 안내', '개인정보처리방침이 아래와 같이 일부 개정될 예정입니다.');
+insert into notice (nnum, ntitle, ncontent)
+values (notice_nnum_seq.nextval, '서버 점검 안내', '고객님들의 너그러운 양해 바랍니다.');
+insert into notice (nnum, ntitle, ncontent)
+values (notice_nnum_seq.nextval, '검색이 업데이트 되었습니다.', '이제는 공백과 유사어를 검색하여 출력합니다.');
 
 select * from notice;
 
@@ -404,10 +410,26 @@ nocycle; --순환하지않음
 
 --원글 샘플데이터 등록    
 insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'독서 기록은 어떻게 하나요?','테스터1','기록은 어떻게 하면 되나요?',qna_qnum_seq.currval);
+values(qna_qnum_seq.nextval,'독서 기록은 어떻게 하나요?','홍길동','기록은 어떻게 하면 되나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'회원 탈퇴는 어떻게 하나요?','홍길순','탈퇴는 어떻게 하면 되나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'회원정보 수정은 어떤 걸 할 수 있나요?','홍길남','정보 수정은 어떤 걸 할 수 있나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'카카오톡 로그인은 없나요?','홍길북','카톡 로그인은 없나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'달력은 무엇인가요?','홍길여','달력은 무엇인가요?',qna_qnum_seq.currval);
 
 --답글 샘플데이터 등록
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'이렇게 하면 됩니다.','관리자',1,'책장을 이용하여 작성하며 됩니다.',1,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',1,'책장을 이용하여 작성하며 됩니다.',1,1,1,'A');
+insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
+values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',2,'마이페이지에서 하시면 됩니다.',2,1,1,'A');
+insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
+values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',3,'이메일과 별칭이 수정됩니다.',3,1,1,'A');
+insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
+values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',4,'추후 업데이트할 예정입니다.',4,1,1,'A');
+insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
+values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',5,'읽은 책들을 표시해 주는 기능입니다.',5,1,1,'A');
 
 commit;
