@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping("/map")
 public class MapController {
 
+  @RequestMapping("/map")
   public String map(){
     log.info("map() 호출됨!");
 

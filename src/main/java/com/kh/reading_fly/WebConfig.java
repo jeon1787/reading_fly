@@ -43,18 +43,22 @@ public class WebConfig implements WebMvcConfigurer {
             "/member/outCompleted",       // 회원탈퇴 완료
             "/find/**",                   // id 및 pw 찾기 관련 일체
 
-            "/memberexist/**",             // id 및 pw 찾기 관련 일체
+            "/memberexist/**",            // id 및 pw 찾기 관련 일체
 
-            "/restart",                    //홈화면 복귀
+            "/restart",                   //홈화면 복귀
 
             "/board",
-            "/board/*",                     // 게시판 목록 보기
+            "/board/*",                   // 게시판 목록 보기
+            "/board/*/TC/*",              // 게시판 제목+내용 검색
+            "/board/*/T/*",               // 게시판 제목 검색
+            "/board/*/C/*",               // 게시판 내용 검색
+            "/board/*/N/*",               // 게시판 닉네임 검색
             "/board/*/detail",            // 게시판 내용 보기
-            "/api/comment/*",            // 게시판 댓글 보기
-            "/notices/all",                // 공지사항 목록 보기
-            "/error/**"
+            "/api/comment/*",             // 게시판 댓글 보기
+            "/notices/all",               // 공지사항 목록 보기
+            "/error/**",
 
-
+            "/map"                        //지도 검색
 
         );
 

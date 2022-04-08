@@ -31,6 +31,7 @@ tbody tr:hover {
 .form td.date{width: 130px; text-align: center;}
 .form td.hit{width: 80px; text-align: center;}
 .form a{margin-left: 50px}
+.form .numberOfComment{margin: 0px; padding: 0px;}
 
 .board-button{
   display: flex;
