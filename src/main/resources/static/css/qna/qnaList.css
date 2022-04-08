@@ -1,64 +1,7 @@
 @charset "utf-8";
 
-/*폰트*/
-/*카페24 고운밤*/
-@font-face {
-    font-family: 'Cafe24Oneprettynight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-/*body 글꼴*/
-body{
-    margin: 0;
-    font-family: 'Cafe24Oneprettynight';
-    font-weight: bold;
-}
-/*.form 글꼴*/
-main{
-    font-size: 20px;
-    font-weight: normal;
-}
-
-/*.form 공통*/
-main button{
-    font-family: 'Cafe24Oneprettynight';
-    font-size: 20px;
-    background-color: #f3f3f3;
-    margin: 0px;
-    padding: 0px;
-    border: 0px;
-    height: 30px;
-    width: 70px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-main button:hover{
-    background-color: gray;
-    color: white;
-}
-
-main a{
-    text-decoration: none;
-    color: black;
-}
-
-main a:hover{
-    text-decoration: underline;
-}
-
-main textarea{
-    resize: none;
-}
-
-from {
-  width: 1024px;
-}
-
 .wrap {
-  width: 1000px;
    padding: 42px;
-  background-color: #ffffff;
 }
 
 table{
@@ -76,24 +19,28 @@ tbody tr:hover {
   background-color: #ebecef;
 }
 
-td,th{padding: 0px;}
-td.num{width: 80px; text-align: center;}
-td.title{width: 500px;}
-td.nickname{width: 130px; text-align: center;}
-td.date{width: 130px; text-align: center;}
-td.hit{width: 80px; text-align: center;}
-a{margin-left: 50px}
+.form td,th{padding: 0px;}
+.form td.num{width: 80px; text-align: center;}
+.form td.title{width: 500px;}
+.form td.nickname{width: 130px; text-align: center;}
+.form td.date{width: 130px; text-align: center;}
+.form td.hit{width: 80px; text-align: center;}
+.form a{margin-left: 50px}
 
 .qna-button {
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
   margin-bottom: 20px;
+}
+
+.form .btn {
+  width: 70px;
 }
 
 .qna-page {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .qna-page a{
@@ -106,4 +53,8 @@ a{margin-left: 50px}
 .qna-search {
   display: flex;
   justify-content: center;
+}
+
+.wrap .qna-page .qna-page-item.active{
+  background-color:#87CEEB;
 }

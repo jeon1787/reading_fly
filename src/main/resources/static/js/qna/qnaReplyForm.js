@@ -69,6 +69,14 @@ const page = $qna.dataset.page;
 
 //등록
 writeBtn?.addEventListener("click", e=>{
+  if(document.querySelector('.title').value.trim() == ''){
+      alert("제목을 입력하세요.");
+      return;
+    }
+    if(document.querySelector('.ck-content').textContent.trim() == ''){
+      alert("본문을 입력하세요.");
+      return;
+    }
   writeForm.submit();
 });
 //목록

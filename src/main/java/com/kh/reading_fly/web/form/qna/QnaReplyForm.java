@@ -10,13 +10,13 @@ import java.util.List;
 @Data
 public class QnaReplyForm {
   @NotBlank(message = "제목을 입력해주세요")
-  @Size(min=1, max = 20, message = "최소 1자 최대 20자")
+  @Size(min=1, max = 20, message = "글자수 20자를 초과할 수 없습니다.")
   private String qTitle;         //  제목
   @NotBlank
   @Size(min=3,max=15)
   private String qNickname;      //  별칭
   @NotBlank(message = "내용을 입력해주세요")
-  @Size(min=1, max = 1000, message = "최소 1자 최대 1000자")
+  @Size(min=1, message = "내용은 글자수 최소 1자 입니다.")
   private String qContent;      //  내용
 
   private List<MultipartFile> files;  // 첨부파일

@@ -10,7 +10,7 @@
         ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
@@ -23,7 +23,7 @@
   <script defer src="" th:src="@{/js/qna/qnaReplyForm.js}"></script>
 </head>
 <body>
-<main>
+<div class="form">
   <div class="wrap" th:data-page="${fc.rc.reqPage}">
     <h3>답글 작성</h3>
     <div id="container">
@@ -62,6 +62,6 @@
       </form>
     </div>
   </div>
-</main>
+</div>
 </body>
 </html>
