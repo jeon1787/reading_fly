@@ -10,21 +10,19 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class UpdateForm {
-    //    private Long bnum;     //    NUMBER(15) not null,                  --도서등록번호
+public class DetailForm {
     private String isbn;    //    isbn NUMBER(13) not null,             -- 도서번호13
     private String title;    //    title VARCHAR2(100) not null,         -- 제목
+    private String bcontents;
     private String authors;    //    author VARCHAR2(100),                 -- 저자
     private String publisher;    //    publisher VARCHAR2(100),              -- 출판사
     private String translators;    //    translator VARCHAR2(100),             -- 번역가
     private String thumbnail;    //    thumbnail VARCHAR2(200) not null,     -- 표지URL
-    private Date publication_dt;    //    publication_dt DATE                   -- 출판일
-    private String bcontents;
+    private Date publisher_dt;    //    publication_dt DATE                   -- 출판일
 
-    private Long snum; //NUMBER(15) not null,     -- 독서등록번호
-    //    private int sgroup; //NUMBER(1) default 1,    -- 독서상태(도서번호 1=예정, 2=읽는중, 3=완독)
+    private Long snum; //NUMBER(15) not null,     -- 도서등록번호
     private Long spage;  //NUMBER(15),            -- 총페이지
-    private String sisbn; //NUMBER(13) not null,    -- ISBN
+    private Long sisbn; //NUMBER(13) not null,    -- ISBN
     private String sid; //VARCHAR2(40) not null     -- 아이디
 
     private Long dnum; //NUMBER(15) not null,       -- 기록No

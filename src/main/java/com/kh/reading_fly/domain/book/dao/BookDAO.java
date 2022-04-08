@@ -19,10 +19,10 @@ public interface BookDAO {
     List<Book> list(String id);
 
     //조회
-    Book detail(String isbn);
+    List<Book> detail(String id, String isbn);
 
     //수정
-    Book update(String isbn, Book book);
+    Long update(String id, String isbn, Book book);
 
     //삭제
     int delete(String isbn);

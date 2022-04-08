@@ -38,13 +38,13 @@ public class BookSVCImpl implements BookSVC{
     }
 
     @Override
-    public Book detail(String isbn) {
-        return bookDAO.detail(isbn);
+    public List<Book> detail(String id, String isbn) {
+        return bookDAO.detail(id, isbn);
     }
 
     @Override
-    public Book update(String isbn, Book book) {
-        return bookDAO.update(isbn, book);
+    public Long update(String id, String isbn, Book book) {
+        return bookDAO.update(id, isbn, book);
     }
 
     @Override
