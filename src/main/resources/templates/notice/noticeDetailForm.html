@@ -9,7 +9,7 @@
          ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
@@ -23,7 +23,7 @@
   <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<main>
+<div class="form">
   <div class="wrap">
     <div class="class-body">
       <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}" enctype="multipart/form-data">
@@ -75,6 +75,6 @@
       </form>
     </div>
   </div>
-</main>
+</div>
 </body>
 </html>
