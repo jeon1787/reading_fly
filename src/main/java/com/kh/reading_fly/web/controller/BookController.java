@@ -3,6 +3,7 @@ package com.kh.reading_fly.web.controller;
 import com.kh.reading_fly.domain.book.dto.Book;
 import com.kh.reading_fly.domain.book.dto.BookRequest;
 import com.kh.reading_fly.domain.book.svc.BookSVC;
+import com.kh.reading_fly.web.form.book.DetailForm;
 import com.kh.reading_fly.web.form.book.SaveForm;
 import com.kh.reading_fly.web.form.book.UpdateForm;
 import com.kh.reading_fly.web.form.member.SessionConst;
@@ -29,6 +30,7 @@ public class BookController {
 
     private final BookSVC bookSVC;
 
+    //검색
     @GetMapping({"/search", "/search/{inputWord}"})
     public String search(@Valid@ModelAttribute BookRequest bookRequest,
                          @PathVariable(required = false) Optional<String> inputWord,
@@ -40,6 +42,7 @@ public class BookController {
         return "book/bookSearch";
     }
 
+    //검색결과
     @PostMapping("/info")
     public String info(@Valid@ModelAttribute BookRequest bookRequest,
                        Model model){
@@ -50,31 +53,9 @@ public class BookController {
         return "book/bookInfo";
     }
 
-//    //상세
-//    @PostMapping("/{isbn}/detail")
-//    public String detailForm(@PathVariable String isbn,
-//                             @Valid @ModelAttribute BookRequest bookRequest,
-//                             Model model){
-//        model.addAttribute("bookRequest", bookRequest);
-//        return "book/bookDetail";
-//    }
-
-
-
-    //등록양식
-//    @PostMapping("/saveForm")
-//    public String saveForm(@Valid @ModelAttribute BookRequest bookRequest,
-//                             Model model){
-//        model.addAttribute("bookRequest", bookRequest);
-//        return "book/bookSave";
-//    }
-    //※saveForm은 필요없을 듯
-
     //등록처리
     @PostMapping("/save")
     public String save(@Valid@ModelAttribute SaveForm saveForm,
-//                       @PathVariable String isbn,
-                       RedirectAttributes redirectAttributes,
                        HttpSession session){
         log.info("통과");
         log.info("saveForm={}", saveForm);
@@ -91,10 +72,6 @@ public class BookController {
         book.setDpage(0L);
         book.setDsnum(snum);
         bookSVC.saveDocument(book);
-//        book.setDpage(0L);
-//
-//        redirectAttributes.addAttribute("isbn", isbn);
-//        redirectAttributes.addAttribute("saveForm", saveForm);
         return "redirect:/book/list";
     }
 
@@ -105,31 +82,41 @@ public class BookController {
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
         List<Book> listBook = bookSVC.list(id);
-        model.addAttribute("list", listBook);
+        model.addAttribute("listBook", listBook);
         return "book/bookList";
     }
 
+    //상세
+    @PostMapping("/{isbn}/detail")
+    public String detail(@PathVariable String isbn,
+                             HttpSession session,
+                             Model model){
+        LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String id = loginMember.getId();
 
+        List<Book> detailBook = bookSVC.detail(id, isbn);
+        model.addAttribute("detailBook", detailBook);
+        return "book/bookDetail";
+    }
 
     //수정양식
     @GetMapping("/{isbn}/update")
-    public String updateForm(@PathVariable String isbn,
-                             Model model){
-        Book book = bookSVC.detail(isbn);
-        UpdateForm updateForm = new UpdateForm();
-        BeanUtils.copyProperties(book, updateForm);
-        model.addAttribute("updateForm", updateForm);
+    public String updateForm(Model model){
+        model.addAttribute("updateForm", new UpdateForm());
         return "book/updateForm";
     }
 
     //수정처리
     @PostMapping("/{isbn}/update")
-    public String update(@PathVariable String isbn,
+    public String update(@PathVariable String id,
+                         @PathVariable String isbn,
                          @Valid @ModelAttribute UpdateForm updateForm,
                          RedirectAttributes redirectAttributes){
+
         Book book = new Book();
         BeanUtils.copyProperties(updateForm, book);
-        bookSVC.update(isbn, book);
+        book.setDsnum(updateForm.getSnum());
+        bookSVC.update(id, isbn, book);
 
         redirectAttributes.addAttribute("isbn", isbn);
         return "redirect:/book/{isbn}/update";

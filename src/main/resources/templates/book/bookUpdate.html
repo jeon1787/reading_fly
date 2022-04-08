@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독서기록추가</title>
+    <script defer th:src="@{/js/book/bookUpdate.js}"></script>
+</head>
+<body>
+<div class="form">
+    <h3>독서기록추가</h3>
+    <form class="update-form" id="updateForm" action="" th:action th:method="post" th:object="${updateForm}">
+        <div><label for="">얼마나 읽었나요?</label></div>
+        <div><input id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:min="0" th:max="*{spage}" th:step="1"></div>
+
+        <div><label for="">날짜는?</label></div>
+        <div><input type="date" th:field="*{ddate}"></div>
+
+        <div><label for="">페이지는?</label></div>
+        <div><input id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}">/<input id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>
+    </form>
+    <div class="update-btngrp">
+        <button type="button" id="updateBtn">등록하기</button>
+        <button type="button" id="listBtn">돌아가기</button>
+    </div>
+</div>
+</body>
+</html>

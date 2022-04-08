@@ -6,14 +6,13 @@ $emptyImg.addEventListener('click', event => {
     location.href = `/book/search`;
 })
 
-// const $bookImg = document.getElementById('bookImg');
-// $bookImg.addEventListener('click', event => {
-//     console.log(event);
-//     console.log(book);
-//     const isbn = event.target.dataset.isbn;
-//     const url = '/book/{' + isbn + '}/update';
-//     lodation.href = url;
-// })
+ const $bookImg = document.getElementById('bookImg');
+ $bookImg.addEventListener('click', event => {
+
+     const isbn = event.target.dataset.isbn;
+     const url = "/book/" + isbn + "/update";
+     location.href = url;
+ })
     
 // bookImg.addEventListener('mouseOver', event => {
 //     var positionX = $bookImg.position().left;

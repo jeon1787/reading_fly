@@ -53,32 +53,33 @@ public class APiBookController {
         return result;
     }
 //
-//    //조회
-//    @PostMapping("/{isbn}")
-//    public ApiResult<Book> detail(@PathVariable String isbn){
-//
-//        Book detailBook = bookSVC.detail(isbn);
-//
-//        ApiResult<Book> result = null;
-//
-//        if(detailBook != null) {
-//
-//            result = new ApiResult<>("00", "success", detailBook);
-//
-//        }else{
-//
-//            result = new ApiResult<>("99", "조회하고자하는 데이터가 없습니다.", detailBook);
-//
-//        }
-//
-//        return result;
-//    }
+    //조회
+    @PostMapping("/{isbn}")
+    public ApiResult<List<Book>> detail(@PathVariable String id, @PathVariable String isbn){
+
+        List<Book> detailBook = bookSVC.detail(id, isbn);
+
+
+        ApiResult<List<Book>> result = null;
+
+        if(detailBook != null) {
+
+            result = new ApiResult<>("00", "success", detailBook);
+
+        }else{
+
+            result = new ApiResult<>("99", "조회하고자하는 데이터가 없습니다.", detailBook);
+
+        }
+
+        return result;
+    }
 
     //수정
     @PatchMapping("/{isbn}")
-    public ApiResult<Book> update(@PathVariable String isbn, @RequestBody Book book){
+    public ApiResult<Book> update(@PathVariable String id, @PathVariable String isbn, @RequestBody Book book){
 
-        Book updateBook = bookSVC.update(isbn, book);
+        Long updateBook = bookSVC.update(id, isbn, book);
 
         book.setDdate(LocalDate.now());
 
@@ -86,11 +87,11 @@ public class APiBookController {
 
         if(updateBook != null){
 
-            result = new ApiResult<>("00","success", bookSVC.detail(book.getIsbn()));
-
-        }else{
-
-            result = new ApiResult<>("99","fail", updateBook);
+//            result = new ApiResult<>("00","success", updateBook);
+//
+//        }else{
+//
+//            result = new ApiResult<>("99","fail", updateBook);
         }
 
         return result;
