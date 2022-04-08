@@ -44,7 +44,7 @@
 
   <!--관리자 계정 로그인-->
   <div class="upper-right" th:fragment="adminLoginUpm">
-    <span th:text="${session?.loginMember?.nickname}">닉네임</span>
+    <span th:text="|${session?.loginMember?.nickname} 님|">닉네임</span>
     <div class="dropdown">
       <span class="dropbtn">ADMIN PAGE</span>
       <div class="dropdown-content">

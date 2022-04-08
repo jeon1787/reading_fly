@@ -8,6 +8,7 @@
 }
 /*body 글꼴*/
 body{
+    overflow-y: scroll;
     margin: 0;
     font-family: 'Cafe24Oneprettynight';
     font-weight: bold;
