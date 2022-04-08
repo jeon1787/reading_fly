@@ -422,14 +422,14 @@ values(qna_qnum_seq.nextval,'달력은 무엇인가요?','홍길여','달력은 
 
 --답글 샘플데이터 등록
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',1,'책장을 이용하여 작성하며 됩니다.',1,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ답변:독서 기록은 어떻게 하나요?','관리자',1,'책장을 이용하여 작성하며 됩니다.',1,1,1,'A');
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',2,'마이페이지에서 하시면 됩니다.',2,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ답변:회원 탈퇴는 어떻게 하나요?','관리자',2,'마이페이지에서 하시면 됩니다.',2,1,1,'A');
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',3,'이메일과 별칭이 수정됩니다.',3,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ답변:회원정보 수정은 어떤 걸 할 수 있나요?','관리자',3,'이메일과 별칭이 수정됩니다.',3,1,1,'A');
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',4,'추후 업데이트할 예정입니다.',4,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ답변:카카오톡 로그인은 없나요?','관리자',4,'추후 업데이트할 예정입니다.',4,1,1,'A');
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)
-values(qna_qnum_seq.nextval,'ㄴ이렇게 하면 됩니다.','관리자',5,'읽은 책들을 표시해 주는 기능입니다.',5,1,1,'A');
+values(qna_qnum_seq.nextval,'ㄴ답변:달력은 무엇인가요?','관리자',5,'읽은 책들을 표시해 주는 기능입니다.',5,1,1,'A');
 
 commit;

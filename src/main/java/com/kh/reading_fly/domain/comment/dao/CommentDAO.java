@@ -41,4 +41,11 @@ public interface CommentDAO {
    * @return
    */
   int delete(Long cnum, String cid);
+
+  /**
+   * 게시글번호로 댓글 개수 조회
+   * @param cbnum
+   * @return
+   */
+  int eachCount(Long cbnum);
 }

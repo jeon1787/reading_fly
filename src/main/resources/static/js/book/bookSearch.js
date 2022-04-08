@@ -66,7 +66,7 @@ searchBtn.addEventListener('click', event => {
         method: "GET",
         url: "https://dapi.kakao.com/v3/search/book?target=title",
         data: { query: $(".word").val(), size: "50" },
-        headers: { Authorization: "KakaoAK 0c9923e8ff0c5dd680f7f403873fb363" }
+        headers: { Authorization: "KakaoAK f75e6a117839fe46761b0b28cf75a7d1" }
     })
         .done(function (msg) {
 
@@ -118,7 +118,7 @@ function notnull(beforeKey) {
         method: "GET",
         url: "https://dapi.kakao.com/v3/search/book?target=title",
         data: { query: key, size: "50" },
-        headers: { Authorization: "KakaoAK 0c9923e8ff0c5dd680f7f403873fb363" }
+        headers: { Authorization: "KakaoAK f75e6a117839fe46761b0b28cf75a7d1" }
     })
         .done(function (msg) {
 

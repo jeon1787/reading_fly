@@ -172,4 +172,22 @@ public class CommentDAOImpl implements CommentDAO {
     return result;
   }//end of delete
 
+  /**
+   * 게시글번호로 댓글 개수 조회
+   * @param cbnum
+   * @return
+   */
+  @Override
+  public int eachCount(Long cbnum) {
+    //sql문 작성
+    StringBuffer sql = new StringBuffer();
+    sql.append(" select count(*) ");
+    sql.append("   from comments  ");
+    sql.append("  where cbnum = ? ");
+
+    //sql문 실행
+    Integer cnt = jdbcTemplate.queryForObject(sql.toString(), Integer.class, cbnum);
+
+    return cnt;
+  }
 }

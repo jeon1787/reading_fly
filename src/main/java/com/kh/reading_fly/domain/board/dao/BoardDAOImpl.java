@@ -312,8 +312,13 @@ public class BoardDAOImpl implements BoardDAO{
   public int totalCount(BoardFilterCondition filterCondition) {
     //sql문 작성
     StringBuffer sql = new StringBuffer();
-    sql.append("select count(*) ");
-    sql.append("  from board  ");
+    sql.append(" SELECT count(*) ");
+    sql.append("   FROM ");
+    sql.append("     Board ");
+    sql.append("   INNER JOIN ");
+    sql.append("     Member ");
+    sql.append("   ON ");
+    sql.append("     Board.bid = Member.id ");
 
     //sql문 검색 조건 추가
     sql = dynamicQuery(filterCondition, sql);
