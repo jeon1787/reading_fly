@@ -19,7 +19,6 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class NoticeDAOImpl implements NoticeDAO{
-
   private final JdbcTemplate jdbcTemplate;
 
   /**
@@ -84,7 +83,6 @@ public class NoticeDAOImpl implements NoticeDAO{
     sql.append("nnum,ntitle,ncontent,nhit,ncdate,nudate ");
     sql.append("from notice) t1 ");
     sql.append("where t1.no between ? and ? ");
-
 
     List<NoticeDTO> list = jdbcTemplate.query(
         sql.toString(),

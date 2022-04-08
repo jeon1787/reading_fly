@@ -1,64 +1,72 @@
 @charset "utf-8";
 
-    form {
-      width: 1024px;
-    }
-    .qna-wrap * {
-      /* outline:1px solid red; */
-      box-sizing: border-box;
-    }
-    .qna-wrap {
-      width: 940px;
-     }
-    .qna-wrap .qna-info{
-      display: flex;
-      justify-content: end;
-    }
-    .qna-wrap .qna-info .qna-hit-content{
-      width:50px;
-      font-weight: bold;
-    }
-    .qna-wrap .qna-info .qna-hit-content.qna-hit-cnt{
-      text-align: right;
-    }
-    .qna-wrap .qna-title {
-      text-align: center; padding:20px 0;
-    }
-    .qna-wrap .qna-content{
-      display: grid;
-       /*제목,내용과 값 간격 = 50px */
-      grid-template-columns: 50px 1fr;
-       /*nav
-      gap: 1px;간격*/
-    }
-    .qna-wrap .qna-content .w100{
-      width:100%; padding:1px;
-    }
-    .qna-wrap .qna-btngrp{
-      display:flex;
-      justify-content: flex-end;
-    }
+.wrap {
+  padding: 42px;
+}
 
-    /*------첨부파일 접었다 펴기------*/
-      #checkbox{
-        display: none;
-      }
-      #accordion{
+/*제목*/
+.qna-title+hr{
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
+}
 
-      }
-      #accordion-item{
-        max-height: 0;
-        transition: all .35s;
-        overflow: hidden;
-        background-color: gray;
-      }
-      #checkbox:checked ~ #accordion-item{
-        max-height: 100px;
-      }
-      #checkbox:checked + #accordion i{
-        transform: rotate( -180deg );
-      }
+.qna-info{
+  margin-right: 20px;
+}
 
-    /* ckeditor style 저장*/
-    #qContent {display:none;}
-    .qna-wrap .ck-editor__editable{min-height:20rem;}
+/*본문*/
+.qna-content{
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
+
+}
+
+/*버튼*/
+.form .qna-button{
+  display:flex;
+  justify-content: flex-end;
+  margin-bottom: 40px;/*변경사항 : br을 마진으로 변경*/
+  font-family: 'Cafe24Oneprettynight';
+}
+
+.form .qna-button button {
+  margin-left: 10px;
+}
+
+/*------첨부파일 접었다 펴기------*/
+
+.qna-file{
+  margin: 0px 10px;
+  margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
+}
+
+#checkbox{
+  display: none;
+}
+#accordion>label{
+  cursor:pointer;
+}
+
+#accordion-item{
+  max-height: 0;
+  transition: all .35s;
+  overflow: hidden;
+
+  margin: 0px 20px;
+  background-color: #F3F3F3;
+  border-radius: 5px;
+}
+
+#accordion-item>div{
+  padding: 10px 20px;
+}
+
+#checkbox:checked ~ #accordion-item{
+  max-height: 100px;
+}
+#checkbox:checked + #accordion i{
+  transform: rotate( -180deg );
+}
+
+/* ckeditor style 지정 */
+#qContent {display:none;}
+.ck-editor__editable{min-height:20rem;}
+.ck-editor__top{display:none;}/*상단툴바 제거*/

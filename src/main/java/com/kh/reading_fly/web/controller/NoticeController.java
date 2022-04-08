@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/notices")
 public class NoticeController {
-
   private final NoticeSVC noticeSVC;
   private final UploadFileSVC uploadFileSVC;
 
@@ -45,7 +45,8 @@ public class NoticeController {
 
   //  등록화면
   @GetMapping("")
-  public String addForm(@ModelAttribute NoticeAddForm noticeAddForm) {
+  public String addForm(@ModelAttribute NoticeAddForm noticeAddForm, Model model) {
+    model.addAttribute("fc",fc);
     return "notice/noticeAddForm";
   }
 
@@ -58,6 +59,7 @@ public class NoticeController {
       RedirectAttributes redirectAttributes,
       Model model){
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()){
       log.info("add/bindingResult={}",bindingResult);
       return "notice/noticeAddForm";
@@ -82,23 +84,23 @@ public class NoticeController {
   //  상세화면
   @GetMapping("/{nNum}/detail")
   public String detailForm(@PathVariable Long nNum, Model model, HttpSession session){
-//    LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//
-//    if(loginMember.getId() != null ) {
-//      String id = loginMember.getId();
-//      session.setAttribute("id",id);
-//    }
-
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
-
 
     NoticeDetailForm noticeDetailForm = new NoticeDetailForm();
     noticeDetailForm.setNNum(notice.getNNum());
     noticeDetailForm.setNTitle(notice.getNTitle());
     noticeDetailForm.setNContent(notice.getNContent());
     noticeDetailForm.setNHit(notice.getNHit());
-    noticeDetailForm.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-    noticeDetailForm.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+    //날짜 포맷
+    LocalDate noticeDate = notice.getNUDate().toLocalDate();
+    LocalDate today = LocalDate.now();
+    if(noticeDate.equals(today)){//오늘 작성된 글이면
+      noticeDetailForm.setNUDate(notice.getNUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+    }else{//오늘 이전에 작성된 글이면
+      noticeDetailForm.setNUDate(notice.getNUDate().toLocalDate().toString());
+    }
+
     model.addAttribute("noticeDetailForm",noticeDetailForm);
 
     //2) 첨부파일 조회
@@ -115,7 +117,6 @@ public class NoticeController {
   //  수정화면
   @GetMapping("/{nNum}")
   public String editForm(@PathVariable Long nNum, Model model){
-
     NoticeDTO notice = noticeSVC.findByNoticeId(nNum);
 
     NoticeEditForm noticeEditForm = new NoticeEditForm();
@@ -166,12 +167,14 @@ public class NoticeController {
 
     return "redirect:/notices/{nNum}/detail";
   }
+
   //  삭제처리
   @DeleteMapping("{nNum}")
   public String del(@PathVariable Long nNum){
     noticeSVC.remove(nNum);
     return "redirect:/notices/all";
   }
+
   //  전체목록
   @GetMapping({"/all",
       "/all/{reqPage}",
@@ -213,8 +216,15 @@ public class NoticeController {
       NoticeItem item = new NoticeItem();
       item.setNNum(notice.getNNum());
       item.setNTitle(notice.getNTitle());
-//      item.setNCDate(notice.getNCDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-      item.setNUDate(notice.getNUDate().toLocalDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+      //날짜 포맷
+      LocalDate noticeDate = notice.getNUDate().toLocalDate();
+      LocalDate today = LocalDate.now();
+      if(noticeDate.equals(today)){//오늘 작성된 글이면
+        item.setNUDate(notice.getNUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+      }else{//오늘 이전에 작성된 글이면
+        item.setNUDate(notice.getNUDate().toLocalDate().toString());
+      }
       item.setNHit(notice.getNHit());
       notices.add(item);
     }

@@ -1,62 +1,68 @@
 @charset "utf-8";
-from { width: 1024px;
-       padding: 42px; }
-    .notice-wrap * {
-      /*outline:1px solid red; */
-      box-sizing: border-box;
-    }
-    .notice-wrap {width: 940px;}
-    .notice-wrap .notice-hit{
-      display: flex;
-      justify-content: end;
-    }
-    .notice-wrap .notice-hit .notice-hit-content{
-      width:50px;
-      font-weight: bold;
-    }
-    .notice-wrap .notice-hit .notice-hit-content.notice-hit-cnt{
-      text-align: right;
-    }
-    .notice-wrap .notice-title {
-      text-align: center; padding:20px 0;
-    }
-    .notice-wrap .notice-content{
-      display: grid;
-      grid-template-columns: 50px 1fr;
-      gap: 1px;
-    }
-    .notice-wrap .notice-content .w100{
-      width:100%; padding:3px;
-    }
-    .notice-wrap .notice-btngrp{
-      display:flex;
-      justify-content: flex-end;
-    }
-    .fieldError {
-      color:red;
-    }
 
-    /*------첨부파일 접었다 펴기------*/
-    #checkbox{
-      display: none;
-    }
-    #accordion{
+.wrap {
+  padding: 42px;
+  }
 
-    }
-    #attachFiles{
-      max-height: 0;
-      transition: all .35s;
-      overflow: hidden;
-      background-color: gray;
-    }
-    #checkbox:checked ~ #attachFiles{
-      max-height: 100px;
-    }
-    #checkbox:checked + #accordion i{
-      transform: rotate( -180deg );
-    }
+/*제목*/
+.notice-title{
+  margin-bottom: 20px;
+}
 
+.notice-title>input {
+ height: 30px;
+ width: 986px;
+ box-sizing: border-box;
+}
 
-    /* ckeditor style 저장*/
-    #nContent {display:none;}
-    .notice-wrap .ck-editor__editable{min-height:20rem;}
+/*본문*/
+.notice-content{
+  margin-bottom: 20px;
+}
+
+/*버튼*/
+.form .notice-button{
+  display: flex;
+  justify-content: end;
+}
+
+.form .notice-button button{
+  margin-left: 10px;
+}
+
+/*------첨부파일 접었다 펴기------*/
+.notice-file{
+  margin: 0px 10px;
+  margin-bottom: 20px;
+}
+#checkbox{
+  display: none;
+}
+#accordion>label{
+  cursor:pointer;
+}
+
+#attachFiles{
+  max-height: 0;
+  transition: all .35s;
+  overflow: hidden;
+
+  margin: 0px 20px;
+  background-color: #F3F3F3;
+  border-radius: 5px;
+}
+
+#attachFiles>div{
+  padding: 10px 20px;
+}
+
+#checkbox:checked ~ #attachFiles{
+  max-height: 100px;
+}
+#checkbox:checked + #accordion i{
+  transform: rotate( -180deg );
+}
+
+/* ckeditor style 저장*/
+#nContent {display:none;}
+.ck-editor__editable{min-height:20rem;}

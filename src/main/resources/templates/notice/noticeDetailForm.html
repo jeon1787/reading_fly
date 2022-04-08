@@ -9,7 +9,7 @@
          ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
@@ -23,28 +23,32 @@
   <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<main>
-  <div class="notice-wrap">
-    <div class="notice-title"><h3>게시글 보기</h3></div>
+<div class="form">
+  <div class="wrap">
     <div class="class-body">
       <form th:action th:method="delete" th:object="${noticeDetailForm}" th:data-n-num="*{nNum}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{nNum}">
-        <!--        <input type="hidden" id="noticeId" name="noticeId" value="xxx">-->
-        <div class="notice-info">
-          <div>관리자</div>
-          <sapn class="date">[[*{nUDate}]]</sapn>
-          <span class="notice-hit-content notice-hit-tit">조회수</span>
-          <span class="notice-hit-content notice-hit-cnt" th:text="*{nHit}">10</span>
+        <div class="notice-title">
+          <div>게시글></div>
+          <h3>[[*{nTitle}]]</h3>
+          <div>
+          <span class="notice-info notice-nickname">관리자</span>
+          <sapn class="notice-info notice-budate" th:text="|작성일 *{nUDate}|"></sapn>
+          <span class="notice-info notice-nhit" th:text="|조회수 *{nHit}|"></span>
         </div>
+        </div>
+        <hr>
+
+<!--        <br>-->
+
+        <!--게시글 본문-->
         <div class="notice-content">
-          <div><lable>제목:</lable></div>
-          <span class="w100">[[*{nTitle}]]</span>
-          <div><lable>내용</lable></div>
-
-          <div><textarea name="" id="" rows="10" class="w100" th:field="*{nContent}" th:readonly="readonly"></textarea></div>
+          <div><textarea name="" id="" cols="30" rows="10" class="w100" th:field="*{nContent}" th:readonly="readonly"></textarea></div>
         </div>
+<!--        <br>-->
 
-        <!--5. 파일첨부-->
+        <!--파일첨부-->
+        <div class="notice-file">
         <input type="checkbox" id="checkbox">
         <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
         <div id="accordion-item">
@@ -55,18 +59,22 @@
             </th:block>
           </div>
         </div>
+        </div>
 
-        <div class="notice-btngrp">
+<!--        <br>-->
+
+        <!--버튼-->
+        <div class="notice-button">
           <!--글작성자가 관리지일때만 수행-->
-          <button type="button" id="editBtn" th:block th:if="${s_email == 'admin@test.com'}">수정</button>
-          <button type="button" id="delBtn" th:block th:if="${s_email == 'admin@test.com'}">삭제</button>
+          <th:block th:if="${s_email == 'admin@test.com'} ">
+          <button type="button" id="editBtn">수정</button>
+          <button type="button" id="delBtn">삭제</button>
           </th:block>
-          <!-------------------------------------------->
           <button type="button" id="listBtn" th:onclick="|location.href='@{/notices/all/{reqPage}(reqPage=${fc.rc.reqPage})}'|">목록</button>
         </div>
       </form>
     </div>
   </div>
-</main>
+</div>
 </body>
 </html>

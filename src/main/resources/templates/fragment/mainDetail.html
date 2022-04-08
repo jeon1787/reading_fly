@@ -12,73 +12,68 @@
   <link href="https://hangeul.pstatic.net/hangeul_static/css/NanumAmSeuTeReuDam.css" rel="stylesheet">
   <title th:replace=${title}>리ː플</title>
   <link rel="stylesheet" th:href="@{/css/main/mainDetail.css}" th:replace=${main_style}>
-  <script defer src="xxx.js" th:replace=${main_script}></script>
+  <script defer th:src="@{xx.js}" th:replace=${main_script}></script>
+  <script src="https://kit.fontawesome.com/0ed864a7e5.js" crossorigin="anonymous"></script>
   <th:block th:replace=${style}></th:block>
   <th:block th:replace=${script}></th:block>
 </head>
-<body th:with="loginMember = ${session.loginMember}">
+<body onload="InitializeStaticMenu()" th:with="loginMember = ${session.loginMember}">
 
 <!--upper-->
 <div class="upper">
-  <div class="upper-left">
-    <input type="text" name="query" placeholder="도서명" size="50">
-    <button type="submit" onclick="location.href='./bookapi.html'"> 찾기 </button>
+  <div class="upper-second">
+    <div class="upper-left">
+      <a th:href="@{/restart}"></a>
+    </div>
+    <div class="upper-center">
+      <input type="text" name="query" placeholder="도서명" size="50">
+      <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
+    </div>
+    <!--로그인시-->
+    <th:block th:if="${!session.isEmpty()}">
+      <div class="upper-right" th:replace="${session.loginMember.id == 'admin'} ? ~{fragment/uppermost::adminLoginUpm} : ~{fragment/uppermost::afterLoginUpm}"></div>
+    </th:block>
+    <!--비로그인시-->
+    <th:block th:unless="${!session.isEmpty()}">
+      <div class="upper-right" th:replace="~{fragment/uppermost::beforeLoginUpm}"></div>
+    </th:block>
   </div>
-  <!--로그인시-->
-  <th:block th:if="${!s_session.isEmpty()}">
-    <div class="upper-right" th:replace="~{fragment/uppermost::afterLoginUpm}"></div>
-  </th:block>
-  <!--비로그인시-->
-  <th:block th:unless="${!s_session.isEmpty()}">
-    <div class="upper-right" th:replace="~{fragment/uppermost::beforeLoginUpm}"></div>
-  </th:block>
 </div>
 
 <!--header-->
-<div class="head" th:replace=${header}>리 : 플</div>
-
+<div class="header" th:replace=${header}>
+<!--  <div class="header-inner">-->
+<!--    <div class="main_logo_box">-->
+<!--      <a href="/"><img class="logo" src="/img/main_logo.png"></a>-->
+<!--    </div>-->
+<!--    <div class="snow-container">-->
+<!--      <div class="snow foreground"></div>-->
+<!--      <div class="snow foreground layered"></div>-->
+<!--      <div class="snow middleground"></div>-->
+<!--      <div class="snow middleground layered"></div>-->
+<!--      <div class="snow background"></div>-->
+<!--      <div class="snow background layered"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
 <!--main-->
 <main>
   <div class="container">
 
     <!--nav-->
-    <nav th:replace=${nav}>
+    <nav id="STATICMENU" th:replace=${nav}>
       <ul>
         <li><a href="">책장</a></li>
         <li><a href="">달력</a></li>
         <li><a href="/board/1">게시판</a></li>
         <li><a href="/notices/all">공지사항</a></li>
         <li><a href="/qna/list">Q&A</a></li>
-        <li><a href="">지도검색</a></li>
+        <li><a href="/map">지도검색</a></li>
       </ul>
     </nav>
 
     <!--form-->
     <div class="main-item" th:replace=${form}>
-      <div class="main-item-list1">
-        <img src="./static/img/inquiry.png">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-      </div>
-      <hr align="center" width="100%" size="30" color="darkgrey">
-      <div class="main-item-list2">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-      </div>
-      <hr align="center" width="100%" size="30" color="darkgrey">
-      <div class="main-item-list3">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-        <img src="/static/img/book.jpg">
-      </div>
-      <hr align="center" width="100%" size="30" color="darkgrey">
     </div>
   </div>
 </main>
@@ -87,6 +82,33 @@
 <div class="footer" th:replace=${footer}>
   @2022 울산 KH 정보교육원 8기 2팀(장유유서) 팀 프로젝트
 </div>
+<script type="text/javascript">
+  var stmnRIGHT = 0; // 오른쪽 여백
+  var stmnGAP1 = 0; // 위쪽 여백
+  var stmnGAP2 = 0; // 스크롤시 브라우저 위쪽과 떨어지는 거리
+  var stmnBASE = 0; // 스크롤 시작위치
+  var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
+  var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
+  var stmnTimer;
 
+  function RefreshStaticMenu() {
+    var stmnStartPoint, stmnEndPoint;
+    stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10);
+    stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2;
+    if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1;
+    if (stmnStartPoint != stmnEndPoint) {
+      stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 );
+      document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px';
+      stmnRefreshTimer = stmnScrollSpeed;
+    }
+    stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed);
+  }
+
+  function InitializeStaticMenu() {
+    document.getElementById('STATICMENU').style.right = stmnRIGHT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
+    document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px';
+    RefreshStaticMenu();
+  }
+</script>
 </body>
 </html>

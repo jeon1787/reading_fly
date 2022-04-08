@@ -9,48 +9,55 @@
         ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Q&A</title>
+  <title>리ː플 | 공지사항</title>
   <link rel="stylesheet" th:href="@{/css/notice/noticeList.css}">
   <script defer src="/js/notice/noticeList.js"></script>
 </head>
 <body>
-<main>
-  <div class="notice-wrap">
-    <div class="notice-title"><h3>공지사항</h3></div>
-    <div class="notice-body">
-      <div class="notice-content">
+<div class="form">
+  <div class="wrap">
+    <!--제목-->
+    <h3>공지사항</h3>
+    <!--    <hr>-->
+
+    <!--전체목록-->
         <table>
+          <!--테이블헤드-->
           <thead>
           <tr>
-            <th>번호</th>
+            <th>no</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
             <th>조회수</th>
           </tr>
           </thead>
+          <!--테이블바디-->
           <tbody>
-          <tr th:each="item : ${notices}">
-            <td th:text="${item.nNum}"></td>
-            <td>
+          <block th:each="item : ${notices}">
+            <tr>
+            <td class="num" th:text="${item.nNum}"></td>
+            <td class="title">
               <a class="answer" href="" th:href="@{|/notices/${item.nNum}/detail|}" th:text="${item.nTitle}">제목1</a>
             </td>
-            <td id="notice-name">관리자</td>
-            <td id="notice-date" th:text="${item.nUDate}">작성일1</td>
-            <td th:text="${item.nHit}">5</td>
-          </tr>
+            <td class="nickname">관리자</td>
+            <td class="date" th:text="${item.nUDate}">작성일1</td>
+            <td class="hit" th:text="${item.nHit}">5</td>
+            </tr>
+          </block>
           </tbody>
         </table>
-      </div>
-      <div class="notice-btngrp">
-        <button type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">문의하기</button>
+
+      <!-- 글쓰기버튼-->
+      <div class="notice-button">
+        <button class="btn" type="botton" id="writeBtn" th:block th:if="${s_email == 'admin@test.com'}">글쓰기</button>
       </div>
 
       <div class="notice-page">
@@ -73,6 +80,7 @@
         </th:block>
       </div>
 
+      <!--검색-->
       <div class="notice-search">
         <select id="searchType" name="searchType" th:field="${fc.searchType}">
           <option value="TC">제목+내용</option>
@@ -82,9 +90,8 @@
         <input type="text" id="keyword" name="keyword" th:field="${fc.keyword}">
         <button id="searchBtn">검색</button>
       </div>
-    </div>
-  </div>
-</main>
-</body>
 
+  </div>
+</div>
+</body>
 </html>

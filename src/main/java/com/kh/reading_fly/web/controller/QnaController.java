@@ -22,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,22 +42,16 @@ public class QnaController {
 
   //작성양식
   @GetMapping("/add")
-//  public String addForm(Model model) {
-//    model.addAttribute("addForm", new AddForm());
-//    return "bbs/addForm";
-//  }
   public String addForm(
       Model model,
       HttpSession session) {
 
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
 
     QnaAddForm qnaAddForm = new QnaAddForm();
-//    qnaAddForm.setQEmail(loginMember.getEmail());
     qnaAddForm.setQNickname(loginMember.getNickname());
     model.addAttribute("qnaAddForm", qnaAddForm);
-
+    model.addAttribute("fc",fc);
     return "qna/qnaAddForm";
   }
 
@@ -65,8 +61,10 @@ public class QnaController {
       @Valid @ModelAttribute QnaAddForm qnaAddForm,
       BindingResult bindingResult,
       HttpSession session,
-      RedirectAttributes redirectAttributes) {
+      RedirectAttributes redirectAttributes,
+      Model model) {
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()) {
       return "qna/qnaAddForm";
     }
@@ -75,11 +73,7 @@ public class QnaController {
 
     //세션 가져오기
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
-    //세션 정보가 없으면 로그인페이지로 이동
-//    if(loginMember == null){
-//      return "redirect:/login";
-//    }
+
     String nickname = loginMember.getNickname();
     log.info("nickname={}", nickname);
 
@@ -146,6 +140,14 @@ public class QnaController {
     for (QnaDTO qna : list) {
       QnaListForm qnaListForm = new QnaListForm();
       BeanUtils.copyProperties(qna, qnaListForm);
+      //날짜 포맷
+      LocalDate boardDate = qna.getQUDate().toLocalDate();
+      LocalDate today = LocalDate.now();
+      if(boardDate.equals(today)){//오늘 작성된 글이면
+        qnaListForm.setQUDate(qna.getQUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+      }else{//오늘 이전에 작성된 글이면
+        qnaListForm.setQUDate(qna.getQUDate().toLocalDate().toString());
+      }
       partOfList.add(qnaListForm);
     }
 
@@ -166,6 +168,16 @@ public class QnaController {
     QnaDetailForm qnaDetailForm = new QnaDetailForm();
 
     BeanUtils.copyProperties(detailQna, qnaDetailForm);
+
+    //날짜 포맷
+    LocalDate qnaDate = detailQna.getQUDate().toLocalDate();
+    LocalDate today = LocalDate.now();
+    if(qnaDate.equals(today)){//오늘 작성된 글이면
+      qnaDetailForm.setQUDate(detailQna.getQUDate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
+    }else{//오늘 이전에 작성된 글이면
+      qnaDetailForm.setQUDate(detailQna.getQUDate().toLocalDate().toString());
+    }
+
     model.addAttribute("qnaDetailForm", qnaDetailForm);
 
     //2) 첨부파일 조회
@@ -228,7 +240,6 @@ public class QnaController {
       qnaSVC.updateByBbsId(id, qna, qnaEditForm.getFiles());
     }
 
-
     redirectAttributes.addAttribute("id",id);
 
     return "redirect:/qna/{id}";
@@ -245,11 +256,10 @@ public class QnaController {
 
     //세션에서 로그인정보 가져오기
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
-//    LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
-//    qnaReplyForm.setQEmail(loginMember.getEmail());
     qnaReplyForm.setQNickname(loginMember.getNickname());
 
     model.addAttribute("qnaReplyForm", qnaReplyForm);
+    model.addAttribute("fc",fc);
     return "qna/qnaReplyForm";
   }
 
@@ -259,12 +269,15 @@ public class QnaController {
       @PathVariable Long id,  //부모글의 qNum
       @Valid QnaReplyForm qnaReplyForm,
       BindingResult bindingResult,
-      RedirectAttributes redirectAttributes
+      RedirectAttributes redirectAttributes,
+      Model model
   ) {
 
+    model.addAttribute("fc",fc);
     if(bindingResult.hasErrors()) {
       return "qna/qnaReplyForm";
     }
+    qnaSVC.updateStatus(id);
 
     QnaDTO replyQna = new QnaDTO();
     BeanUtils.copyProperties(qnaReplyForm,replyQna);
@@ -273,7 +286,14 @@ public class QnaController {
     appendInfoOfParentQna(id, replyQna);
 
     //답글저장(return 답글번호)
-    Long replyQNum = qnaSVC.saveReply(id, replyQna);
+    Long replyQNum = 0L;
+
+    if(qnaReplyForm.getFiles().size() == 0) {
+      replyQNum = qnaSVC.saveReply(id, replyQna);
+
+    }else{
+      replyQNum = qnaSVC.saveReply(id, replyQna, qnaReplyForm.getFiles());
+    }
 
     redirectAttributes.addAttribute("id",replyQNum);
 

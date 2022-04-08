@@ -9,7 +9,7 @@
         ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
@@ -23,32 +23,30 @@
 <script src="https://kit.fontawesome.com/4ee0f83e5d.js" crossorigin="anonymous"></script>
 </head>
 <body>
-<main>
-  <div class="notice-wrap">
-    <div class="notice-title"><h3>게시글 수정</h3></div>
-    <div class="class-body" >
+<div class="form">
+  <div class="wrap">
+    <h3>게시글 수정</h3>
+    <div id="container" >
       <form  th:action th:method="patch" th:object="${noticeEditForm}"
             th:data-n-num="*{nNum}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{nNum}">
-        <div class="notice-hit">
-          <span class="notice-hit-content notice-hit-tit">조회수</span>
-          <span class="notice-hit-content notice-hit-cnt" th:text="*{nHit}">10</span>
+
+        <!--게시글 제목-->
+        <div class="notice-title">
+          <div>제목</div>
+          <input class="title"  type="text" th:field="*{nTitle}" placeholder="제목을 입력하세요(0 ~ 20자)" autofocus >
+          <div class="fieldError" th:errors="*{nTitle}"></div>
         </div>
+
+        <!--게시글 본문-->
         <div class="notice-content">
-          <div><lable>제목</lable></div>
-          <div>
-            <input type="text" name="" id="" class="w100" th:field="*{nTitle}" >
-            <div class="fieldError" th:errors="*{nTitle}"></div>
-          </div>
-          <div><lable>작성자</lable></div>
-          <div>관리자</div>
-          <div><lable>내용</lable></div>
-          <div>
-            <textarea name="" id="" rows="10" class="w100" th:field="*{nContent}"></textarea>
+          <div>내용</div>
+            <textarea name="" id="" cols="30" rows="10" th:field="*{nContent}" placeholder="내용을 입력하세요(0 ~ 1000자)"></textarea>
             <div class="fieldError" th:errors="*{nContent}"></div>
-          </div>
+        </div>
 
           <!--파일첨부-->
+        <div class="notice-file">
           <input type="checkbox" id="checkbox">
           <div id="accordion"><label for="checkbox"><i class="fa-solid fa-angle-down"></i>파일첨부</label></div>
           <div id="attachFiles">
@@ -61,16 +59,17 @@
               </th:block>
             </div>
           </div>
-
         </div>
 
-        <div class="notice-btngrp">
+        <!--버튼-->
+        <div class="notice-button">
           <button type="button" id="cancelBtn">취소</button>
           <button type="button" id="saveBtn">저장</button>
         </div>
+
       </form>
     </div>
   </div>
-</main>
+</div>
 </body>
 </html>

@@ -1,76 +1,56 @@
 @charset "utf-8";
 
-    from {
-      width: 1024px;
-      padding: 42px;
-    }
+.wrap {
+   padding: 42px;
+}
 
-    .notice-wrap * {
-      box-sizing: border-box;
-    }
+table{
+  border-collapse: collapse;
+  margin: 0px auto;
+  margin-bottom: 20px;
+}
 
-    .notice-wrap {
-     width: 940px;
-    }
+tr{
+  border-bottom: 1px solid #ebecef;
+  height: 40px;
+}
 
-    .notice-wrap .notice-title {
-     text-align: center;
-     padding: 20px 0;
-    }
+tbody tr:hover {
+  background-color: #ebecef;
+}
 
-    .notice-wrap .notice-content table {
-      width: 100%;
-      border-top: 2px solid #333;
-      border-bottom: 2px solid #333;
-      border-collapse: collapse;
-    }
+.form td,th{padding: 0px;}
+.form td.num{width: 80px; text-align: center;}
+.form td.title{width: 500px;}
+.form td.nickname{width: 130px; text-align: center;}
+.form td.date{width: 130px; text-align: center;}
+.form td.hit{width: 80px; text-align: center;}
+.form a{margin-left: 50px}
 
-    .notice-wrap .notice-content table th,
-    .notice-wrap .notice-content table td {
-      border-bottom: 1px solid #333;
+.notice-button {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
 
-    }
+.notice-page {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
 
-    .notice-wrap .notice-content table>thead>tr th:nth-child(2) {
-      width: 50%;
-    }
+.notice-page a{
+  margin: 0px;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+}
 
-   #notice-name,
-   #notice-date{
-     text-align: center;
-   }
+.notice-search {
+  display: flex;
+  justify-content: center;
+}
 
-  .notice-wrap .notice-content table>tbody>tr>td:first-child,
-  .notice-wrap .notice-content table>tbody>tr>td:last-child {
-      text-align: center;
-  }
-
-  .notice-wrap .notice-btngrp {
-      display: flex;
-      justify-content: flex-end;
-  }
-
-  .notice-wrap .notice-page {
-      display: flex;
-      justify-content: center;
-      padding: 20px 0;
-  }
-
-  .notice-wrap .notice-page .notice-page-item{
-      display:inline-block;
-      width:24px;
-      height:24px;
-      padding:2px;
-      text-align: center;
-  }
-
-  .notice-wrap .notice-page .notice-page-item.active{
-      background-color:#333;
-      color:white;
-  }
-
-  .notice-wrap .notice-search {
-      display: flex;
-      justify-content: center;
-  }
-  a {text-decoration: none; color:inherit;}
+.wrap .notice-page .notice-page-item.active{
+  background-color:#87CEEB;
+}

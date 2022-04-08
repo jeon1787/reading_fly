@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class QnaSVCImpl implements QnaSVC {
-
   private  final QnaDAO qnaDAO;
   private final UploadFileSVC uploadFileSVC;
 
@@ -37,7 +36,6 @@ public class QnaSVCImpl implements QnaSVC {
 
     return qnaId;
   }
-
 
   //목록
   @Override
@@ -87,11 +85,21 @@ public class QnaSVCImpl implements QnaSVC {
     return affectedRow;
   }
 
-
   //답글
   @Override
   public Long saveReply(Long pQNum, QnaDTO replyQna) {
     return qnaDAO.saveReply(pQNum, replyQna);
+  }
+
+  @Override
+  public Long saveReply(Long pQNum, QnaDTO replyQna, List<MultipartFile> files) {
+    //1)답글 작성
+    Long id = qnaDAO.saveReply(pQNum, replyQna);
+
+    //2)첨부 저장
+    uploadFileSVC.addFile("Q",id,files);
+
+    return id;
   }
 
   //전체건수
@@ -103,5 +111,10 @@ public class QnaSVCImpl implements QnaSVC {
   @Override
   public int totalCount(QnaFilterCondition filterCondition) {
     return qnaDAO.totalCount(filterCondition);
+  }
+
+  @Override
+  public int updateStatus(Long qNum) {
+    return qnaDAO.updateStatus(qNum);
   }
 }

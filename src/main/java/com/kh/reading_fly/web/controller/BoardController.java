@@ -5,20 +5,19 @@ import com.kh.reading_fly.domain.board.dto.BoardDTO;
 import com.kh.reading_fly.domain.board.svc.BoardSVC;
 import com.kh.reading_fly.domain.comment.svc.CommentSVC;
 import com.kh.reading_fly.domain.common.paging.FindCriteria;
-import com.kh.reading_fly.domain.common.paging.PageCriteria;
 import com.kh.reading_fly.domain.common.uploadFile.dto.UploadFileDTO;
 import com.kh.reading_fly.domain.common.uploadFile.svc.UploadFileSVC;
 import com.kh.reading_fly.web.form.board.AddForm;
 import com.kh.reading_fly.web.form.board.DetailForm;
 import com.kh.reading_fly.web.form.board.EditForm;
 import com.kh.reading_fly.web.form.board.ItemForm;
+import com.kh.reading_fly.web.form.comment.numberOfComment;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -100,8 +99,19 @@ public class BoardController {
       items.add(item);
     }
 
+    //게시판별 댓글 개수
+    List<numberOfComment> cntList = new ArrayList<>();
+    for(BoardDTO boardDTO : list){
+       numberOfComment count = new numberOfComment();
+       count.setCbnum(boardDTO.getBnum());//게시글 번호
+       count.setCount(commentSVC.eachCount(boardDTO.getBnum()));//해당 게시글 댓글 개수
+       cntList.add(count);
+       log.info("count",commentSVC.eachCount(boardDTO.getBnum()));
+    }
+
     model.addAttribute("items", items);
     model.addAttribute("fc",fc);
+    model.addAttribute("cntList", cntList);
 
     return "board/listForm";
   }

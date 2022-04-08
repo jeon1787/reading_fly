@@ -9,42 +9,45 @@
         ~{::script},
         _,
         _,
-        ~{::main},
+        ~{::.form},
         _
       )}">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Q&A</title>
+  <title>리ː플 | Q&A</title>
   <link rel="stylesheet" href="" th:href="@{/css/qna/qnaList.css}">
   <script defer src="" th:src="@{/js/qna/qnaList.js}"></script>
 </head>
 <body>
-<main>
-  <div class="qna-wrap">
-    <div class="qna-title"><h3>Q&A</h3></div>
-    <div class="qna-body">
-      <div class="qna-content">
+<div class="form">
+  <div class="wrap">
+    <!--제목-->
+    <h3>Q&A</h3>
+    <!--    <hr>-->
+    <!--전체목록-->
         <table>
+          <!--테이블헤드-->
           <thead>
           <tr>
-            <th>번호</th>
+            <th>no</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
             <th>조회수</th>
           </tr>
           </thead>
+          <!--테이블바디-->
           <tbody>
           <tr th:each="item : ${list}">
             <th:block th:if="${item.qIndent} == 0">
-              <td th:text="${item.qNum}"></td>
+              <td class="num" th:text="${item.qNum}"></td>
             </th:block>
             <th:block th:if="${item.qIndent} > 0">
               <td></td>
             </th:block>
-            <td>
+            <td class="title">
               <!--들여쓰기-->
               <th:block th:if="${item.qIndent} > 0">
                 <!--                  컬렉션없이 단순 반복 처리하고자할때 -->
@@ -54,18 +57,21 @@
               </th:block>
               <a href="" th:href="@{|/qna/${item.qNum}|}" th:text="${item.qTitle}">제목</a>
             </td>
-            <td id="qna-name" th:text="${item.qNickname}">작성자1</td>
-            <td id="qna-date" th:text="${#temporals.format(item.qUDate,'yyyy-MM-dd')}">작성일1</td>
-            <td th:text="${item.qHit}">5</td>
+            <td class="nickname" th:text="${item.qNickname}">작성자1</td>
+            <td class="date" th:text="*{item.qUDate}">작성일1</td>
+            <td class="hit" th:text="${item.qHit}">5</td>
           </tr>
           </tbody>
         </table>
-      </div>
-      <div class="qna-btngrp">
-        <button type="botton" id="writeBtn">문의하기</button>
+
+      <!-- 글쓰기버튼-->
+      <div class="qna-button">
+        <button class="btn" type="botton" id="writeBtn">문의하기</button>
       </div>
 
+    <!--페이징 버튼-->
       <div class="qna-page">
+
         <!--이전페이지정보-->
         <th:block th:if="${fc.prev}">
           <a class="qna-page-item" href="" th:href="@{/qna/list/1}"><<</a>
@@ -78,6 +84,7 @@
             <a class="qna-page-item" th:classappend="${fc.rc.reqPage == pnum} ? 'active'" href="" th:href="@{/qna/list/{reqPage}(reqPage=${pnum})}" th:text="${pnum}">1</a>
           </th:block>
         </th:block>
+
         <!--다음페이지정보-->
         <th:block th:if="${fc.next}">
           <a class="qna-page-item" href="" th:href="@{/qna/list/{reqPage}(reqPage=${fc.endPage+1})}">></a>
@@ -85,6 +92,7 @@
         </th:block>
       </div>
 
+      <!--검색-->
       <div class="qna-search">
         <select id="searchType" name="searchType" th:field="${fc.searchType}">
           <option th:value="TC">제목+내용</option>
@@ -95,9 +103,8 @@
         <input type="text" id="keyword" name="keyword" th:field="${fc.keyword}">
         <button id="searchBtn">검색</button>
       </div>
-    </div>
-  </div>
-</main>
-</body>
 
+  </div>
+</div>
+</body>
 </html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{::style},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서검색</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous"></script>
+    <script defer th:src="@{/js/book/bookSearch.js}"></script>
+    <style>
+        .info-form{
+        display: none;
+        }
+
+    </style>
+</head>
+<body>
+<div class="form">
+    <h3>도서검색</h3>
+    <div class="word-search" id="word-search">
+        <input type="text" class="word" id="word">
+        <button type="button" class="searchBtn" id="searchBtn">검색</button>
+    </div>
+    <hr>
+    <h3>도서검색결과</h3>
+    <div class="result-wrap" id="result-wrap">
+        <div class="search-result" id="search-result" th:data-keyword="${keyword}">
+
+        </div>
+    </div>
+    <form class="info-form" th:method="post" th:object="${bookRequest}">
+        <input class="input-word" type="text" th:field="*{searchWord}">
+        <input class="input-isbn" type="text" th:field="*{isbn}">
+        <input class="input-title" type="text" th:field="*{title}">
+        <input class="input-contents" type="text" th:field="*{bcontents}">
+        <input class="input-authors" type="text" th:field="*{authors}">
+        <input class="input-publisher" type="text" th:field="*{publisher}">
+        <input class="input-translators" type="text" th:field="*{translators}">
+        <input class="input-thumbnail" type="text" th:field="*{thumbnail}">
+        <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">
+    </form>
+</div>
+</body>
+</html>

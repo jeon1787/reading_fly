@@ -10,15 +10,50 @@
 <body>
 
   <!--비로그인-->
+<!--  <div class="upper-right" th:fragment="beforeLoginUpm">-->
+<!--    <button type="submit" onclick="location.href='/login'"> 로그인 </button>-->
+<!--    <button type="submit" onclick="location.href='/signup'"> 회원가입 </button>-->
+<!--  </div>-->
+
+  <!--로그인-->
+<!--  <div class="upper-right" th:fragment="afterLoginUpm">-->
+<!--    <button type="submit" onclick="location.href='member/memberinfo'"> 마이페이지 </button>-->
+<!--    <button type="submit" onclick="location.href='/logout'"> 로그아웃 </button>-->
+<!--  </div>-->
+
+  <!--비로그인-->
   <div class="upper-right" th:fragment="beforeLoginUpm">
-    <button type="submit" onclick="location.href='/login'"> 로그인 </button>
-    <button type="submit" onclick="location.href='/signup'"> 회원가입 </button>
+    <span>환영합니다!</span>
+    <span><a th:href="@{/signup}">SIGN-UP</a></span>
+    <span class="log"><a th:href="@{/login}">LOG-IN</a></span>
   </div>
 
   <!--로그인-->
   <div class="upper-right" th:fragment="afterLoginUpm">
-    <button type="submit" onclick="location.href='member/memberinfo'"> 마이페이지 </button>
-    <button type="submit" onclick="location.href='/logout'"> 로그아웃 </button>
+    <span th:text="${session?.loginMember?.nickname}">닉네임</span>
+    <div class="dropdown">
+      <span class="dropbtn">MY PAGE</span>
+      <div class="dropdown-content">
+        <a th:href="@{/member/edit}">회원정보 변경</a>
+        <a th:href="@{/member/memberpw}">비밀번호 변경</a>
+        <a th:href="@{/member/out}">회원탈퇴</a>
+      </div>
+    </div>
+    <span class="log"><a th:href="@{/logout}">LOG-OUT</a></span>
+  </div>
+
+  <!--관리자 계정 로그인-->
+  <div class="upper-right" th:fragment="adminLoginUpm">
+    <span th:text="|${session?.loginMember?.nickname} 님|">닉네임</span>
+    <div class="dropdown">
+      <span class="dropbtn">ADMIN PAGE</span>
+      <div class="dropdown-content">
+        <a th:href="@{/member/edit}">회원정보 변경</a>
+        <a th:href="@{/member/memberpw}">비밀번호 변경</a>
+        <a th:href="@{/admin/memberlist}">회원정보조회</a>
+      </div>
+    </div>
+    <span class="log"><a th:href="@{/logout}">LOG-OUT</a></span>
   </div>
 
 </body>

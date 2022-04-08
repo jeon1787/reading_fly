@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragment/mainDetail::main(
+        ~{::title},
+        _,
+        ~{},
+        ~{},
+        ~{::script},
+        _,
+        _,
+        ~{::.form},
+        _
+      )}">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서상세</title>
+    <script defer th:src="@{/js/book/bookInfo.js}"></script>
+</head>
+<body>
+<div class="form">
+    <h3>도서상세</h3>
+    <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
+        <input class="input-word" type="text" th:field="*{searchWord}">검색단어
+        <input class="input-isbn" type="text" th:field="*{isbn}" >도서번호
+        <input class="input-title" type="text" th:field="*{title}" >도서제목
+        <input class="input-contents" type="text" th:field="*{bcontents}" >설명
+        <input class="input-authors" type="text" th:field="*{authors}" >저자
+        <input class="input-publisher" type="text" th:field="*{publisher}" >출판사
+        <input class="input-translators" type="text" th:field="*{translators}" >번역
+        <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
+        <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
+        <div><span>총페이지:</span><input class="input-spage" type="text" th:field="*{spage}">총페이지</div>
+    </form>
+    <div class="info-bntgrp">
+        <button class="saveBtn" id="saveBtn" type="button">등록하기</button>
+<!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
+        <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
+    </div>
+<!--<div th:text="${bookRequest.title}">-->
+</div>
+</body>
+</html>
