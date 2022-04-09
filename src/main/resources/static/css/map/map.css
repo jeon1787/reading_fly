@@ -1,4 +1,8 @@
 @charset "utf-8";
+.wrap{
+  padding: 42px;
+}
+
 .mapSearch{
   display: flex;
 }
@@ -23,8 +27,14 @@
   background: #fff;
 }
 
+.map-wrap{
+  display: flex;
+  justify-content: center;
+}
+
 #map{
-  width:auto; height: 620px;
-  position: absolute;
+  width:920px;
+  height: 620px;
+  /*position: absolute;*/
   margin-top: 20px;
 }
