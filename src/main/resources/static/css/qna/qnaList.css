@@ -27,6 +27,12 @@ tbody tr:hover {
 .form td.hit{width: 80px; text-align: center;}
 .form a{margin-left: 50px}
 
+.th1{width: 80px;}
+.th2{width: 500px;}
+.th3{width: 130px;}
+.th4{width: 130px;}
+.th5{width: 80px;}
+
 .qna-button {
   display: flex;
   justify-content: end;
