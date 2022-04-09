@@ -1,8 +1,8 @@
-    // 지도생성시 초기 옵션 주기
-    var mapOptions = {
-      center: new naver.maps.LatLng(35.5352071674071, 129.31091449029512),
-      zoom: 18,
-      mapTypeId: naver.maps.MapTypeId.NORMAL
+  // 지도생성시 초기 옵션 주기
+  var mapOptions = {
+    center: new naver.maps.LatLng(35.5352071674071, 129.31091449029512),
+    zoom: 18,
+    mapTypeId: naver.maps.MapTypeId.NORMAL
   };
 
   // 지도 그리기
@@ -112,15 +112,15 @@
         console.log(selectedCity);//시도
         const selectedState = getState();
         console.log(selectedState);//구군//서점인지 도서관인지
-                                               console.log(e.target.textContent);//도서관 or 서점
-                                               const searchKeyword = selectedCity + " "
+        console.log(e.target.textContent);//도서관 or 서점
+        const searchKeyword = selectedCity + " "
 
          + selectedState + " " + e.target.textContent;
         console.log("검색어"+searchKeyword);
 
         //키워드로 장소를 검색합니다
-          //ps.keywordSearch($keyword.value, placesSearchCB);
-          ps.keywordSearch(searchKeyword, placesSearchCB);
+        //ps.keywordSearch($keyword.value, placesSearchCB);
+        ps.keywordSearch(searchKeyword, placesSearchCB);
         break;
       default:
         console.log('etc..');

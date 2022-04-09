@@ -24,6 +24,11 @@ tbody tr:hover {
   background-color: #ebecef;
 }
 
+.th1{width: 80px;}
+.th2{width: 500px;}
+.th3{width: 130px;}
+.th4{width: 130px;}
+.th5{width: 80px;}
 .form td,th{padding: 0px;}
 .form td.num{width: 80px; text-align: center;}
 .form td.title{width: 500px;}

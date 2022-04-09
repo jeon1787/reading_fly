@@ -17,7 +17,6 @@ public class EditForm {
   @Size(max = 20)
   private String btitle;
   @NotBlank
-  @Size(max = 1000)
   private String bcontent;
 
   private List<MultipartFile> files;  // 첨부파일

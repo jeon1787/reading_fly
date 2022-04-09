@@ -16,7 +16,6 @@ public class AddForm {
   @Size(max = 20)
   private String btitle;        //제목
   @NotBlank
-  @Size(max = 1000)
   private String bcontent;      //본문
 
   private List<MultipartFile> files;  // 첨부파일

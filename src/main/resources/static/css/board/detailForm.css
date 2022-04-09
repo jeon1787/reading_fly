@@ -1,28 +1,4 @@
 @charset "utf-8";
-/*
-.form{
-  width: 1024px;
-  padding: 42px;
-}
-.wrap{
-  width: 940px;
-}
-
-.form .button-area{
-  display: flex;
-  justify-content: space-between;
-}
-.form #content{
-  height: auto;
-  min-height: 400px;
-  width: 100%;
-}
-*/
-/*
-.wrap{
-  width: 1080px;
-}
-*/
 .wrap{
   padding: 42px;
 }
@@ -40,6 +16,11 @@
 .board-content{
   margin-bottom: 20px;/*변경사항 : br을 마진으로 변경*/
 }
+
+/* ckeditor style 지정 */
+#bcontent {display:none;}
+.ck-editor__editable{min-height:20rem;}
+.ck-editor__top{display:none;}/*상단툴바 제거*/
 
 /*버튼*/
 .form .board-button{
@@ -87,11 +68,6 @@
   transform: rotate( -180deg );
 }
 
-/* ckeditor style 지정 */
-#bcontent {display:none;}
-.ck-editor__editable{min-height:20rem;}
-.ck-editor__top{display:none;}/*상단툴바 제거*/
-
 /*댓글*/
 .comment-textarea{
   width: 986px;
@@ -130,9 +106,3 @@
 .btn-right>button{
   margin-left: 10px;
 }
-
-/*
-.comment{
-  border-bottom: solid 1px gray;
-}
-*/
