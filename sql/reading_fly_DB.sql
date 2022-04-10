@@ -228,10 +228,43 @@ insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.n
 
 select * from review;
 
+--7. 코드
+--코드 테이블 생성
+create table code(
+    code_id     varchar2(11),                   -- 코드
+    decode      varchar2(30),                   -- 코드명
+    discript    clob,                           -- 코드설명
+    pcode_id    varchar2(11),                   -- 상위코드
+    useyn       char(1) default 'Y',            -- 사용여부 (사용:'Y',미사용:'N')
+    cdate       timestamp default systimestamp, -- 생성일시
+    udate       timestamp default systimestamp  -- 수정일시
+);
+--기본키
+alter table code add Constraint code_code_id_pk primary key (code_id);
+
+--외래키
+alter table code add constraint bbs_pcode_id_fk
+    foreign key(pcode_id) references code(code_id);
+
+--제약조건
+alter table code modify decode constraint code_decode_nn not null;
+alter table code modify useyn constraint code_useyn_nn not null;
+alter table code add constraint code_useyn_ck check(useyn in ('Y','N'));
+
+--샘플데이터 of code
+insert into code (code_id,decode,pcode_id,useyn) values ('C01','커뮤니티',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0101','게시판','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0102','공지사항','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0103','Q&A','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F01','첨부',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0101','파일','F01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0102','이미지','F01','Y');
+
 --7. 게시판
 --게시판 테이블 생성
 create table board(
   bnum NUMBER(15) not null,                   -- 게시글번호
+  bcategory varchar2(11),                     -- 분류카테고리
   btitle VARCHAR2(60) not null,               -- 게시글제목
   bcdate TIMESTAMP default systimestamp,      -- 게시글작성일
   budate TIMESTAMP default systimestamp,      -- 게시글수정일
@@ -245,6 +278,7 @@ create table board(
 alter table board add Constraint board_bnum_pk primary key (bnum);                                        -- 기본키 생성
 alter table board add constraint board_bid_fk foreign key(bid) references member(id) on delete cascade;   -- bid의 외래키 = 회원의 기본키(id)
 alter table board add constraint board_bstatus_ck check (bstatus in ('E','D'));                           -- 게시글 상태(E:exist, D:delete)
+alter table board add constraint board_bcategory_fk foreign key(bcategory) references code(code_id);
 
 --게시판 시퀀스 생성
 create sequence board_bnum_seq
@@ -312,7 +346,7 @@ commit;
 create table uploadfile(
   fnum NUMBER(15) not null,                     -- 첨부파일번호
   rnum NUMBER(15) not null,                     -- 참조번호(게시글번호 등)
-  code char(1),                                 -- 카테고리코드('B','N','Q')
+  code varchar2(11),                            -- 분류코드
   store_filename VARCHAR2(50) not null,         -- 로컬파일명
   upload_filename VARCHAR2(50) not null,        -- 업로드파일명
   fsize VARCHAR2(50) not null,                  -- 파일크기(단위 byte)
@@ -322,8 +356,8 @@ create table uploadfile(
 );
 
 --파일첨부 제약조건 생성
-alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum);           -- 기본키 생성
-alter table uploadfile add constraint uploadfile_code_ck check(code in ('B','N','Q')); -- 카테고리코드('B','N','Q')
+alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum);                            -- 기본키 생성
+alter table uploadfile add constraint uploadfile_code_fk foreign key(code) references code(code_id);    --외래키 생성
 
 --파일첨부 시퀀스 생성
 create sequence uploadfile_fnum_seq
@@ -340,6 +374,7 @@ nocycle; --순환하지않음
 --공지사항 테이블 생성
 create table notice(
   nnum NUMBER(15) not null,         -- 공지사항번호
+  ncategory varchar2(11),           -- 분류카테고리
   ntitle VARCHAR2(60) not null,     -- 공지사항제목
   ncontent CLOB not null,           -- 공지사항내용
   nhit NUMBER(5) default 0,         -- 조회수  
@@ -349,6 +384,7 @@ create table notice(
 
 --공지사항 기본키 생성
 alter table notice add Constraint notice_nnum_pk primary key (nnum);     -- 기본키 생성
+alter table notice add constraint notice_ncategory_fk foreign key(ncategory) references code(code_id);
 
 --공지사항 시퀀스 생성
 create sequence notice_nnum_seq
@@ -376,18 +412,19 @@ select * from notice;
 --11. Q&A
 --Q&A 테이블 생성
 create table qna(
-    qnum      number(10),                             --게시글 번호
-    qtitle    varchar2(150),                          --제목
-    qnickname varchar2(30),                           --별칭
-    qhit      number(5) default 0,                    --조회수
-    qcontent  clob,                                   --본문
-    pqnum     number(10),                             --부모 게시글번호
-    qgroup    number(10),                             --답글그룹
-    qstep     number(3) default 0,                    --답글단계
-    qindent   number(3) default 0,                    --답글들여쓰기
-    qstatus   char(1) default 'Q',                    --답글상태  (답글: 'A', 원글'Q')
-    qcdate    timestamp default systimestamp,         --생성일시
-    qudate    timestamp default systimestamp          --수정일시
+    qnum      number(10),                             -- 게시글 번호
+    qcategory varchar2(11),                           -- 분류카테고리
+    qtitle    varchar2(150),                          -- 제목
+    qnickname varchar2(30),                           -- 별칭
+    qhit      number(5) default 0,                    -- 조회수
+    qcontent  clob,                                   -- 본문
+    pqnum     number(10),                             -- 부모 게시글번호
+    qgroup    number(10),                             -- 답글그룹
+    qstep     number(3) default 0,                    -- 답글단계
+    qindent   number(3) default 0,                    -- 답글들여쓰기
+    qstatus   char(1) default 'Q',                    -- 답글상태  (답글: 'A', 원글'Q')
+    qcdate    timestamp default systimestamp,         -- 생성일시
+    qudate    timestamp default systimestamp          -- 수정일시
 );
 
 --Q&A 제약조건 생성
@@ -398,6 +435,7 @@ alter table qna modify qtitle constraint qna_qtitle_nn not null;
 alter table qna modify qnickname constraint qna_qnickname_nn not null;
 alter table qna modify qcontent constraint qna_qcontent_nn not null;
 alter table qna add constraint qna_qstatus_ck check(qstatus in ('A','Q')); --답글상태  (답글: 'A', 원글'Q')
+alter table qna add constraint qna_qcategory_fk foreign key(ncategory) references code(code_id);
 
 --Q&A 시퀀스 생성
 create sequence qna_qnum_seq

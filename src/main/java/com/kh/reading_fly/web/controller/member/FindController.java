@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,11 +31,12 @@ public class FindController {
 
 
   //아이디 및 pw 찾기
-  @GetMapping("/findidpw")
+  @GetMapping("/findidpw/{target}")
   public String findidpw( @ModelAttribute FindIdReq findIdReq,
                           @ModelAttribute FindPwReq findPwReq
   ) {
     log.info("findIdPwForm() 호출됨!");
+
     return "member/find/findIdPwForm";
   }
 
