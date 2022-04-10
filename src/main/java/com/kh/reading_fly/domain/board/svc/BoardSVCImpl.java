@@ -94,7 +94,7 @@ public class BoardSVCImpl implements BoardSVC{
     Long rnum = savedBoard.getBnum();
 
     //2) 첨부파일 저장
-    uploadFileSVC.addFile("B", rnum, files);
+    uploadFileSVC.addFile("C0101", rnum, files);
 
     return savedBoard;
   }
@@ -122,7 +122,7 @@ public class BoardSVCImpl implements BoardSVC{
     Long rnum = modifiedBoard.getBnum();
 
     //2) 첨부파일 저장
-    uploadFileSVC.addFile("B", rnum, files);
+    uploadFileSVC.addFile("C0101", rnum, files);
 
     return modifiedBoard;
   }
@@ -135,7 +135,7 @@ public class BoardSVCImpl implements BoardSVC{
   @Override
   public int removeBoard(Long bnum, String bid) {
     //1) 첨부파일 삭제
-    uploadFileSVC.deleteFileByCodeWithRnum("B", bnum);
+    uploadFileSVC.deleteFileByCodeWithRnum("C0101", bnum);
 
     //2) 게시글 삭제
     return boardDAO.deleteBoard(bnum, bid);
@@ -149,7 +149,7 @@ public class BoardSVCImpl implements BoardSVC{
   @Override
   public int removeContentOfBoard(Long bnum, String bid) {
     //1) 첨부파일 삭제
-    uploadFileSVC.deleteFileByCodeWithRnum("B", bnum);
+    uploadFileSVC.deleteFileByCodeWithRnum("C0101", bnum);
 
     //2) 게시글 삭제
     return boardDAO.deleteContentOfBoard(bnum, bid);

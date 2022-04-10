@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public class UploadFileDTO {
   private Long fnum;                    // 첨부파일번호
   private Long rnum;                    // 참조번호(게시글번호 등)
-  private String code;                  // 카테고리코드('B','N','Q')
+  private String code;                  // 카테고리코드
   private String store_filename;        // 로컬파일명
   private String upload_filename;       // 업로드파일명
   private String fsize;                 // 파일크기(단위 byte)
