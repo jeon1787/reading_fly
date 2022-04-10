@@ -181,7 +181,7 @@ public class QnaController {
     model.addAttribute("qnaDetailForm", qnaDetailForm);
 
     //2) 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("Q", detailQna.getQNum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0103", detailQna.getQNum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);
@@ -210,7 +210,7 @@ public class QnaController {
     model.addAttribute("qnaEditForm",qnaEditForm);
 
     //2) 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("Q", qnaEditForm.getQNum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0103", qnaEditForm.getQNum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);

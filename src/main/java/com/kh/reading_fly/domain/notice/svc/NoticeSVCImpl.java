@@ -46,7 +46,7 @@ public class NoticeSVCImpl implements NoticeSVC{
     Long rnum = write(notice);
 
     //2)첨부 저장
-    uploadFileSVC.addFile("N",rnum,files);
+    uploadFileSVC.addFile("C0102",rnum,files);
 
     return rnum;
   }
@@ -106,7 +106,7 @@ public class NoticeSVCImpl implements NoticeSVC{
     Long rnum = modifiedNotice.getNNum();
 
     //2) 첨부파일 저장
-    uploadFileSVC.addFile("N", rnum, files);
+    uploadFileSVC.addFile("C0102", rnum, files);
 
     return modifiedNotice;
   }
@@ -118,6 +118,10 @@ public class NoticeSVCImpl implements NoticeSVC{
    */
   @Override
   public int remove(Long nNum) {
+
+    //1) 첨부파일 삭제
+    uploadFileSVC.deleteFileByCodeWithRnum("C0102", nNum);
+
     return noticeDAO.delete(nNum);
   }
 

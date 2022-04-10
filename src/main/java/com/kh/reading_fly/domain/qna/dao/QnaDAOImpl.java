@@ -27,8 +27,8 @@ public class QnaDAOImpl implements QnaDAO {
 
     //SQL작성
     StringBuffer sql = new StringBuffer();
-    sql.append("insert into qna (qnum,qtitle,qnickname,qcontent,qgroup) ");
-    sql.append("values(qna_qnum_seq.nextval,?,?,?,qna_qnum_seq.currval) ");
+    sql.append("insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup) ");
+    sql.append("values(qna_qnum_seq.nextval,'C0103',?,?,?,qna_qnum_seq.currval) ");
 
     //SQL실행
     KeyHolder keyHolder = new GeneratedKeyHolder();
