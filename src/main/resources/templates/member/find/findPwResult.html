@@ -24,74 +24,46 @@
 
   <div class="form"> 
 
-    <form >
+    <div class="wrap">
 
-<!-- <h1 class="findId__title">아이디 찾기 결과</h1>
-      
-      <div class="findedId">
-        <p class="findedId__text">회원님의 아이디는</p>
-        	<p th:text="${findids}" class="findedId__result"></p>
-        <p class="findedId__text">입니다.</p>
-      </div> -->
+      <form>
 
+        <h3>비밀번호 찾기 결과</h3>
 
+        <table>
 
+          <tr>
+            <td>찾으시는 아이디의 임시 비밀번호는</td>
+            <td>
+              <div class="textForm">
 
+                <p th:text="*{findpws}" th:class="${#fields.hasErrors('findpws') ? 'fieldError' : 'fieldSuccess'}">
 
+                </p>
 
+            </div>
 
+            </td>
+            <td>
+              입니다
+              <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
+              <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
 
+              <p th:if="${#fields.hasErrors('findpws')}"></p>
+              <p th:errors="*{findpws}" th:errorclass="fieldError"></p>
+            </td>
+          </tr>
 
-      <h3>비밀번호 찾기 결과</h3>
-      <p>        
-      </p>
+        </table>
 
-      <table>
+        <div class="find_btn_group">
+          <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button>
+          <button id="signupBtn" type="button" onclick="location.href='/signup'">회원가입</button>
+        </div>
 
-        <tr>
-          <td>찾으시는 아이디의 임시 비밀번호는</td>
-          <td>
-            <div class="textForm">
+      </form>
 
-              <p th:text="*{findpws}" th:class="${#fields.hasErrors('findpws') ? 'fieldError' : 'fieldSuccess'}">
-
-              </p>
-
-          </div>
-          
-
-          </td>
-          <td>
-            입니다
-            <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
-            <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
-            
-            <p th:if="${#fields.hasErrors('findpws')}"></p>
-            <p th:errors="*{findpws}" th:errorclass="fieldError"></p>
-          </td>
-        </tr>
-
-
-
-      </table>
-
-
-      <br>
-      <div class="find_btn_group">         
-        <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button> 
-        <button id="signupBtn" type="button" onclick="location.href='/signup'">회원가입</button> 
-      </div>
-
-
-
-
-
-    </form>
-
-
-
-
-
+    </div>
 
   </div>
 <!--   

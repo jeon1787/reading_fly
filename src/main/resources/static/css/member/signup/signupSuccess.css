@@ -1,17 +1,11 @@
 @charset "utf-8";
-
-
+/*
 .signupSuccessForm {
   position:relative;
-  /* width:500px; */
   height:300px;
   background-color:#FFFFFF;
   text-align:center;
-  /* top:30%; 
-  left:30%;
-  transform: translate(-50%,-50%); */
   border-radius: 15px;
-
 }
 
 .success {
@@ -21,16 +15,11 @@
   color: #636e72;
   font-size:16px;
   height:25px;
-  background: none; 
-  
+  background: none;
 }
 
-
-
 .btn_login_success_group button {
-
   width: 60px;
-  
 
   border-top-left-radius: 5px; 
   border-top-right-radius: 5px; 
@@ -39,7 +28,7 @@
   margin-right: 10px;
 
   border: 1px solid skyblue; 
-  background-color: rgba(0,0,0,0); 
+  background-color: rgba(0,0,0,0);
   color: skyblue; 
   padding: 5px;    
 }
@@ -47,5 +36,19 @@
 .btn_login_success_group button:hover {
   color:white; 
   background-color: skyblue;
-
 }
+*/
+
+.wrap{
+  padding: 42px;
+  text-align: center;
+}
+
+/*제목*/
+form>h3{margin-bottom: 60px;}
+
+/*메세지*/
+form>p{margin-bottom: 20px;}
+
+/*버튼*/
+.btn_login_success_group{margin-bottom: 20px;}

@@ -28,18 +28,21 @@ body{
 .form button{
     font-family: 'Cafe24Oneprettynight';
     font-size: 20px;
-    background-color: #f3f3f3;
+    /*background-color: #f3f3f3;*/
+    background-color: rgb(227, 239, 198);
     margin: 0px;
     padding: 0px;
     border: 0px;
     height: 30px;
-    width: 60px;
+    min-width: 60px;
     cursor: pointer;
     border-radius: 5px;
 }
 .form button:hover{
-    background-color: gray;
-    color: white;
+    /*background-color: gray;*/
+    background-color: rgb(151, 195, 27);
+    /*color: white;*/
+    color: #E3EFC6;
 }
 
 .form a{
