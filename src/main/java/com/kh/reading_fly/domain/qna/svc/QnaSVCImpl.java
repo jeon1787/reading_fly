@@ -32,7 +32,7 @@ public class QnaSVCImpl implements QnaSVC {
     Long qnaId = saveOrigin(qna);
 
     //2)첨부 저장
-    uploadFileSVC.addFile("Q",qnaId,files);
+    uploadFileSVC.addFile("C0103",qnaId,files);
 
     return qnaId;
   }
@@ -64,6 +64,8 @@ public class QnaSVCImpl implements QnaSVC {
   //삭제
   @Override
   public int deleteByQNum(Long qNum) {
+    uploadFileSVC.deleteFileByCodeWithRnum("C0103", qNum);
+
     return qnaDAO.deleteByQNum(qNum);
   }
 
@@ -80,7 +82,7 @@ public class QnaSVCImpl implements QnaSVC {
     int affectedRow = updateByQNum(id,qna);
 
     //2)첨부 저장
-    uploadFileSVC.addFile("Q",id,files);
+    uploadFileSVC.addFile("C0103",id,files);
 
     return affectedRow;
   }
@@ -97,7 +99,7 @@ public class QnaSVCImpl implements QnaSVC {
     Long id = qnaDAO.saveReply(pQNum, replyQna);
 
     //2)첨부 저장
-    uploadFileSVC.addFile("Q",id,files);
+    uploadFileSVC.addFile("C0103",id,files);
 
     return id;
   }
