@@ -21,28 +21,66 @@
     <script defer th:src="@{/js/book/bookInfo.js}"></script>
 </head>
 <body>
-<div class="form">
+<!--form-->
+<div class="form" th:data-login-chk="${!session?.isEmpty()}" th:data-id="${session?.loginMember?.id}">
+
     <div class="wrap">
-    <h3>도서상세</h3>
-    <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
-        <input class="input-word" type="text" th:field="*{searchWord}">검색단어
-        <input class="input-isbn" type="text" th:field="*{isbn}" >도서번호
-        <input class="input-title" type="text" th:field="*{title}" >도서제목
-        <input class="input-contents" type="text" th:field="*{bcontents}" >설명
-        <input class="input-authors" type="text" th:field="*{authors}" >저자
-        <input class="input-publisher" type="text" th:field="*{publisher}" >출판사
-        <input class="input-translators" type="text" th:field="*{translators}" >번역
-        <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
-        <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
-        <div><span>총페이지:</span><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
-    </form>
-    <div class="info-bntgrp">
-        <button class="saveBtn" id="saveBtn" type="button">등록하기</button>
-<!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
-        <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
+
+        <!--제목-->
+        <h3>도서상세</h3>
+
+        <!--도서 정보-->
+        <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
+            <input class="input-word" type="text" th:field="*{searchWord}">검색단어
+            <input class="input-isbn" type="text" th:field="*{isbn}" >도서번호
+            <input class="input-title" type="text" th:field="*{title}" >도서제목
+            <input class="input-contents" type="text" th:field="*{bcontents}" >설명
+            <input class="input-authors" type="text" th:field="*{authors}" >저자
+            <input class="input-publisher" type="text" th:field="*{publisher}" >출판사
+            <input class="input-translators" type="text" th:field="*{translators}" >번역
+            <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
+            <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
+            <div><span>총페이지:</span><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
+        </form>
+
+        <!--버튼-->
+        <div class="info-bntgrp">
+            <button class="saveBtn" id="saveBtn" type="button">등록하기</button>
+            <!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
+            <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
+        </div>
+        <!--<div th:text="${bookRequest.title}">-->
+
+        <!--리뷰-->
+        <div class="review-area">
+            <div>리뷰</div>
+            <hr>
+            <div>
+                <form action="">
+                    <div class="review-header">
+                        <span th:text="${!session.isEmpty()} ? ${session?.loginMember?.nickname} : '로그인 후 이용해주세요'">닉네임</span>
+                        <div class="radioBtn">
+                            <input type="radio" name="star" class="star" id="one-star" value="5">
+                            <label for="one-star"><div class="star-div one-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="two-star" value="4">
+                            <label for="two-star"><div class="star-div two-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="three-star" value="3">
+                            <label for="three-star"><div class="star-div three-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="four-star" value="2">
+                            <label for="four-star"><div class="star-div four-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="five-star" value="1">
+                            <label for="five-star"><div class="star-div five-star-div">★</div></label>
+                        </div>
+                    </div>
+                    <textarea class="review-textarea" name="" cols="104" rows="10" placeholder="리뷰를 입력하세요"></textarea>
+                    <div><button type="submit" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button></div>
+                </form>
+            </div>
+            <div class="review-list"></div>
+        </div>
+
     </div>
-<!--<div th:text="${bookRequest.title}">-->
-    </div>
+
 </div>
 </body>
 </html>

@@ -29,10 +29,10 @@ public class ApiReviewController {
 
   //댓글 전체 조회
   @GetMapping("/{risbn}")
-  public ReviewApiResult<Object> list(@PathVariable Long risbn) {
+  public ReviewApiResult<Object> list(@PathVariable String risbn) {
     log.info("list() 호출됨!");
 
-    List<ReviewDTO> list = reviewSVC.reSelectAll(risbn);
+    List<ReviewDTO> list = reviewSVC.selectAll(risbn);
     List<ReviewItemForm> items = new ArrayList<>();
 
     for (ReviewDTO reviewDTO : list) {
@@ -60,7 +60,7 @@ public class ApiReviewController {
   public ReviewApiResult<Object> detail(@PathVariable Long rnum){
     log.info("detail() 호출됨!");
 
-    ReviewDTO reviewDTO = reviewSVC.reSelectOne(rnum);
+    ReviewDTO reviewDTO = reviewSVC.selectOne(rnum);
 
     ReviewDetailForm detailForm = new ReviewDetailForm();
     BeanUtils.copyProperties(reviewDTO, detailForm);
@@ -79,10 +79,11 @@ public class ApiReviewController {
 
   //댓글 등록
   @PostMapping("/{risbn}")
-  public ReviewApiResult<Object> add(@PathVariable Long risbn,
-                               @RequestBody ReviewAddForm reviewAddForm,
-                               HttpSession session){
+  public ReviewApiResult<Object> add(@PathVariable String risbn,
+                                     @RequestBody ReviewAddForm reviewAddForm,
+                                     HttpSession session){
     log.info("add() 호출됨!");
+    log.info("reviewAddForm={}",reviewAddForm);
 
     ReviewDTO reviewDTO = new ReviewDTO();
     reviewDTO.setRcontent(reviewAddForm.getRcontent());
@@ -90,14 +91,14 @@ public class ApiReviewController {
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     reviewDTO.setRid(loginMember.getId());
 
-    ReviewDTO savedReview = reviewSVC.reCreate(reviewDTO);
+    ReviewDTO savedReview = reviewSVC.create(reviewDTO);
 
     return new ReviewApiResult<>("00", "success", savedReview);
   }
 
   //댓글 수정
   @PatchMapping("/{risbn}")
-  public ReviewApiResult<Object> edit(@PathVariable Long risbn,
+  public ReviewApiResult<Object> edit(@PathVariable String risbn,
                                 @RequestBody ReviewEditForm revirwEditForm,
                                 HttpSession session){
     log.info("edit() 호출됨!");
@@ -113,7 +114,7 @@ public class ApiReviewController {
     reviewDTO.setRid(revirwEditForm.getRid());
     reviewDTO.setRcontent(revirwEditForm.getRcontent());
 
-    ReviewDTO modifiedReview = reviewSVC.reUpdate(reviewDTO);
+    ReviewDTO modifiedReview = reviewSVC.update(reviewDTO);
 
     return new ReviewApiResult<>("00", "success", modifiedReview);
   }
@@ -125,7 +126,7 @@ public class ApiReviewController {
     log.info("delete() 호출됨!");
 
     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
-    int result = reviewSVC.reDelete(rnum, loginMember.getId());
+    int result = reviewSVC.delete(rnum, loginMember.getId());
     ReviewApiResult<Object> reviewApiResult = null;
 
     if(result == 1){

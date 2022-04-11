@@ -11,7 +11,7 @@ public interface ReviewDAO {
    * @param risbn 도서번호
    * @return
    */
-  List<ReviewDTO> selectAll(Long risbn);
+  List<ReviewDTO> selectAll(String risbn);
 
   /**
    * 단건조회 by rnum

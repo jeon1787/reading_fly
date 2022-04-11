@@ -29,12 +29,25 @@ public class ReviewDAOImpl implements ReviewDAO{
    * @return
    */
   @Override
-  public List<ReviewDTO> selectAll(Long risbn) {
+  public List<ReviewDTO> selectAll(String risbn) {
     StringBuffer sql = new StringBuffer();
-    sql.append(" select row_number() over (order by rcdate) as num, rnum, risbn, rcontent, rstar, rcdate, rudate, rid, nickname ");
-    sql.append(" from review, member ");
-    sql.append(" where review.rid = member.id and risbn = ? ");
-    sql.append(" order by rcdate asc ");
+    sql.append(" SELECT ");
+    sql.append("   row_number() over (order by rcdate) as num, ");
+    sql.append("   rnum, ");
+    sql.append("   risbn, ");
+    sql.append("   rcontent, ");
+    sql.append("   rstar, ");
+    sql.append("   rcdate, ");
+    sql.append("   rudate, ");
+    sql.append("   rid, ");
+    sql.append("   nickname ");
+    sql.append(" FROM ");
+    sql.append("   review, ");
+    sql.append("   member ");
+    sql.append(" WHERE ");
+    sql.append("   review.rid = member.id ");
+    sql.append(" AND risbn = ? ");
+    sql.append(" ORDER BY rcdate ASC ");
 
     //sql 실행
     List<ReviewDTO> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(ReviewDTO.class), risbn);
@@ -51,9 +64,22 @@ public class ReviewDAOImpl implements ReviewDAO{
   public ReviewDTO selectOne(Long rnum) {
     StringBuffer sql = new StringBuffer();
 
-    sql.append(" select rnum, risbn, rcontent, rstar,rcdate, rudate, rid, nickname ");
-    sql.append(" from review, member ");
-    sql.append(" where review.rid = member.id and rnum = ? ");
+    sql.append(" SELECT ");
+    sql.append("   rnum, ");
+    sql.append("   risbn, ");
+    sql.append("   rcontent, ");
+    sql.append("   rstar, ");
+    sql.append("   rcdate, ");
+    sql.append("   rudate, ");
+    sql.append("   rid, ");
+    sql.append("   nickname ");
+    sql.append(" FROM ");
+    sql.append("   review, ");
+    sql.append("   member ");
+    sql.append(" WHERE ");
+    sql.append("   review.rid = member.id ");
+    sql.append(" AND ");
+    sql.append("   rnum = ? ");
 
     //sql 실행
     List<ReviewDTO> query = jdbcTemplate.query(sql.toString(),
@@ -69,12 +95,10 @@ public class ReviewDAOImpl implements ReviewDAO{
   @Override
   public ReviewDTO create(ReviewDTO reviewDTO) {
     StringBuffer sql = new StringBuffer();
-//    sql.append(" insert into review (rnum, rcontent, rstar, risbn, rid) ");
-//    sql.append(" values (review_rnum_seq.nextval, ?, ?, ?, ?) ");
-
-
-    sql.append(" insert into review (rnum, rcontent, risbn, rid) ");
-    sql.append(" values (review_rnum_seq.nextval, ?, ?, ?) ");
+    sql.append(" INSERT INTO ");
+    sql.append("   review (rnum, rcontent, risbn, rid) ");
+    sql.append(" VALUES ");
+    sql.append("   (review_rnum_seq.nextval, ?, ?, ?) ");
 
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -86,16 +110,9 @@ public class ReviewDAOImpl implements ReviewDAO{
             new String[]{"rnum"}
         );
 
-//        pstmt.setString(1, reviewDTO.getRcontent());
-//        pstmt.setLong(2, reviewDTO.getrstar());
-//        pstmt.setLong(3, reviewDTO.getRisbn());
-//        pstmt.setString(4, reviewDTO.getRid());
-
-
         pstmt.setString(1, reviewDTO.getRcontent());
-        pstmt.setLong(2, reviewDTO.getRisbn());
+        pstmt.setString(2, reviewDTO.getRisbn());
         pstmt.setString(3, reviewDTO.getRid());
-
 
         return pstmt;
       }
@@ -113,11 +130,16 @@ public class ReviewDAOImpl implements ReviewDAO{
   @Override
   public ReviewDTO update(ReviewDTO reviewDTO) {
     StringBuffer sql = new StringBuffer();
-    sql.append(" update review ");
-    sql.append(" set rcontent = ? , ");
-//    sql.append("     rstar = ? , ");
-    sql.append("     rudate = systimestamp ");
-    sql.append(" where rnum = ? and rid = ? ");
+    sql.append(" UPDATE ");
+    sql.append("   review ");
+    sql.append(" SET ");
+    sql.append("   rcontent = ? , ");
+    sql.append("   rstar = ? , ");
+    sql.append("   rudate = systimestamp ");
+    sql.append(" WHERE ");
+    sql.append("   rnum = ? ");
+    sql.append(" AND ");
+    sql.append("   rid = ? ");
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
     jdbcTemplate.update(new PreparedStatementCreator() {
@@ -128,20 +150,9 @@ public class ReviewDAOImpl implements ReviewDAO{
             new String[]{"rnum"}
         );
 
-//        pstmt.setString(1, reviewDTO.getRcontent());
-//        pstmt.setLong(2, reviewDTO.getrstar());
-//        pstmt.setLong(3, reviewDTO.getRnum());
-//        pstmt.setString(4, reviewDTO.getRid());
-
-
         pstmt.setString(1, reviewDTO.getRcontent());
         pstmt.setLong(2, reviewDTO.getRnum());
         pstmt.setString(3, reviewDTO.getRid());
-
-
-
-
-
 
         return pstmt;
       }
@@ -160,8 +171,12 @@ public class ReviewDAOImpl implements ReviewDAO{
   @Override
   public int delete(Long rnum, String rid) {
     StringBuffer sql = new StringBuffer();
-    sql.append(" delete from review ");
-    sql.append("  where rnum =? and rid = ? ");
+    sql.append(" DELETE FROM ");
+    sql.append("   review ");
+    sql.append("  WHERE ");
+    sql.append("    rnum =? ");
+    sql.append("  AND ");
+    sql.append("    rid = ? ");
 
     int result = jdbcTemplate.update(sql.toString(), rnum, rid);
 
