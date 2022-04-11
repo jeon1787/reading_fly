@@ -120,8 +120,8 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public int editDoc(String id, String isbn, Long spage, Book book) {
-        return bookDAO.editDoc(id, isbn, spage, book);
+    public int editDoc(Book book) {
+        return bookDAO.editDoc(book);
     }
 
     /**

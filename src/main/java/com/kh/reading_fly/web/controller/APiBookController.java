@@ -68,7 +68,7 @@ public class APiBookController {
     }
 
     //기록 목록 조회
-    @GetMapping("/{id}/list")
+    @GetMapping("/{isbn}/list")
     public ApiResult<List<Book>> listDoc(@PathVariable String isbn,
                                          HttpSession session){
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -94,7 +94,9 @@ public class APiBookController {
         BeanUtils.copyProperties(insertForm, book);
         book.setDid(id);
         book.setSid(id);
+
         Long dnum = bookSVC.insertDoc(book);
+        int num = bookSVC.editDoc(book);
         Book insertDoc = new Book();
         insertDoc.setDnum(dnum);
 //        if(dnum > 0){

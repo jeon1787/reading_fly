@@ -93,8 +93,9 @@ $detailBtn.addEventListener('click', event => {
     const insertForm = {};
     insertForm.ddate = document.querySelector('.date').value;
     insertForm.dsnum = frm.dataset.dsnum;
-    insertForm.dpage = $start;
+    insertForm.dpage = document.querySelector('.start-page').value
     insertForm.sisbn = frm.dataset.isbn;
+    insertForm.spage = document.querySelector('.end-page').value
 
     fetch(`http://localhost:9080/api/book/save`,{
       method:'POST',
@@ -106,6 +107,7 @@ $detailBtn.addEventListener('click', event => {
     .then(res=>res.json())
     .then(res=>{
       console.log(res);
+      list_f();
     })
     .catch(err => console.error('Err:',err));
 });
@@ -133,18 +135,31 @@ $listBtn.addEventListener('click', event => {
 //            .catch(err=>{console.error('Err:',err)});
 //        console.log('after fetch');
 //}
-////상품목록 가져오기
-//function list_f(e){
-//
-//  fetch('/api/book/${id}/list',{
-//    method:'GET'
-//  }).then(res=>res.json())
-//    .then(res=>{printItemList(res);})
-//    .catch(err=>{console.error('Err:',err)});
-//}
-//
-////상품목록 출력
-//function printItemList(res){
+
+document.addEventListener('DOMContentLoaded', list_f);
+
+//상품목록 가져오기
+function list_f(e){
+  const isbn = document.querySelector('.detail-form').dataset.isbn;
+  fetch(`http://localhost:9080/api/book/${isbn}/list`,{
+    method:'GET'
+  }).then(res=>res.json())
+    .then(res=>{printItemList(res.data);})
+    .catch(err=>{console.error('Err:',err)});
+}
+
+//상품목록 출력
+function printItemList(list){
+    let html = '';
+    list.forEach(item => {
+        html += `<p>`;
+        html += `<span>기록날짜:${item.ddate}</span>`
+        html += `<span>기록페이지:${item.dpage}</span>`
+        html += `<span>총페이지:${item.spage}</span>`
+        html += `<button data-item-id='${item.id}' onclick='delItem(event)'>삭제</button>`;
+        html += `</p>`;
+    });
+    detailList.innerHTML = html;
 //  console.log(res);
 //  let html = '';
 //  if(res.rtcd === '00'){  //목록이 있는 경우
@@ -160,4 +175,4 @@ $listBtn.addEventListener('click', event => {
 //    alert(res.rtmsg);
 //  }
 //  itemList.innerHTML = html;
-//}
+}
