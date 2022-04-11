@@ -51,7 +51,6 @@
               <!--td3-->
               <td class="loginTd3">
                 <p th:if="${#fields.hasErrors('${loginForm}')}"></p>
-                <p th:errors="*{id}" th:errorclass="globalError"></p>
 
                 <p th:if="${#fields.hasErrors('id')}"></p>
                 <p th:errors="*{id}" th:errorclass="fieldError"></p>
@@ -71,7 +70,6 @@
               <!--td3-->
               <td class="loginTd3">
                 <p th:if="${#fields.hasErrors('${loginForm}')}"></p>
-                <p th:errors="*{id}" th:errorclass="globalError"></p>
 
                 <p th:if="${#fields.hasErrors('pw')}"></p>
                 <p th:errors="*{pw}" th:errorclass="fieldError"></p>

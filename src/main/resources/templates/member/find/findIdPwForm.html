@@ -16,7 +16,7 @@ th:replace="~{fragment/mainDetail::main(
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>아아디 / 패스워드 찾기</title>
+  <title>아이디 / 패스워드 찾기</title>
   <link rel="stylesheet" th:href="@{/css/member/find/findIdPwForm.css}">
   <script defer th:src="@{/js/member/find/findIdPwForm.js}"></script>
 </head>
@@ -34,7 +34,7 @@ th:replace="~{fragment/mainDetail::main(
           <tr>
             <td>
               <input type="radio" name="find_idpw" id="find_id" onclick="div_show('0');" value="아이디 찾기">
-              <label for="find_id"><span>아아디 찾기</span></label>  
+              <label for="find_id"><span>아이디 찾기</span></label>
             </td>
 
             <td>
@@ -100,7 +100,7 @@ th:replace="~{fragment/mainDetail::main(
 
           <!--버튼-->
           <div class="find_btn_group">           
-            <button id="findIdBtn" type="submit">아아디 찾기</button>
+            <button id="findIdBtn" type="submit">아이디 찾기</button>
             <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button> 
             <button id="signupBtn" type="button" onclick="location.href='/signup'">회원가입</button> 
           </div>     
