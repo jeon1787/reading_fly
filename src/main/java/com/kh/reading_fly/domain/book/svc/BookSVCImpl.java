@@ -107,8 +107,8 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public Long insertDoc(String id, String isbn, Book book) {
-        return bookDAO.insertDoc(id, isbn, book);
+    public Long insertDoc(Book book) {
+        return bookDAO.insertDoc(book);
     }
 
     /**

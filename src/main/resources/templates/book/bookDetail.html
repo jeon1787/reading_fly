@@ -25,12 +25,12 @@
     <div class="wrap">
 
         <h3>독서기록추가</h3>
-        <form class="detail-form" id="detailForm" action="" th:action th:method="post" th:object="${detailForm}" th:data-isbn="${detailForm.isbn}">
+        <form class="detail-form" id="detailForm" action="" th:action th:method="post" th:object="${detailForm}" th:data-isbn="${detailForm.isbn}" th:data-dsnum="${detailForm.dsnum}">
             <div><label for="">얼마나 읽었나요?</label></div>
             <div><input class="range-bar" id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}" th:step="1"></div>
 
             <div><label for="">날짜는?</label></div>
-            <div><input class="date" id="date" type="text" th:field="*{ddate}" readonly></div>
+            <div><input class="date" id="date" type="date" th:field="*{ddate}"></div>
 
             <div><label for="">페이지는?</label></div>
             <div><input class="start-page" id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}">/<input class="end-page" id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>

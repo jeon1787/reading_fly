@@ -178,7 +178,7 @@ public class BookDAOImpl implements BookDAO{
     @Override
     public Book detailDoc(String id, String isbn) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select ddate, dpage, spage, thumbnail, title, isbn ");
+        sql.append("select dsnum, ddate, dpage, spage, thumbnail, title, isbn ");
         sql.append("from (select document.dsnum, document.dnum, document.ddate, document.dpage, book_shelf.spage, book.thumbnail, book.title, book.isbn ");
         sql.append("from document, book_shelf, book ");
         sql.append("where book_shelf.snum = document.dsnum and book_shelf.sisbn = book.isbn ");
@@ -218,14 +218,15 @@ public class BookDAOImpl implements BookDAO{
      * @return
      */
     @Override
-    public Long insertDoc(String id, String isbn, Book book) {
+    public Long insertDoc(Book book) {
         StringBuffer sql = new StringBuffer();
         sql.append("insert into document (dnum, ddate, dsnum, dpage, did) ");
-        sql.append("select document_dnum_seq.nextval, systimestamp, ?, ?, ? ");
-        sql.append("from book_shelf, document ");
-        sql.append("where book_shelf.sid = ? ");
-        sql.append("and book_shelf.sisbn = ? ");
-        log.info("book1={}", book);
+        sql.append("values (document_dnum_seq.nextval, ?, ?, ?, ?) ");
+//        sql.append("select document_dnum_seq.nextval, ?, ?, ?, ? ");
+//        sql.append("from book_shelf, document ");
+//        sql.append("where book_shelf.sid = ? ");
+//        sql.append("and book_shelf.sisbn = ? ");
+//        log.info("book1={}", book);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator() {
@@ -233,11 +234,12 @@ public class BookDAOImpl implements BookDAO{
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"dnum"});  // keyHolder에 담을 테이블의 컬럼명을 지정
 
-                pstmt.setLong(1,book.getSnum());
-                pstmt.setLong(2,book.getDpage());
-                pstmt.setString(3,book.getDid());
-                pstmt.setString(4,id);
-                pstmt.setString(5,isbn);
+                pstmt.setDate(1, Date.valueOf(book.getDdate()));
+                pstmt.setLong(2,book.getDsnum());
+                pstmt.setLong(3,book.getDpage());
+                pstmt.setString(4,book.getDid());
+//                pstmt.setString(5,book.getSid());
+//                pstmt.setString(6,book.getSisbn());
                 return pstmt;
             }
         },keyHolder);

@@ -84,20 +84,23 @@ public class APiBookController {
     }
 
     //기록 등록
-    @PostMapping("/{isbn}/save")
-    public ApiResult<Book> insertDoc(@PathVariable String isbn,
-                                     @ModelAttribute InsertForm insertForm,
+    @PostMapping("/save")
+    public ApiResult<Book> insertDoc(@RequestBody InsertForm insertForm,
                                      HttpSession session){
+        log.info("insertForm={}",insertForm);
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
         Book book = new Book();
         BeanUtils.copyProperties(insertForm, book);
-        Long dnum = bookSVC.insertDoc(id, isbn,book);
-        Book insertDoc = null;
-        if(dnum > 0){
+        book.setDid(id);
+        book.setSid(id);
+        Long dnum = bookSVC.insertDoc(book);
+        Book insertDoc = new Book();
+        insertDoc.setDnum(dnum);
+//        if(dnum > 0){
 //            insertDoc = bookSVC.detailDoc(id, isbn);
-            BeanUtils.copyProperties(insertDoc, book);
-        }
+//            BeanUtils.copyProperties(insertDoc, book);
+//        }
         ApiResult<Book> result = new ApiResult<>("00", "기록등록", book);
         return result;
     }

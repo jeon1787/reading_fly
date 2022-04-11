@@ -85,14 +85,29 @@ const $detailBtn = document.querySelector('.detail-btn');
 $detailBtn.addEventListener('click', event => {
     const frm = document.querySelector('.detail-form');
     console.log("frm:" + frm);
+    console.log(document.querySelector('.date').value);
+    console.log(frm.dataset.dsnum);
+    console.log($start);
+    console.log(frm.dataset.isbn);
+    //객체 생성(ddate,dsnum,dpage,sisbn)
+    const insertForm = {};
+    insertForm.ddate = document.querySelector('.date').value;
+    insertForm.dsnum = frm.dataset.dsnum;
+    insertForm.dpage = $start;
+    insertForm.sisbn = frm.dataset.isbn;
 
-    const isbn = frm.dataset.isbn;
-    console.log("isbn:" + isbn);
-    const url = `/api/book/${isbn}/save`;
-    alert("멈춰");
-
-    frm.action = url;
-    frm.submit();
+    fetch(`http://localhost:9080/api/book/save`,{
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(insertForm)  // js객체를 => json 포맷 문자열 변환
+    })
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+    })
+    .catch(err => console.error('Err:',err));
 });
 
 const $listBtn = document.querySelector('.list-btn');
