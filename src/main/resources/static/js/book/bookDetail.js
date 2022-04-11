@@ -156,23 +156,27 @@ function printItemList(list){
         html += `<span>기록날짜:${item.ddate}</span>`
         html += `<span>기록페이지:${item.dpage}</span>`
         html += `<span>총페이지:${item.spage}</span>`
-        html += `<button data-item-id='${item.id}' onclick='delItem(event)'>삭제</button>`;
+        html += `<button class="delBtn" data-item-dnum="${item.dnum}">삭제</button>`;
         html += `</p>`;
     });
     detailList.innerHTML = html;
-//  console.log(res);
-//  let html = '';
-//  if(res.rtcd === '00'){  //목록이 있는 경우
-//    res.data.forEach(item => {
-//      html += `<p>`;
-//      html += `기록날짜:${item.ddate},기록페이지:${item.dpage}, 총페이지:${item.spage}`;
-//      // html += `<button data-item-id='${item.id}' onclick='delItem(event)'>삭제</button>`;
-//      html += `</p>`;
-//    });
-//  }else if(res.rtcd === '02'){ //목록이 없는 경우
-//    html = '';
-//  }else{
-//    alert(res.rtmsg);
-//  }
-//  itemList.innerHTML = html;
 }
+
+function delItem(event){
+    console.log(event.target.dataset.dnum);
+}
+
+const $detailList = document.querySelector('.detail-list');
+$detailList.addEventListener('click',e=>{
+    if(e.target.className != 'delBtn') return;
+
+    const dnum = e.target.dataset.itemDnum;
+
+    fetch(`http://localhost:9080/api/book/${dnum}/delete`,{method:'DELETE'})
+    .then(res=>res.json())
+    .then(res=>{
+      console.log(res);
+      list_f();
+    })
+    .catch(err => console.error('Err:',err));
+})

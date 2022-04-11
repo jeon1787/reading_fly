@@ -205,6 +205,7 @@ public class BookDAOImpl implements BookDAO{
         sql.append("where book_shelf.snum = document.dsnum ");
         sql.append("and book_shelf.sid = ? ");
         sql.append("and book_shelf.sisbn = ? ");
+        sql.append("order by document.ddate desc, document.dpage desc ");
         List<Book> detailBook = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Book.class), id, isbn);
         log.info("detailBook={}", detailBook);
         return detailBook;
@@ -270,9 +271,9 @@ public class BookDAOImpl implements BookDAO{
      * @return
      */
     @Override
-    public int removeDoc(Long dnum) {
+    public int removeDoc(String id, Long dnum) {
         String sql = "delete from document where did = ? and dnum = ? ";
-        int removeRow = jdbcTemplate.update(sql.toString(), dnum);
+        int removeRow = jdbcTemplate.update(sql.toString(), id, dnum);
         log.info("removeRow={}", removeRow);
         return removeRow;
     }

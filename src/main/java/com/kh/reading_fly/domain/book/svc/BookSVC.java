@@ -38,5 +38,5 @@ public interface BookSVC {
     int editDoc(Book book);
 
     //독서기록 단건 삭제
-    int removeDoc(Long dnum);
+    int removeDoc(String id, Long dnum);
 }

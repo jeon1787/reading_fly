@@ -130,7 +130,7 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public int removeDoc(Long dnum) {
-        return bookDAO.removeDoc(dnum);
+    public int removeDoc(String id, Long dnum) {
+        return bookDAO.removeDoc(id, dnum);
     }
 }
