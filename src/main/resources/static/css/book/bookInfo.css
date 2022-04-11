@@ -1,0 +1,72 @@
+@charset "utf-8";
+.wrap{
+  padding: 42px;
+}
+/*
+.star{
+  display: none;
+}
+*/
+/*
+#one-star:checked .one-star-div{
+background-color: yellow;
+}
+#two-star:checked .one-star-div,.two-star-div{
+background-color: yellow;
+}
+#three-star:checked .one-star-div,.two-star-div,.three-star-div{
+background-color: yellow;
+}
+#four-star:checked .one-star-div,.two-star-div,.three-star-div,.four-star-div{
+background-color: yellow;
+}
+#five-star:checked .one-star-div,.two-star-div,.three-star-div,.four-star-div,.five-star-div{
+background-color: yellow;
+}*/
+
+
+/*리뷰 작성창 헤더*/
+.review-header{
+    display: flex;
+    justify-content: space-between;
+}
+.review-header>span{
+    line-heigth: 42px;
+}
+
+/*별점*/
+.radioBtn input{
+    display: none;
+}
+
+.radioBtn{
+    direction: rtl;
+    display: inline-block;
+}
+
+.star-div{
+  display: inline-block;
+}
+
+.form label{
+    font-size: 2em;
+    color: transparent;
+    color: #f0f0f0;
+}
+.form label:hover{
+    color: rgba(250, 208, 0, 0.99);
+}
+.form label:hover ~ label{
+    color: rgba(250, 208, 0, 0.99);
+}
+.form input[type=radio]:checked ~ label{
+    color: rgba(250, 208, 0, 0.99);
+}
+
+/*리뷰 작성창*/
+.review-textarea{
+    width: 980px;
+    heigth: 50px;
+}
+
+#addBtn{float: right;}

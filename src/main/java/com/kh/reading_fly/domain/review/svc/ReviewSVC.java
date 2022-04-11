@@ -7,19 +7,19 @@ import java.util.List;
 public interface ReviewSVC {
 
   // isbn 번호로 리뷰 전체 조회
-  List<ReviewDTO> reSelectAll(Long risbn);
+  List<ReviewDTO> selectAll(String risbn);
 
   // 리뷰 수정의 취소 경우 화면 조회
-  ReviewDTO reSelectOne(Long rnum);
+  ReviewDTO selectOne(Long rnum);
 
   // 리뷰 등록
-  ReviewDTO reCreate(ReviewDTO reviewDTO);
+  ReviewDTO create(ReviewDTO reviewDTO);
 
   // 리뷰 수정
-  ReviewDTO reUpdate(ReviewDTO reviewDTO);
+  ReviewDTO update(ReviewDTO reviewDTO);
 
   // 리뷰 삭제
-  int reDelete(Long rnum, String rid);
+  int delete(Long rnum, String rid);
 
 
 
