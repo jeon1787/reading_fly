@@ -29,14 +29,17 @@
       <input type="text" name="query" placeholder="도서명" size="50">
       <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
     </div>
+
     <!--로그인시-->
     <th:block th:if="${!session.isEmpty()}">
       <div class="upper-right" th:replace="${session.loginMember.id == 'admin'} ? ~{fragment/uppermost::adminLoginUpm} : ~{fragment/uppermost::afterLoginUpm}"></div>
     </th:block>
+
     <!--비로그인시-->
     <th:block th:unless="${!session.isEmpty()}">
       <div class="upper-right" th:replace="~{fragment/uppermost::beforeLoginUpm}"></div>
     </th:block>
+
   </div>
 </div>
 
@@ -73,7 +76,7 @@
     </nav>
 
     <!--form-->
-    <div class="main-item" th:replace=${form}>
+    <div th:replace=${form}>
     </div>
   </div>
 </main>
