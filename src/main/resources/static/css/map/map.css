@@ -13,10 +13,6 @@
   display: flex;
 }
 
-.place button{
-  margin-right: 10px;
-  border: 1px solid black;
-}
 
 select{
   font-family: 'Cafe24Oneprettynight';
