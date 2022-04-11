@@ -1,11 +1,14 @@
-        *{
-                    font-family: 'NanumAmSeuTeReuDam';
-                    font-weight: bold;
-                    margin: 0;
-                    padding: 0;
-                    /* outline: 1px solid red; */
-            }
+*{
+margin : 0;
+padding : 0;
+}
 
+@font-face {
+    font-family: 'Cafe24Oneprettynight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Oneprettynight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
             @-webkit-keyframes AnimationName{
                 0%{background-position:0% 50%}
@@ -44,6 +47,9 @@
         justify-content: center;
         top: 35%;
         text-align: center;
+        margin: 0;
+        font-family: 'Cafe24Oneprettynight';
+        font-weight: bold;
         }
 
         .upper {
@@ -63,9 +69,9 @@
         }
 
         .upper-left{
-            width: auto;
+            width: 320px;
+            height: 35px;
             display: flex;
-            padding: 1px;
             background-color: white;
             border: solid 0.5px black;
             border-radius: 5px;
@@ -74,30 +80,19 @@
         .upper-left > input{
             text-align: center;
             border: none;
+            border-radius: 5px;
             width: 300px;
         }
 
         .upper-left > a{
-            line-height: 35px;
+            padding-top: 8px;
         }
         .upper-right{
-            width: 250px;
+            width: 300px;
             display: flex;
             justify-content: space-between;
         }
 
-        .upper > .upper-right > button {
-            width: 20%;
-        }
-
-        .login{
-            width: 50%;
-            background-color: burlywood;
-        }
-        .join{
-            width: 50%;
-            background-color: burlywood;
-        }
 
         main{
             display: flex;
@@ -138,46 +133,72 @@
         .category{
             display: grid;
             justify-content: center;
-            grid-template-columns: 100px 100px 100px;
-            grid-gap: 55px;
-            height: 50%;
+            grid-template-columns: 160px 150px 160px;
+
+            grid-column-gap : 30px;
+            grid-row-gap: 70px;
         }
 
+        .icon{
+            display: flex;
+            text-decoration: none;
+            padding: 15px;
+        }
 
         i{
+            position: absolute;
             color: bisque;
             transition-duration: 1s;
         }
 
-        i:hover{
+        .explain{
             opacity: 0;
+            font-size: 3em;
+            font-weight: bold;
+            line-height : 3em;
+            color: white;
+            z-index: 1;
+        }
+
+        .icon:hover .explain{
+            opacity: 1;
             transition-duration: 1s;
+        }
+
+        .icon:hover i{
+            display: none;
         }
 
         .dropdown{
             position : relative;
             display : inline-block;
+            text-align : center;
+            width:40%;
         }
 
         .dropdown .dropbtn{
             color: white;
-            font-size: 1.3em;
             margin-left: 10px;
         }
+
         .dropdown-content{
             display : none;
             position : absolute;
             z-index : 1;
-            background-color: white;
         }
 
-        .dropdown-content a{
-            font-size: x-large;
-            display : block;
+        .dropdown-content > a{
+            color:white;
+            text-decoration-line: none;
+            display : inline-block;
+            text-align : center;
         }
 
         .dropdown-content a:hover{
-            background-color: skyblue;
+            background-color: rgba(0,0,0,0.5);
+            border-radius : 10px;
+            padding : 10px;
+            color : white;
         }
 
         .dropdown:hover .dropdown-content {
@@ -194,6 +215,5 @@
 
         .upper-right>span>a{
             color: white;
-            font-size: 1.5em;
             text-decoration: none;
         }

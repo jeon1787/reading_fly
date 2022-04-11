@@ -14,6 +14,8 @@
 }
 
 .tableForm {
+  margin-top:150px;
+  margin-left:210px;
   width: 800px;
   
 }
@@ -79,7 +81,7 @@
 
 .btn_editpw_group button {
 
-  width: 60px;
+  width: 80px;
   
 
   border-top-left-radius: 5px; 

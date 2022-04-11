@@ -6,6 +6,7 @@
   height:300px;
   background-color:#FFFFFF;
   text-align:center;
+
   /* top:30%; 
   left:30%;
   transform: translate(-50%,-50%); */
@@ -13,7 +14,19 @@
 
 }
 
+.notice{
+    margin-top: 10px;
+    text-align: left;
+    margin-left: 60px;
+    color: red;
+    border: solid 2px red;
+    padding: 5px;
+    font-size: 0.9em
+}
+
 .tableForm {
+  margin-top:150px;
+  margin-left:210px;
   width: 800px;
   
 }

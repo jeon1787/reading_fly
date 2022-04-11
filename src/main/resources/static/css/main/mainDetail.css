@@ -1,3 +1,7 @@
+*{
+margin : 0;
+padding : 0;
+}
 /*폰트*/
 /*카페24 고운밤*/
 @font-face {
@@ -21,7 +25,8 @@ body{
 
 /*에러 메세지 공통*/
 .fieldError{
-    color: skyblue;
+    color: red;
+    font-weight : bold;
 }
 
 /*.form 공통*/
@@ -123,45 +128,51 @@ width: 20px;
 line-height: 40px;
 }
 
+        .upper-right>span>a{
+            text-decoration: none;
+        }
+
 .upper-right{
 width: 300px;
 height: 100px;
 display: flex;
 justify-content: space-between;
-line-height: 100px;
+margin-top:40px;
+/*line-height: 100px;*/
 }
 
-/*a태그 css제거*/
-.upper-right>span>a{
-text-decoration: none;
-color: black;
-}
 
 /*upper - dropdown*/
 .dropdown{
-position : relative;
-display : inline-block;
+            position : relative;
+            display : inline-block;
+            text-align : center;
+            width:40%;
 }
 
 .dropdown .dropbtn{
-color: black;
-font-size: 1.3em;
-margin-left: 10px;
+    margin-left: 10px;
 }
+
 .dropdown-content{
 display : none;
 position : absolute;
 z-index : 1;
-background-color: white;
 }
 
-.dropdown-content a{
-font-size: x-large;
-display : block;
+.dropdown-content > a{
+     color : gray;
+     text-decoration-line: none;
+     display : inline-block;
+     text-align : center;
 }
 
-.dropdown-content a:hover{
-background-color: skyblue;
+.dropdown-content > a:hover{
+     color : black;
+
+     background-color: rgba(128, 128, 128,0.5);
+     border-radius : 10px;
+     padding : 10px;
 }
 
 .dropdown:hover .dropdown-content {
