@@ -22,6 +22,7 @@
 </head>
 <body>
 <div class="form">
+    <div class="wrap">
     <h3>도서상세</h3>
     <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
         <input class="input-word" type="text" th:field="*{searchWord}">검색단어
@@ -41,6 +42,7 @@
         <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
     </div>
 <!--<div th:text="${bookRequest.title}">-->
+    </div>
 </div>
 </body>
 </html>

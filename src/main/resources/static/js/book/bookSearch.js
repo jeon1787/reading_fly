@@ -14,7 +14,7 @@ $infoClick.addEventListener('click', e => {
     const inputThumbnail = document.querySelector('.search-thumbnail');
     const inputPublisher_dt = document.querySelector('.search-publisher_dt');
 
-    const msg = event.target.closest('.imgList');
+    const msg = event.target.closest('.img-list');
 
     console.log(msg);
     console.log(document.querySelector('.word').value);

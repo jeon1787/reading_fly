@@ -27,19 +27,21 @@
         <h3>독서기록추가</h3>
         <form class="detail-form" id="detailForm" action="" th:action th:method="post" th:object="${detailForm}" th:data-isbn="${detailForm.isbn}">
             <div><label for="">얼마나 읽었나요?</label></div>
-            <div><input id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:min="0" th:max="*{spage}" th:step="1"></div>
+            <div><input class="range-bar" id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}" th:step="1"></div>
 
             <div><label for="">날짜는?</label></div>
-            <div><input type="date" th:field="*{ddate}"></div>
+            <div><input class="date" id="date" type="text" th:field="*{ddate}" readonly></div>
 
             <div><label for="">페이지는?</label></div>
-            <div><input id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}">/<input id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>
+            <div><input class="start-page" id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}">/<input class="end-page" id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>
         </form>
         <div class="detail-btngrp">
-            <button type="button" id="detailBtn">등록하기</button>
-            <button type="button" id="listBtn">돌아가기</button>
+            <button type="button" class="detail-btn" id="detailBtn">기록추가하기</button>
+            <button type="button" class="list-btn" id="listBtn">책장으로</button>
         </div>
-
+        <div>기록목록</div>
+        <div class="detail-list" id="detailList">
+        </div>
     </div>
 </div>
 </body>

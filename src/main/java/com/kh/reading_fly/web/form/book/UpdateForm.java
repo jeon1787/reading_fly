@@ -1,14 +1,14 @@
 package com.kh.reading_fly.web.form.book;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class UpdateForm {
     //    private Long bnum;     //    NUMBER(15) not null,                  --도서등록번호

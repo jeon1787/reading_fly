@@ -200,7 +200,7 @@ public class BookDAOImpl implements BookDAO{
     @Override
     public List<Book> listDoc(String id, String isbn) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select document.dnum, document.ddate, document.dpage, book_shelf.spage");
+        sql.append("select document.dnum, document.ddate, document.dpage, book_shelf.spage ");
         sql.append("from document, book_shelf ");
         sql.append("where book_shelf.snum = document.dsnum ");
         sql.append("and book_shelf.sid = ? ");
@@ -220,16 +220,27 @@ public class BookDAOImpl implements BookDAO{
     @Override
     public Long insertDoc(String id, String isbn, Book book) {
         StringBuffer sql = new StringBuffer();
-        sql.append("insert into document (dsnum, dnum, ddate, dpage, did) ");
-        sql.append("select snum , document_dnum_seq.nextval, systimestamp, dpage, ? ");
+        sql.append("insert into document (dnum, ddate, dsnum, dpage, did) ");
+        sql.append("select document_dnum_seq.nextval, systimestamp, ?, ?, ? ");
         sql.append("from book_shelf, document ");
         sql.append("where book_shelf.sid = ? ");
         sql.append("and book_shelf.sisbn = ? ");
-
+        log.info("book1={}", book);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(sql.toString(), new String[]{"dnum"},id, isbn, id);
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"dnum"});  // keyHolder에 담을 테이블의 컬럼명을 지정
 
+                pstmt.setLong(1,book.getSnum());
+                pstmt.setLong(2,book.getDpage());
+                pstmt.setString(3,book.getDid());
+                pstmt.setString(4,id);
+                pstmt.setString(5,isbn);
+                return pstmt;
+            }
+        },keyHolder);
         Long dnum = Long.valueOf(keyHolder.getKeys().get("dnum").toString());
         log.info("dnum={}", dnum);
         return dnum;
