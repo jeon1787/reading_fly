@@ -1,19 +1,4 @@
 'use strict';
-const $emptyImg = document.getElementById('emptyImg');
-
-
-$emptyImg.addEventListener('click', event => {
-    location.href = `/book/search`;
-})
-
- const $bookImg = document.getElementById('bookImg');
- $bookImg.addEventListener('click', event => {
-
-     const isbn = event.target.dataset.isbn;
-     const url = "/book/" + isbn + "/update";
-     location.href = url;
- })
-    
 // bookImg.addEventListener('mouseOver', event => {
 //     var positionX = $bookImg.position().left;
 //     var positionY = $bookImg.position().top;
@@ -39,3 +24,54 @@ $emptyImg.addEventListener('click', event => {
 //    location.href = url;
 //    }
 //  }
+
+const $shelfWrap = document.querySelector('.shelf-wrap');
+
+//도서 목록 호출
+document.addEventListener('DOMContentLoaded', list);
+//도서 목록 json 받아오기
+function list(){
+    fetch(`http://localhost:9080/api/book`,{method:'GET'})
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+      displaylist(res.data);
+    })
+    .catch(err => console.error('Err:',err))
+}
+//도서 목록 화면 출력
+function displaylist(books){
+    let content = `<img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">`;
+
+    books.forEach(ele => {
+      content += `<div class="bookshelf-list">
+                      <img class="book-Img" id="bookImg" src="${ele.thumbnail}" width="130px" height="150px" data-isbn="${ele.isbn}">
+                      <div class="book-title">${ele.title}</div>
+                  </div>`
+    })
+
+    $shelfWrap.innerHTML = content;
+}
+
+$shelfWrap.addEventListener('click', e=>{
+  if(e.target.className == 'empty-Img'){
+    console.log('책장 추가 이미지');
+    location.href = `/book/search`;
+  }else if(e.target.className == 'book-Img'){
+    console.log('도서 기록 버튼');
+    const isbn = e.target.dataset.isbn;
+    const url = "/book/" + isbn + "/detail";
+    location.href = url;
+  }
+})
+
+//$emptyImg.addEventListener('click', event => {
+//    location.href = `/book/search`;
+//})
+//
+//$bookImg.addEventListener('click', event => {
+//
+// const isbn = event.target.dataset.isbn;
+// const url = "/book/" + isbn + "/detail";
+// location.href = url;
+//})
