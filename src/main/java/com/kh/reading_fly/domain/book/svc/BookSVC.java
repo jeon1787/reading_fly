@@ -32,7 +32,7 @@ public interface BookSVC {
     List<Book> listDoc(String id, String isbn);
 
     //기록 등록
-    Long insertDoc(String id, String isbn, Book book);
+    Long insertDoc(Book book);
 
     //총페이지 수정
     int editDoc(String id, String isbn, Long spage, Book book);
