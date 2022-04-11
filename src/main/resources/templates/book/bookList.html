@@ -25,16 +25,16 @@
     <h3>책장</h3>
     <div class="shelf-wrap">
         <!--책장-->
-            <!--등록버튼-->
-            <img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">
+<!--            &lt;!&ndash;등록버튼&ndash;&gt;-->
+<!--            <img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">-->
 
-            <!--반복-->
-            <th:block th:each="book:${list}">
-                <div class="bookshelf-list">
-                    <img class="book-Img" id="bookImg" src="" th:src="${book.thumbnail}" width="130px" height="150px" data-isbn="{book.isbn}">
-                    <div class="book-title" th:text="${book.title}">책이름</div>
-                </div>
-            </th:block>
+<!--            &lt;!&ndash;반복&ndash;&gt;-->
+<!--            <th:block th:each="book:${list}">-->
+<!--                <div class="bookshelf-list">-->
+<!--                    <img class="book-Img" id="bookImg" src="" th:src="${book.thumbnail}" width="130px" height="150px" data-isbn="{book.isbn}">-->
+<!--                    <div class="book-title" th:text="${book.title}">책이름</div>-->
+<!--                </div>-->
+<!--            </th:block>-->
     </div>
 </div>
 </body>

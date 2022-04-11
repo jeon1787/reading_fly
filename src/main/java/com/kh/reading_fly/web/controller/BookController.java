@@ -64,14 +64,18 @@ public class BookController {
 //        if(saveForm.getIsbn().split(0,9))
         BeanUtils.copyProperties(saveForm, book);
         book.setSid(loginMember.getId());
-        book.setSisbn(saveForm.getIsbn());
+//        book.setSisbn(saveForm.getIsbn());
         book.setDid(loginMember.getId());
         bookSVC.saveBook(book);
-        book.setSpage(saveForm.getSpage());
-        Long snum = bookSVC.saveBookShelf(book);
+//        book.setSpage(saveForm.getSpage());
         book.setDpage(0L);
+        log.info("book.getSpage()={}", book.getSpage());
+        if(book.getSpage() == null){
+            book.setSpage(0L);
+        }
+        Long snum = bookSVC.saveShelf(book);
         book.setDsnum(snum);
-        bookSVC.saveDocument(book);
+        bookSVC.saveDoc(book);
         return "redirect:/book/list";
     }
 
@@ -81,51 +85,23 @@ public class BookController {
                        Model model){
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
-        List<Book> listBook = bookSVC.list(id);
+        List<Book> listBook = bookSVC.listShelf(id);
         model.addAttribute("listBook", listBook);
         return "book/bookList";
     }
 
     //상세
-    @PostMapping("/{isbn}/detail")
+    @GetMapping("/{isbn}/detail")
     public String detail(@PathVariable String isbn,
                              HttpSession session,
                              Model model){
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
 
-        List<Book> detailBook = bookSVC.detail(id, isbn);
-        model.addAttribute("detailBook", detailBook);
+        Book detailBook = bookSVC.detailDoc(id, isbn);
+        DetailForm detailForm = new DetailForm();
+        BeanUtils.copyProperties(detailBook, detailForm);
+        model.addAttribute("detailForm", detailForm);
         return "book/bookDetail";
-    }
-
-    //수정양식
-    @GetMapping("/{isbn}/update")
-    public String updateForm(Model model){
-        model.addAttribute("updateForm", new UpdateForm());
-        return "book/updateForm";
-    }
-
-    //수정처리
-    @PostMapping("/{isbn}/update")
-    public String update(@PathVariable String id,
-                         @PathVariable String isbn,
-                         @Valid @ModelAttribute UpdateForm updateForm,
-                         RedirectAttributes redirectAttributes){
-
-        Book book = new Book();
-        BeanUtils.copyProperties(updateForm, book);
-        book.setDsnum(updateForm.getSnum());
-        bookSVC.update(id, isbn, book);
-
-        redirectAttributes.addAttribute("isbn", isbn);
-        return "redirect:/book/{isbn}/update";
-    }
-
-    //삭제
-    @GetMapping("/{isbn}/delete")
-    public String delete(@PathVariable String isbn){
-        bookSVC.delete(isbn);
-        return "redirect:/book/list";
     }
 }

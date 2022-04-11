@@ -1,11 +1,11 @@
 'use strict';
-const $rangeBar = document.getElementById('rangeBar');
-    const $crange = document.getElementById('rangeBar').value;
+$rangeBar = document.getElementById('rangeBar');
+$crange = document.getElementById('rangeBar').value;
 
-    const $startPage = document.getElementById('startPage').value;
-    const $cpage = document.getElementById('startPage').value;
-    const $dpage = document.getElementById('endPage').value;
-    const $maxPage = document.getElementById('rangeBar').max;
+$startPage = document.getElementById('startPage').value;
+$cpage = document.getElementById('startPage').value;
+$dpage = document.getElementById('endPage').value;
+$maxPage = document.getElementById('rangeBar').max;
 
     $rangeBar.addEventListener('change', event => {
         $crange.value = $rangeBar.value;
