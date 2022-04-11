@@ -108,9 +108,12 @@ public class APiBookController {
     }
 
     //독서기록 단건 삭제
-    @DeleteMapping("/{dnum}")
-    public ApiResult<Boolean> removeDoc(@PathVariable Long dnum){
-        int removeDoc = bookSVC.removeDoc(dnum);
+    @DeleteMapping("/{dnum}/delete")
+    public ApiResult<Boolean> removeDoc(@PathVariable Long dnum,
+                                        HttpSession session){
+        LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
+        String id = loginMember.getId();
+        int removeDoc = bookSVC.removeDoc(id, dnum);
         ApiResult<Boolean> result = null;
         if(removeDoc == 1){
             result = new ApiResult<>("00", "기록 단건 삭제", true);
