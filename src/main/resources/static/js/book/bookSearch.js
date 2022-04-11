@@ -14,7 +14,7 @@ $infoClick.addEventListener('click', e => {
     const inputThumbnail = document.querySelector('.search-thumbnail');
     const inputPublisher_dt = document.querySelector('.search-publisher_dt');
 
-    const msg = event.target.closest('.imgList');
+    const msg = event.target.closest('.img-list');
 
     console.log(msg);
     console.log(document.querySelector('.word').value);
@@ -37,7 +37,7 @@ $infoClick.addEventListener('click', e => {
 searchBtn.addEventListener('click', event => {
     let i = 0;
     let j = 0;
-    $('div').remove('.imgList');
+    $('div').remove('.img-list');
     $.ajax({
         method: "GET",
         url: "https://dapi.kakao.com/v3/search/book?target=title",
