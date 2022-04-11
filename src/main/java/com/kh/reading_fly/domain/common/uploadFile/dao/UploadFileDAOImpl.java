@@ -157,7 +157,7 @@ public class UploadFileDAOImpl implements UploadFileDAO{
     sql.append("   ftype,  ");
     sql.append("   fcdate,  ");
     sql.append("   fudate ");
-    sql.append("  FROM  uploadfile  ");
+    sql.append("  FROM uploadfile  ");
     sql.append(" WHERE code = ?  ");
     sql.append("   AND rnum = ?  ");
 

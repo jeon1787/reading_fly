@@ -9,7 +9,7 @@
   margin-bottom: 20px;
 }
 
-notice-title>input {
+.notice-title>input {
  height: 30px;
  width: 986px;
  box-sizing: border-box;

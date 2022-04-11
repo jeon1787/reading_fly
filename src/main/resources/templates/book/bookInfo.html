@@ -5,7 +5,7 @@
         ~{::title},
         _,
         ~{},
-        ~{},
+        ~{::link},
         ~{::script},
         _,
         _,
@@ -16,7 +16,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>도서상세</title>
+    <title>title</title>
+    <link rel="stylesheet" href="../../static/css/book/bookInfo.css" th:href="@{/css/book/bookInfo.css}">
     <script defer th:src="@{/js/book/bookInfo.js}"></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
         <input class="input-translators" type="text" th:field="*{translators}" >번역
         <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
         <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
-        <div><span>총페이지:</span><input class="input-spage" type="text" th:field="*{spage}">총페이지</div>
+        <div><span>총페이지:</span><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
     </form>
     <div class="info-bntgrp">
         <button class="saveBtn" id="saveBtn" type="button">등록하기</button>

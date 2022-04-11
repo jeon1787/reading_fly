@@ -9,6 +9,7 @@ drop table book cascade constraints;        -- 도서정보
 drop table book_shelf cascade constraints;  -- 책장
 drop table document cascade constraints;    -- 도서기록
 drop table review cascade constraints;      -- 리뷰
+drop table code cascade constraints;        -- 코드
 drop table board cascade constraints;       -- 게시판
 drop table uploadfile cascade constraints;  -- 게시판_파일첨부
 drop table comments cascade constraints;    -- 게시판_댓글
@@ -228,10 +229,43 @@ insert into review (rnum, rcontent, rstar, risbn, rid) values (review_rnum_seq.n
 
 select * from review;
 
+--7. 코드
+--코드 테이블 생성
+create table code(
+    code_id     varchar2(11),                   -- 코드
+    decode      varchar2(30),                   -- 코드명
+    discript    clob,                           -- 코드설명
+    pcode_id    varchar2(11),                   -- 상위코드
+    useyn       char(1) default 'Y',            -- 사용여부 (사용:'Y',미사용:'N')
+    cdate       timestamp default systimestamp, -- 생성일시
+    udate       timestamp default systimestamp  -- 수정일시
+);
+--기본키
+alter table code add Constraint code_code_id_pk primary key (code_id);
+
+--외래키
+alter table code add constraint bbs_pcode_id_fk
+    foreign key(pcode_id) references code(code_id);
+
+--제약조건
+alter table code modify decode constraint code_decode_nn not null;
+alter table code modify useyn constraint code_useyn_nn not null;
+alter table code add constraint code_useyn_ck check(useyn in ('Y','N'));
+
+--샘플데이터 of code
+insert into code (code_id,decode,pcode_id,useyn) values ('C01','커뮤니티',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0101','게시판','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0102','공지사항','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('C0103','QNA','C01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F01','첨부',null,'Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0101','파일','F01','Y');
+insert into code (code_id,decode,pcode_id,useyn) values ('F0102','이미지','F01','Y');
+
 --7. 게시판
 --게시판 테이블 생성
 create table board(
   bnum NUMBER(15) not null,                   -- 게시글번호
+  bcategory varchar2(11),                     -- 분류카테고리
   btitle VARCHAR2(60) not null,               -- 게시글제목
   bcdate TIMESTAMP default systimestamp,      -- 게시글작성일
   budate TIMESTAMP default systimestamp,      -- 게시글수정일
@@ -245,6 +279,7 @@ create table board(
 alter table board add Constraint board_bnum_pk primary key (bnum);                                        -- 기본키 생성
 alter table board add constraint board_bid_fk foreign key(bid) references member(id) on delete cascade;   -- bid의 외래키 = 회원의 기본키(id)
 alter table board add constraint board_bstatus_ck check (bstatus in ('E','D'));                           -- 게시글 상태(E:exist, D:delete)
+alter table board add constraint board_bcategory_fk foreign key(bcategory) references code(code_id);
 
 --게시판 시퀀스 생성
 create sequence board_bnum_seq
@@ -256,19 +291,19 @@ nocache --시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미
 nocycle; --순환하지않음
 
 --게시판 샘플데이터 등록
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '볼만한 책 소개합니다', '그런거 없어', 'user1'); 
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'sf소설 추천 좀', '제곧내', 'user1'); 
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목1', '게시판내용1', 'user2'); 
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목2', '게시판내용2', 'admin');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목3', '게시판내용3', 'admin');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목4', '게시판내용4', 'user3');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목5', '게시판내용5', 'user4');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목6', '게시판내용6', 'user3');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목7', '게시판내용7', 'admin');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목8', '게시판내용8', 'user2');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목9', '게시판내용9', 'user1');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목10', '게시판내용10', 'user2');
-insert into board (bnum, btitle, bcontent, bid) values (board_bnum_seq.nextval, '게시판제목11', '게시판내용11', 'admin');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '볼만한 책 소개합니다', '그런거 없어', 'user1'); 
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', 'sf소설 추천 좀', '제곧내', 'user1'); 
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목1', '게시판내용1', 'user2'); 
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목2', '게시판내용2', 'admin');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목3', '게시판내용3', 'admin');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목4', '게시판내용4', 'user3');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목5', '게시판내용5', 'user4');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목6', '게시판내용6', 'user3');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목7', '게시판내용7', 'admin');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목8', '게시판내용8', 'user2');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목9', '게시판내용9', 'user1');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목10', '게시판내용10', 'user2');
+insert into board (bnum, bcategory, btitle, bcontent, bid) values (board_bnum_seq.nextval, 'C0101', '게시판제목11', '게시판내용11', 'admin');
 
 select * from board;
 
@@ -312,7 +347,7 @@ commit;
 create table uploadfile(
   fnum NUMBER(15) not null,                     -- 첨부파일번호
   rnum NUMBER(15) not null,                     -- 참조번호(게시글번호 등)
-  code char(1),                                 -- 카테고리코드('B','N','Q')
+  code varchar2(11),                            -- 분류코드
   store_filename VARCHAR2(50) not null,         -- 로컬파일명
   upload_filename VARCHAR2(50) not null,        -- 업로드파일명
   fsize VARCHAR2(50) not null,                  -- 파일크기(단위 byte)
@@ -322,8 +357,8 @@ create table uploadfile(
 );
 
 --파일첨부 제약조건 생성
-alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum);           -- 기본키 생성
-alter table uploadfile add constraint uploadfile_code_ck check(code in ('B','N','Q')); -- 카테고리코드('B','N','Q')
+alter table uploadfile add Constraint uploadfile_fnum_pk primary key (fnum);                            -- 기본키 생성
+alter table uploadfile add constraint uploadfile_code_fk foreign key(code) references code(code_id);    -- 외래키 생성
 
 --파일첨부 시퀀스 생성
 create sequence uploadfile_fnum_seq
@@ -340,6 +375,7 @@ nocycle; --순환하지않음
 --공지사항 테이블 생성
 create table notice(
   nnum NUMBER(15) not null,         -- 공지사항번호
+  ncategory varchar2(11),           -- 분류카테고리
   ntitle VARCHAR2(60) not null,     -- 공지사항제목
   ncontent CLOB not null,           -- 공지사항내용
   nhit NUMBER(5) default 0,         -- 조회수  
@@ -349,6 +385,7 @@ create table notice(
 
 --공지사항 기본키 생성
 alter table notice add Constraint notice_nnum_pk primary key (nnum);     -- 기본키 생성
+alter table notice add constraint notice_ncategory_fk foreign key(ncategory) references code(code_id);
 
 --공지사항 시퀀스 생성
 create sequence notice_nnum_seq
@@ -360,34 +397,35 @@ nocache --시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미
 nocycle; --순환하지않음
 
 --공지사항 샘플데이터 생성
-insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '사이트 이용방법', '사용자의 독서 기록을 등록할 수 있도록 지원합니다.'); 
-insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '게시판 이용규칙', '욕설 폭언 등 상대방에게 불쾌감을 줄 수 있는 단어는 사용하지 마세요');
-insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '개인정보처리방침 개정 안내', '개인정보처리방침이 아래와 같이 일부 개정될 예정입니다.');
-insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '서버 점검 안내', '고객님들의 너그러운 양해 바랍니다.');
-insert into notice (nnum, ntitle, ncontent)
-values (notice_nnum_seq.nextval, '검색이 업데이트 되었습니다.', '이제는 공백과 유사어를 검색하여 출력합니다.');
+insert into notice (nnum, ncategory, ntitle, ncontent)
+values (notice_nnum_seq.nextval, 'C0102', '사이트 이용방법', '사용자의 독서 기록을 등록할 수 있도록 지원합니다.'); 
+insert into notice (nnum, ncategory, ntitle, ncontent)
+values (notice_nnum_seq.nextval, 'C0102', '게시판 이용규칙', '욕설 폭언 등 상대방에게 불쾌감을 줄 수 있는 단어는 사용하지 마세요');
+insert into notice (nnum, ncategory, ntitle, ncontent)
+values (notice_nnum_seq.nextval, 'C0102', '개인정보처리방침 개정 안내', '개인정보처리방침이 아래와 같이 일부 개정될 예정입니다.');
+insert into notice (nnum, ncategory, ntitle, ncontent)
+values (notice_nnum_seq.nextval, 'C0102', '서버 점검 안내', '고객님들의 너그러운 양해 바랍니다.');
+insert into notice (nnum, ncategory, ntitle, ncontent)
+values (notice_nnum_seq.nextval, 'C0102', '검색이 업데이트 되었습니다.', '이제는 공백과 유사어를 검색하여 출력합니다.');
 
 select * from notice;
 
 --11. Q&A
 --Q&A 테이블 생성
 create table qna(
-    qnum      number(10),                             --게시글 번호
-    qtitle    varchar2(150),                          --제목
-    qnickname varchar2(30),                           --별칭
-    qhit      number(5) default 0,                    --조회수
-    qcontent  clob,                                   --본문
-    pqnum     number(10),                             --부모 게시글번호
-    qgroup    number(10),                             --답글그룹
-    qstep     number(3) default 0,                    --답글단계
-    qindent   number(3) default 0,                    --답글들여쓰기
-    qstatus   char(1) default 'Q',                    --답글상태  (답글: 'A', 원글'Q')
-    qcdate    timestamp default systimestamp,         --생성일시
-    qudate    timestamp default systimestamp          --수정일시
+    qnum      number(10),                             -- 게시글 번호
+    qcategory varchar2(11),                           -- 분류카테고리
+    qtitle    varchar2(150),                          -- 제목
+    qnickname varchar2(30),                           -- 별칭
+    qhit      number(5) default 0,                    -- 조회수
+    qcontent  clob,                                   -- 본문
+    pqnum     number(10),                             -- 부모 게시글번호
+    qgroup    number(10),                             -- 답글그룹
+    qstep     number(3) default 0,                    -- 답글단계
+    qindent   number(3) default 0,                    -- 답글들여쓰기
+    qstatus   char(1) default 'Q',                    -- 답글상태  (답글: 'A', 원글'Q')
+    qcdate    timestamp default systimestamp,         -- 생성일시
+    qudate    timestamp default systimestamp          -- 수정일시
 );
 
 --Q&A 제약조건 생성
@@ -398,6 +436,7 @@ alter table qna modify qtitle constraint qna_qtitle_nn not null;
 alter table qna modify qnickname constraint qna_qnickname_nn not null;
 alter table qna modify qcontent constraint qna_qcontent_nn not null;
 alter table qna add constraint qna_qstatus_ck check(qstatus in ('A','Q')); --답글상태  (답글: 'A', 원글'Q')
+alter table qna add constraint qna_qcategory_fk foreign key(qcategory) references code(code_id);
 
 --Q&A 시퀀스 생성
 create sequence qna_qnum_seq
@@ -409,16 +448,16 @@ nocache --시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미
 nocycle; --순환하지않음
 
 --원글 샘플데이터 등록    
-insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'독서 기록은 어떻게 하나요?','홍길동','기록은 어떻게 하면 되나요?',qna_qnum_seq.currval);
-insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'회원 탈퇴는 어떻게 하나요?','홍길순','탈퇴는 어떻게 하면 되나요?',qna_qnum_seq.currval);
-insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'회원정보 수정은 어떤 걸 할 수 있나요?','홍길남','정보 수정은 어떤 걸 할 수 있나요?',qna_qnum_seq.currval);
-insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'카카오톡 로그인은 없나요?','홍길북','카톡 로그인은 없나요?',qna_qnum_seq.currval);
-insert into qna (qnum,qtitle,qnickname,qcontent,qgroup)
-values(qna_qnum_seq.nextval,'달력은 무엇인가요?','홍길여','달력은 무엇인가요?',qna_qnum_seq.currval);
+insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'C0103','독서 기록은 어떻게 하나요?','홍길동','기록은 어떻게 하면 되나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'C0103','회원 탈퇴는 어떻게 하나요?','홍길순','탈퇴는 어떻게 하면 되나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'C0103','회원정보 수정은 어떤 걸 할 수 있나요?','홍길남','정보 수정은 어떤 걸 할 수 있나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'C0103','카카오톡 로그인은 없나요?','홍길북','카톡 로그인은 없나요?',qna_qnum_seq.currval);
+insert into qna (qnum,qcategory,qtitle,qnickname,qcontent,qgroup)
+values(qna_qnum_seq.nextval,'C0103','달력은 무엇인가요?','홍길여','달력은 무엇인가요?',qna_qnum_seq.currval);
 
 --답글 샘플데이터 등록
 insert into qna (qnum,qtitle,qnickname,pqnum,qcontent,qgroup,qstep,qindent,qstatus)

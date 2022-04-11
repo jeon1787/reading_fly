@@ -175,8 +175,8 @@ public class BoardDAOImpl implements BoardDAO{
   public BoardDTO create(BoardDTO board) {
     //sql 작성
     StringBuffer sql = new StringBuffer();
-    sql.append(" insert into board (bnum, btitle, bcontent, bid) ");
-    sql.append(" values (board_bnum_seq.nextval, ?, ?, ?) ");
+    sql.append(" insert into board (bnum, bcategory, btitle, bcontent, bid) ");
+    sql.append(" values (board_bnum_seq.nextval, 'C0101', ?, ?, ?) ");
 
     //sql 실행
     KeyHolder keyHolder = new GeneratedKeyHolder();

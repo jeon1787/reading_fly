@@ -7,24 +7,36 @@ import java.util.List;
 
 public interface BookSVC {
 
-    //도서등록
+    //도서 등록
     Book saveBook(Book book);
 
-    //책장등록
-    Long saveBookShelf(Book book);
+    //책장 등록
+    Long saveShelf(Book book);
 
-    //독서기록등록
-    Book saveDocument(Book book);
+    //독서기록 등록(최초)
+    Long saveDoc(Book book);
 
-    //목록
-    List<Book> list(String id);
+    //책장목록
+    List<Book> listShelf(String id);
 
-    //조회
-    List<Book> detail(String id, String isbn);
+    //책장삭제
+    int delShelf(String id, String isbn);
 
-    //수정
-    Long update(String id, String isbn, Book book);
+    //기록삭제
+    int delDoc(String id, String isbn);
 
-    //삭제
-    int delete(String isbn);
+    //최근기록 단건 조회
+    Book detailDoc(String id, String isbn);
+
+    //기록 목록 조회
+    List<Book> listDoc(String id, String isbn);
+
+    //기록 등록
+    Long insertDoc(String id, String isbn, Book book);
+
+    //총페이지 수정
+    int editDoc(String id, String isbn, Long spage, Book book);
+
+    //독서기록 단건 삭제
+    int removeDoc(Long dnum);
 }

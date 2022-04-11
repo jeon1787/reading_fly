@@ -25,9 +25,11 @@ th:replace="~{fragment/mainDetail::main(
   <div class="form">
 
     <div class="findIdPwForm">
-      <!-- <form action="findIdPwForm"> -->
 
-      <div>
+      <h3>아이디/비밀번호 찾기</h3>
+
+      <!--radioBtn-->
+      <div class="radioBtn">
         <table>
           <tr>
             <td>
@@ -43,84 +45,62 @@ th:replace="~{fragment/mainDetail::main(
         </table>
       </div>
 
-
+      <!--아이디 찾기-->
       <div id="find_id_form" style="display:none" >
 
+        <!--form 태그-->
         <form action="#" id="findIdForm" th:action="@{/find/findid}" th:object="${findIdReq}" th:method="POST" >
             
+          <!--제목-->
+<!--          <h3>아이디 찾기</h3>-->
 
-          <h3>아이디 찾기</h3>
-                                                                                                  
-          <table class="findTableForm">        
+          <div class="idTable">
+
+            <!--table-->
+            <table class="findTableForm">
+                <!--이름-->
+                <tr>
+                  <td class="td1"><label>이름</label></td>
+                  <td class="td2">
+                    <div class="textForm">
+                      <input type="text" id="idname" class="idname" placeholder="이름" th:field="*{idname}"
+                       th:class="${#fields.hasErrors('idname') ? 'fieldError' : 'fieldSuccess'}">
+                    </div>
+                  </td>
+                  <td class="td3">
+                    <p th:if="${#fields.hasErrors('${findIdReq}')}"></p>
+                    <p th:errors="${findIdReq}" th:errorclass="globalError"></p>
+
+                    <p th:if="${#fields.hasErrors('idname')}"></p>
+                    <p th:errors="*{idname}" th:errorclass="fieldError"></p>
+                  </td>
+                </tr>
+
+              <!--이메일-->
               <tr>
-                <td class="td1"><label>이름</label></td>
+                <td class="td1"><label>email</label></td>
                 <td class="td2">
-                  <div class="textForm">                    
-                    <input type="text" id="idname" class="idname" placeholder="이름" th:field="*{idname}"
-                     th:class="${#fields.hasErrors('idname') ? 'fieldError' : 'fieldSuccess'}">
+                  <div class="textForm">
+                    <input type="text" id="idemail" class="idemail" placeholder="이메일" th:field=*{idemail}
+                     th:class="${#fields.hasErrors('idemail') ? 'fieldError' : 'fieldSuccess'}">
                   </div>
-                </td>          
+                </td>
                 <td class="td3">
                   <p th:if="${#fields.hasErrors('${findIdReq}')}"></p>
                   <p th:errors="${findIdReq}" th:errorclass="globalError"></p>
-                  
-                  <p th:if="${#fields.hasErrors('idname')}"></p>
-                  <p th:errors="*{idname}" th:errorclass="fieldError"></p>
-                </td>
-              </tr>  
 
-            <tr>
-              <td><label>email</label></td>
-              <td>
-                <div class="textForm">
-                  <input type="text" id="idemail" class="idemail" placeholder="이메일" th:field=*{idemail}
-                   th:class="${#fields.hasErrors('idemail') ? 'fieldError' : 'fieldSuccess'}">
-                </div>
-              </td>
-              <td>
-                <p th:if="${#fields.hasErrors('${findIdReq}')}"></p>
-                  <p th:errors="${findIdReq}" th:errorclass="globalError"></p>
-                  
                   <p th:if="${#fields.hasErrors('idname')}"></p>
                   <p th:errors="*{idemail}" th:errorclass="fieldError"></p>
-              </td>
-            </tr>
+                </td>
+              </tr>
 
+            </table>
 
-            <!-- <tr>
-              <td><label></label></td>
-              <td>
+          </div>
 
-              </td>
-              <td>
-                  
-                  <p th:if="${#fields.hasErrors('fId')}"></p>
-                  <p th:errors="*{fId}" th:errorclass="fieldError"></p>
-              </td>
-            </tr> -->
-
-
-
-
-
-
-
-
-            <tr>
-              <td> </td>
-              <td><span id="findedId"></span></td>
-              <td>  </td>
-            </tr>
-
-            
-
-
-          </table>
-
-
-          <br>
+          <!--버튼-->
           <div class="find_btn_group">           
-            <button id="findIdBtnE" type="submit">아아디 찾기</button>
+            <button id="findIdBtn" type="submit">아아디 찾기</button>
             <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button> 
             <button id="signupBtn" type="button" onclick="location.href='/signup'">회원가입</button> 
           </div>     
@@ -129,100 +109,92 @@ th:replace="~{fragment/mainDetail::main(
       
       </div>
 
-
+      <!--비밀번호 찾기-->
       <div id="find_pw_form" style="display:none">
 
+        <!--form 태그-->
         <form action="#" id="findPwForm" th:action="@{/find/findpw}" th:object="${findPwReq}" th:method="post" >
-          
-          <h3>비밀번호 찾기</h3>
-                                                                                                  
-          <table class="findTableForm">
-            <tr>
-              <td class="td1"> 아이디 </td>
-              <td class="td2">
-                <div class="textForm">
-                  <input type="text" id="pwid" class="pwid" placeholder="아이디" th:field="*{pwid}"
-                   th:class="${#fields.hasErrors('pwid') ? 'fieldError' : 'fieldSuccess'}">
-                </div>
-              </td>          
-              <td class="td3">
-                <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
-                <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
-                
-                <p th:if="${#fields.hasErrors('pwid')}"></p>
-                <p th:errors="*{pwid}" th:errorclass="fieldError"></p>
-              </td>
-            </tr>
-            <tr>
-              <td><label>이름</label></td>
-              <td>
-                <div class="textForm">
-                  <input type="text" id="pwname" class="pwname"  placeholder="이름" th:field="*{pwname}"
-                   th:class="${#fields.hasErrors('pwname') ? 'fieldError' : 'fieldSuccess'}">
-                </div>
-              </td>          
-              <td>
-                <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
-                <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
-                
-                <p th:if="${#fields.hasErrors('pwname')}"></p>
-                <p th:errors="*{pwname}" th:errorclass="fieldError"></p>
-              </td>
-            </tr>        
-            <tr>
-              <td><label>email</label></td>
-              <td>
-                <div class="textForm">
-                  <input type="text" id="pwemail" class="pwemail" placeholder="이메일" th:field="*{pwemail}"
-                   th:class="${#fields.hasErrors('pwemail') ? 'fieldError' : 'fieldSuccess'}">
-                </div>
-              </td>
-              <td>
-                <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
-                <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
-                
-                <p th:if="${#fields.hasErrors('pwemail')}"></p>
-                <p th:errors="*{pwemail}" th:errorclass="fieldError"></p>
-              </td>
-            </tr>
 
-            
-          </table>        
+          <!--제목-->
+<!--          <h3>비밀번호 찾기</h3>-->
 
-          <br>
+          <div class="pwTable">
+
+            <!--table-->
+            <table class="findTableForm">
+
+              <!--아이디-->
+              <tr>
+                <td class="td1"> 아이디 </td>
+                <td class="td2">
+                  <div class="textForm">
+                    <input type="text" id="pwid" class="pwid" placeholder="아이디" th:field="*{pwid}"
+                     th:class="${#fields.hasErrors('pwid') ? 'fieldError' : 'fieldSuccess'}">
+                  </div>
+                </td>
+                <td class="td3">
+                  <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
+                  <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
+
+                  <p th:if="${#fields.hasErrors('pwid')}"></p>
+                  <p th:errors="*{pwid}" th:errorclass="fieldError"></p>
+                </td>
+              </tr>
+
+              <!--이름-->
+              <tr>
+                <td class="td1"><label>이름</label></td>
+                <td class="td2">
+                  <div class="textForm">
+                    <input type="text" id="pwname" class="pwname"  placeholder="이름" th:field="*{pwname}"
+                     th:class="${#fields.hasErrors('pwname') ? 'fieldError' : 'fieldSuccess'}">
+                  </div>
+                </td>
+                <td class="td3">
+                  <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
+                  <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
+
+                  <p th:if="${#fields.hasErrors('pwname')}"></p>
+                  <p th:errors="*{pwname}" th:errorclass="fieldError"></p>
+                </td>
+              </tr>
+
+              <!--이메일-->
+              <tr>
+                <td><label>email</label></td>
+                <td>
+                  <div class="textForm">
+                    <input type="text" id="pwemail" class="pwemail" placeholder="이메일" th:field="*{pwemail}"
+                     th:class="${#fields.hasErrors('pwemail') ? 'fieldError' : 'fieldSuccess'}">
+                  </div>
+                </td>
+                <td>
+                  <p th:if="${#fields.hasErrors('${findPwReq}')}"></p>
+                  <p th:errors="${findPwReq}" th:errorclass="globalError"></p>
+
+                  <p th:if="${#fields.hasErrors('pwemail')}"></p>
+                  <p th:errors="*{pwemail}" th:errorclass="fieldError"></p>
+                </td>
+              </tr>
+
+            </table>
+
+          </div>
+
+          <!--버튼-->
           <div class="find_btn_group"> 
-            <button id="findPwBtnE" type="submit">비밀번호 찾기</button> 
+            <button id="findPwBtn" type="submit">비밀번호 찾기</button>
             <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button> 
             <button id="signupBtn" type="button" onclick="location.href='/signup'">회원가입</button> 
           </div>
 
         </form>
       
-      
-      
       </div>
-
-
-
-
-
-    <!-- </form> -->
 
     </div>
 
-
-
-
-
-
-
   </div>
-
-
-
-
-
-
   
 </body>
 </html>

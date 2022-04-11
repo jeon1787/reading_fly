@@ -104,7 +104,7 @@ public class NoticeController {
     model.addAttribute("noticeDetailForm",noticeDetailForm);
 
     //2) 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("N", noticeDetailForm.getNNum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0102", noticeDetailForm.getNNum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);
@@ -127,7 +127,7 @@ public class NoticeController {
     model.addAttribute("noticeEditForm", noticeEditForm);
 
     // 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("N", noticeEditForm.getNNum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0102", noticeEditForm.getNNum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);

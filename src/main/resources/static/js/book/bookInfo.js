@@ -1,13 +1,13 @@
 'use strict';
 const $infoForm = document.querySelector('.info-form');
-const $saveBtn = document.querySelector('.saveBtn');
+//const $saveBtn = document.querySelector('.saveBtn');
 //const $reviewBtn = document.querySelector('.reviewBtn');
-const $prevBtn = document.querySelector('.prevBtn');
-const $inputSpage = document.querySelector('.input-spage');
-$saveBtn.addEventListener('click', btn_check);
+//const $prevBtn = document.querySelector('.prevBtn');
+//const $inputSpage = document.querySelector('.input-spage');
+saveBtn.addEventListener('click', btn_check);
 //$reviewBtn.addEventListener('click', btn_check);
-$prevBtn.addEventListener('click', btn_check);
-$inputSpage.value = document.querySelector('.input-spage').value;
+prevBtn.addEventListener('click', btn_check);
+//$inputSpage.value = document.querySelector('.input-spage').value;
 function btn_check(e){
     if(e.target.id === "saveBtn")
     {

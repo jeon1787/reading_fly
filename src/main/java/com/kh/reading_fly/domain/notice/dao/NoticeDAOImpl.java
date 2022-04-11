@@ -30,8 +30,8 @@ public class NoticeDAOImpl implements NoticeDAO{
   public Long create(NoticeDTO notice) {
     //SQL작성
     StringBuffer sql = new StringBuffer();
-    sql.append("insert into notice (nnum,ntitle,ncontent) ");
-    sql.append("values(notice_nnum_seq.nextval, ?, ? ) ");
+    sql.append("insert into notice (nnum,ncategory,ntitle,ncontent) ");
+    sql.append("values(notice_nnum_seq.nextval,'C0102', ?, ? ) ");
 
     //SQL실행
     KeyHolder keyHolder = new GeneratedKeyHolder();

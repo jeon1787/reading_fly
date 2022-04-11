@@ -139,7 +139,7 @@ public class BoardController {
     log.info("detailForm={}", detailForm);
 
     //2) 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("B", boardDTO.getBnum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0101", boardDTO.getBnum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);
@@ -215,7 +215,7 @@ public class BoardController {
     model.addAttribute("editForm", editForm);
 
     //2) 첨부파일 조회
-    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("B", boardDTO.getBnum());
+    List<UploadFileDTO> attachFiles = uploadFileSVC.findFilesByCodeWithRnum("C0101", boardDTO.getBnum());
     if(attachFiles.size() > 0){
       log.info("attachFiles={}",attachFiles);
       model.addAttribute("attachFiles", attachFiles);

@@ -22,41 +22,38 @@
 </head>
 <body>
 
+  <!--form-->
   <div class="form">
 
+    <!--wrap-->
+    <div class="wrap">
 
-    <form class="signupSuccessForm" >
+      <!--form 태그-->
+      <form class="signupSuccessForm" >
 
-      <h3>회원가입완료</h3>
+        <!--제목-->
+        <h3>회원가입완료</h3>
 
-      <br>
-      <p>
-      </p>
-  
+        <!--메세지-->
         <p class="success">회원가입 처리되었습니다.</p>
 
-      <br>
-      <div class="btn_login_success_group"> 
-        <button id="cancelBtn" type="button" onclick="location.href='/login'">로그인</button> 
-        <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button>         
-      </div>
-      <br>
-      <div>
-        <a href="#" th:href="@{/memberexist/findid}">아이디찾기</a>
-        <a href="#" th:href="@{/memberexist/findpw}">비밀번호찾기</a>
-      </div>
+        <!--버튼-->
+        <div class="btn_login_success_group">
+          <button id="cancelBtn" type="button" onclick="location.href='/login'">로그인</button>
+          <button id="cancelBtn" type="button" onclick="location.href='/'">취소</button>
+        </div>
 
-    </form>
+        <!--페이지이동-->
+        <div>
+          <a href="#" th:href="@{/find/findidpw/id}">id/</a>
+          <a href="#" th:href="@{/find/findidpw/pw}">pw 찾기</a>
+        </div>
 
+      </form>
 
+    </div>
 
-
-
-
-    
   </div>
 
-
-  
 </body>
 </html>
