@@ -212,8 +212,6 @@ public class BookDAOImpl implements BookDAO{
 
     /**
      * 기록 등록
-     * @param id
-     * @param isbn
      * @param book
      * @return
      */
@@ -250,21 +248,18 @@ public class BookDAOImpl implements BookDAO{
 
     /**
      * 총페이지 수정
-     * @param id
-     * @param isbn
-     * @param spage
      * @param book
      * @return
      */
     @Override
-    public int editDoc(String id, String isbn, Long spage, Book book) {
+    public int editDoc(Book book) {
         StringBuffer sql = new StringBuffer();
-        sql.append("uupdate book_shelf ");
+        sql.append("update book_shelf ");
         sql.append("set spage = ? ");
         sql.append("where sid = ? ");
         sql.append("and sisbn = ? ");
 
-        int editRow = jdbcTemplate.update(sql.toString(), spage, id, isbn);
+        int editRow = jdbcTemplate.update(sql.toString(), book.getSpage(), book.getSid(), book.getSisbn());
         log.info("editRow={}", editRow);
         return editRow;
     }

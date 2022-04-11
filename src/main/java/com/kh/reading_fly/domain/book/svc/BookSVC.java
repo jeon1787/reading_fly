@@ -35,7 +35,7 @@ public interface BookSVC {
     Long insertDoc(Book book);
 
     //총페이지 수정
-    int editDoc(String id, String isbn, Long spage, Book book);
+    int editDoc(Book book);
 
     //독서기록 단건 삭제
     int removeDoc(Long dnum);
