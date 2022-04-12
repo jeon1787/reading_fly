@@ -28,6 +28,27 @@
 
         <!--제목-->
         <h3>도서상세</h3>
+        <div class="info-wrap">
+            <div class="info-upper">
+                <div class="info-img"><img class="book-img" th:src="${bookRequest.thumbnail}"></div>
+                <div class="info-content">
+                    <div><h5 th:text="${bookRequest.title}">도서제목</h5></div>
+                    <div><h5 th:text="${bookRequest.authors}">저자</h5></div>
+                    <div><h5 th:text="${bookRequest.publisher}">출판사</h5></div>
+                    <div><h5 th:text="${bookRequest.translators}">번역</h5></div>
+                    <div><h5 th:text="${bookRequest.publisher_dt}">출판날짜</h5></div>
+                </div>
+                <div class="info-link">
+                    <a href="https://www.ypbooks.co.kr/book.yp?bookcd="><img src="../../static/img/youngpung.png">영풍문고</a>
+                    <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode="><img src="../../static/img/gyobo.png">교보문고</a>
+                    <a href="http://www.yes24.com/Product/Goods/"><img src="../../static/img/yes.png">예스24</a>
+                    <a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId="><img src="../../static/img/alladin.png">알라딘</a>
+                </div>
+            </div>
+            <div class="info-body">
+                <div><h5 th:text="${bookRequest.bcontents}">설명</h5></div>
+            </div>
+        </div>
 
         <!--도서 정보-->
         <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">

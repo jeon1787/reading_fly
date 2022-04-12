@@ -1,3 +1,24 @@
+@charset "utf-8";
 .search-form{
     display: none;
+}
+.result-wrap{
+    display: flex;
+    flex-direction: column;    
+}
+.search-result{
+    display: flex;
+    flex-direction: column;
+}
+.img-list{
+    display: flex;
+    flex-direction: row;
+}
+.content-list{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.content-list >p {
+    font-size: 20px;
 }
