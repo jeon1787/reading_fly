@@ -166,15 +166,28 @@ function selectImg(calendarDTO){
 
     res.data.forEach(ele=>{
         let date = ele.ddate.split('-');
-        console.log("json날짜"+date[2]);
+        let targetDate = date[2];
+        if(date[2].charAt(0) == '0'){
+            targetDate = date[2].substr(1,1);
+        }
+        console.log("json날짜"+targetDate);
 //        console.log(`.date .thisM`);
-        let str = `.date.thisM.d${date[2]}`;
+//        let str = `.date.thisM.d${date[2]}`;
+        let str = `.date.thisM.d${targetDate}`;
         console.log("str="+str);
-        console.log("div="+document.querySelector(str));
+        console.log(""+document.querySelector(str));
         console.log("ele.thumbnail="+ele.thumbnail);
+//        let imageUrl = `url("ele.thumbnail")`;
+//        console.log(imageUrl);
+//        let imageUrl = `url("${ele.thumbnail}")`;
+//        console.log(imageUrl);
 
-        let item = document.querySelector(str);
-        item.style.backgroundImage = `url("${ele.thumbnail}")`;
+
+        document.querySelector(str).style.backgroundImage = `url(${ele.thumbnail})`;
+//        let item = document.querySelector(str);
+//        item.style.backgroundImage = `url(${imageUrl})`;
+
+
 //        console.log("결과2"+item);
 //                let item3 = document.querySelector(`${str}`);
 //        console.log("결과3"+item3);
