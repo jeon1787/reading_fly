@@ -55,6 +55,21 @@ public class BookDAOImpl implements BookDAO{
         return book;
     }
 
+    @Override
+    public int count(String isbn) {
+        //sql문 작성
+        StringBuffer sql = new StringBuffer();
+        sql.append(" select count(*) ");
+        sql.append("   from book  ");
+        sql.append("  where isbn = ? ");
+
+        //sql문 실행
+//        Integer cnt = jdbcTemplate.queryForObject(sql.toString(), Integer.class, isbn);
+        int cnt = jdbcTemplate.update(sql.toString(), isbn);
+
+        return cnt;
+    }
+
     /**
      * 책장 등록
      * @param book

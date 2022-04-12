@@ -24,6 +24,53 @@ const renderCalendar = () => {
   const thisDates = [...Array(TLDate + 1).keys()].slice(1);
   const nextDates = [];
 
+  //년도
+//  console.log(viewYear);
+  //이번달
+//  console.log(viewMonth+1)
+  //첫날 날짜
+//  console.log(thisDates.indexOf(1)+1)
+  //마지막 날짜
+//  console.log(thisDates.lastIndexOf(TLDate)+1)
+
+//    const startDate = viewYear +"/"+ (viewMonth+1) +"/"+ (thisDates.indexOf(1)+1);
+////    console.log(startDate);
+//    const endDate = viewYear +"/"+ (viewMonth+1) +"/"+ (thisDates.lastIndexOf(TLDate)+1);
+////    console.log(endDate);
+//
+//    const calendarDTO = {};
+//    calendarDTO.startDate = startDate;
+//    calendarDTO.endDate = endDate;
+//
+//
+//
+//      fetch('http://localhost:9080/api/calendar',{
+//        method:'POST',
+//        headers: {
+//          'Content-Type': 'application/json',
+//        },
+//        body: JSON.stringify(calendarDTO)  // js객체를 => json 포맷 문자열 변환
+//      })
+//      .then(res=>res.json())
+//      .then(res=>{
+//        console.log(res);
+//
+//        res.data.forEach(ele=>{
+//
+//            let item = document.querySelectorAll('.date .this');
+//
+//            for(var i=0; i<item.length; i++){
+//                if(item[i].className.trim() == 'other') return;
+//                console.log(i+"는"+item[i].className.trim()+"임");
+//                console.log("json날짜"+ele.ddate);
+//
+//            }
+//        })
+//      })
+//      .catch(err => console.error('Err:',err));
+
+
+
   // prevDates 계산
   if (PLDay !== 6) {
     for (let i = 0; i < PLDay + 1; i++) {
@@ -45,18 +92,18 @@ const renderCalendar = () => {
   const lastDateIndex = dates.lastIndexOf(TLDate);
   // console.log("마지막날 인덱스:"+lastDateIndex);//마지막날 인덱스
   dates.forEach((date, i) => {
-    console.log("date:"+date);
-    console.log("i:"+i);
+//    console.log("date:"+date);
+//    console.log("i:"+i);
     const condition = i >= firstDateIndex && i < lastDateIndex + 1
                       ? 'this'
                       : 'other';
 
     if(condition == 'this'){
-      console.log(i+"는 this");
-      dates[i] = `<div class="date thisM ${date}"><span class="${condition}">${date}</span></div>`;
+//      console.log(i+"는 this");
+      dates[i] = `<div class="date thisM d${date}"><span class="${condition}">${date}</span></div>`;
     }else if(condition == 'other'){
-      console.log(i+"는 other");
-      dates[i] = `<div class="date otherM ${date}"><span class="${condition}">${date}</span></div>`;
+//      console.log(i+"는 other");
+      dates[i] = `<div class="date otherM d${date}"><span class="${condition}">${date}</span></div>`;
     }
   })
 
@@ -73,6 +120,19 @@ const renderCalendar = () => {
         }
       }
     }
+
+
+    const startDate = viewYear +"/"+ (viewMonth+1) +"/"+ (thisDates.indexOf(1)+1);
+//    console.log(startDate);
+    const endDate = viewYear +"/"+ (viewMonth+1) +"/"+ (thisDates.lastIndexOf(TLDate)+1);
+//    console.log(endDate);
+
+    const calendarDTO = {};
+    calendarDTO.startDate = startDate;
+    calendarDTO.endDate = endDate;
+
+  // json 불러오기
+    selectImg(calendarDTO);
 }
 
 renderCalendar();
@@ -90,4 +150,37 @@ const nextMonth = () => {
 const goToday = () => {
   date = new Date();
   renderCalendar();
+}
+
+function selectImg(calendarDTO){
+  fetch('http://localhost:9080/api/calendar',{
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(calendarDTO)  // js객체를 => json 포맷 문자열 변환
+  })
+  .then(res=>res.json())
+  .then(res=>{
+    console.log(res);
+
+    res.data.forEach(ele=>{
+        let date = ele.ddate.split('-');
+        console.log("json날짜"+date[2]);
+//        console.log(`.date .thisM`);
+        let str = `.date.thisM.d${date[2]}`;
+        console.log("str="+str);
+        console.log("div="+document.querySelector(str));
+        console.log("ele.thumbnail="+ele.thumbnail);
+
+        let item = document.querySelector(str);
+        item.style.backgroundImage = `url("${ele.thumbnail}")`;
+//        console.log("결과2"+item);
+//                let item3 = document.querySelector(`${str}`);
+//        console.log("결과3"+item3);
+//                        let item4 = document.querySelector(`.dates .date.thisM.d${date[2]}`);
+//                console.log("결과4"+item4);
+    })
+  })
+  .catch(err => console.error('Err:',err));
 }

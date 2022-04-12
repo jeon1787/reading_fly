@@ -8,6 +8,9 @@ public interface BookDAO {
 
     //도서 등록
     Book saveBook(Book book);
+    
+    //도서 등록 여부
+    int count(String isbn);
 
     //책장 등록
     Long saveShelf(Book book);

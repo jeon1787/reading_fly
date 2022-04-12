@@ -66,7 +66,9 @@ public class BookController {
         book.setSid(loginMember.getId());
 //        book.setSisbn(saveForm.getIsbn());
         book.setDid(loginMember.getId());
-        bookSVC.saveBook(book);
+        if(bookSVC.count(saveForm.getIsbn()) == 0 ){
+            bookSVC.saveBook(book);
+        }
 //        book.setSpage(saveForm.getSpage());
         book.setDpage(0L);
         log.info("book.getSpage()={}", book.getSpage());
