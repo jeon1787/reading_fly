@@ -27,11 +27,14 @@
 <div class="form">
     <div class="wrap">
     <h3>도서검색</h3>
+    <div class="search-wrap">
     <div class="word-search" id="word-search">
-        <input type="text" class="word" id="word">
+        <input type="text" class="word" id="word" placeholder="검색할 도서를 입력해주세요.">
         <button type="button" class="searchBtn" id="searchBtn">검색</button>
     </div>
+        <br>
     <hr>
+        <br>
     <h3>도서검색결과</h3>
     <div class="result-wrap" id="result-wrap">
         <div class="search-result" id="search-result" th:data-keyword="${keyword}">
@@ -49,6 +52,7 @@
         <input class="search-thumbnail" type="text" th:field="*{thumbnail}">
         <input class="search-publisher_dt" type="text" th:field="*{publisher_dt}">
     </form>
+    </div>
     </div>
 </div>
 </body>

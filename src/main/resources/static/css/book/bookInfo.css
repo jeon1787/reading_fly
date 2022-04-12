@@ -1,19 +1,29 @@
 @charset "utf-8";
 .wrap{
-  padding: 42px;
+  margin-top: 25px;
+  padding-left: 30px;
+  position: relative;
 }
+
 .info-wrap{
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .info-upper{
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
 }
 .info-content{
     margin-left: 20px;
     display: flex;
     flex-direction: column;
+}
+
+.info-content > div{
+    margin-top: 3px;
 }
 .info-form{
     display: none;
@@ -21,6 +31,27 @@
 .info-link{
     display: flex;
     flex-direction: column;
+    margin-right: 100px;
+}
+.info-link > a{
+    margin-top: 3px;
+}
+.info-body{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.info-right{
+    display: flex;
+    flex-direction: row;
+    width: 900px;
+    justify-content: space-between;
+}
+.info-btngrp{
+    margin-bottom: 10px;
+}
+.book-img{
+    width: 230px;
+    heigth: 250px;
 }
 
 /*리뷰 작성창 헤더*/
