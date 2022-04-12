@@ -35,7 +35,7 @@
 
 .nav {
   display: flex;
-  border: 1px solid #333333;
+  /**border: 1px solid #333333;*/
   border-radius: 5px;
 }
 
@@ -44,7 +44,7 @@
   height: 30px;
   border: none;
   font-size: 16px;
-  line-height: 34px;
+  /*line-height: 34px;*/
   background-color: transparent;
   cursor: pointer;
 }

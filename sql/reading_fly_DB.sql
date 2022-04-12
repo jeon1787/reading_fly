@@ -208,7 +208,7 @@ create table review(
 alter table review add Constraint review_rnum_pk primary key (rnum);                                             -- 기본키 생성
 alter table review add constraint review_rstar_ck check (rstar in(0,1,2,3,4,5));                                 -- 체크키 생성
 alter table review add constraint review_uk unique(risbn, rid);                                                  -- 복합 유니크키 생성(2개의 값이 동일한 경우에 한하여 오류 확인)
-alter table review add constraint reviewr_risbn_fk foreign key(risbn) references book(isbn) on delete cascade;   -- risbn 의 외래키 = 도서의 기본키(isbn)
+--리뷰작성에 에러를 발생시켜 삭제alter table review add constraint reviewr_risbn_fk foreign key(risbn) references book(isbn) on delete cascade;   -- risbn 의 외래키 = 도서의 기본키(isbn)
 alter table review add constraint review_rid_fk foreign key(rid) references member(id) on delete cascade;        -- rid의 외래키 = 회원의 기본키(id)
 
 --리뷰 시퀀스 생성

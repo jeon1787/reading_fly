@@ -27,12 +27,12 @@ public class ApiReviewController {
   private final ReviewSVC reviewSVC;
 
 
-  //댓글 전체 조회
+  //리뷰 전체 조회
   @GetMapping("/{risbn}")
   public ReviewApiResult<Object> list(@PathVariable String risbn) {
     log.info("list() 호출됨!");
 
-    List<ReviewDTO> list = reviewSVC.selectAll(risbn);
+    List<ReviewDTO> list = reviewSVC.selectAll(risbn);//risbn으로 리뷰 검색
     List<ReviewItemForm> items = new ArrayList<>();
 
     for (ReviewDTO reviewDTO : list) {
@@ -55,7 +55,7 @@ public class ApiReviewController {
 
   }
 
-
+  //리뷰 단건 조회
   @GetMapping("/{rnum}/detail")
   public ReviewApiResult<Object> detail(@PathVariable Long rnum){
     log.info("detail() 호출됨!");
@@ -77,7 +77,7 @@ public class ApiReviewController {
     return new ReviewApiResult<>("00", "success", detailForm);
   }
 
-  //댓글 등록
+  //리뷰 등록
   @PostMapping("/{risbn}")
   public ReviewApiResult<Object> add(@PathVariable String risbn,
                                      @RequestBody ReviewAddForm reviewAddForm,
@@ -87,6 +87,7 @@ public class ApiReviewController {
 
     ReviewDTO reviewDTO = new ReviewDTO();
     reviewDTO.setRcontent(reviewAddForm.getRcontent());
+    reviewDTO.setRstar(reviewAddForm.getRstar());
     reviewDTO.setRisbn(risbn);
     LoginMember loginMember = (LoginMember) session.getAttribute("loginMember");//세션에서 로그인 정보 가져오기
     reviewDTO.setRid(loginMember.getId());
@@ -96,7 +97,7 @@ public class ApiReviewController {
     return new ReviewApiResult<>("00", "success", savedReview);
   }
 
-  //댓글 수정
+  //리뷰 수정
   @PatchMapping("/{risbn}")
   public ReviewApiResult<Object> edit(@PathVariable String risbn,
                                 @RequestBody ReviewEditForm revirwEditForm,
@@ -119,7 +120,7 @@ public class ApiReviewController {
     return new ReviewApiResult<>("00", "success", modifiedReview);
   }
 
-  //댓글 삭제
+  //리뷰 삭제
   @DeleteMapping("/{rnum}")
   public ReviewApiResult<Object> delete(@PathVariable Long rnum,
                                   HttpSession session){

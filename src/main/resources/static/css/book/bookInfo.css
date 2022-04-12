@@ -23,29 +23,6 @@
     flex-direction: column;
 }
 
-/*
-.star{
-  display: none;
-}
-*/
-/*
-#one-star:checked .one-star-div{
-background-color: yellow;
-}
-#two-star:checked .one-star-div,.two-star-div{
-background-color: yellow;
-}
-#three-star:checked .one-star-div,.two-star-div,.three-star-div{
-background-color: yellow;
-}
-#four-star:checked .one-star-div,.two-star-div,.three-star-div,.four-star-div{
-background-color: yellow;
-}
-#five-star:checked .one-star-div,.two-star-div,.three-star-div,.four-star-div,.five-star-div{
-background-color: yellow;
-}*/
-
-
 /*리뷰 작성창 헤더*/
 .review-header{
     display: flex;
@@ -90,4 +67,16 @@ background-color: yellow;
     heigth: 50px;
 }
 
+.reviewWriter{
+    margin-bottom: 60px;
+}
+
 #addBtn{float: right;}
+
+/*리뷰 목록*/
+.review{
+    border-bottom: 1px solid gray;
+}
+.review>div{
+    margin: 10px;
+}
