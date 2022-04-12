@@ -76,25 +76,25 @@
         <div class="review-area">
             <div>리뷰</div>
             <hr>
-            <div>
+            <div class="reviewWriter">
                 <form action="">
                     <div class="review-header">
                         <span th:text="${!session.isEmpty()} ? ${session?.loginMember?.nickname} : '로그인 후 이용해주세요'">닉네임</span>
                         <div class="radioBtn">
-                            <input type="radio" name="star" class="star" id="one-star" value="5">
-                            <label for="one-star"><div class="star-div one-star-div">★</div></label>
-                            <input type="radio" name="star" class="star" id="two-star" value="4">
-                            <label for="two-star"><div class="star-div two-star-div">★</div></label>
-                            <input type="radio" name="star" class="star" id="three-star" value="3">
-                            <label for="three-star"><div class="star-div three-star-div">★</div></label>
-                            <input type="radio" name="star" class="star" id="four-star" value="2">
-                            <label for="four-star"><div class="star-div four-star-div">★</div></label>
-                            <input type="radio" name="star" class="star" id="five-star" value="1">
-                            <label for="five-star"><div class="star-div five-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="fiveStar" value="5">
+                            <label for="fiveStar"><div class="star-div one-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="fourStar" value="4">
+                            <label for="fourStar"><div class="star-div two-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="threeStar" value="3">
+                            <label for="threeStar"><div class="star-div three-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="twoStar" value="2">
+                            <label for="twoStar"><div class="star-div four-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="oneStar" value="1">
+                            <label for="oneStar"><div class="star-div five-star-div">★</div></label>
                         </div>
                     </div>
                     <textarea class="review-textarea" name="" cols="104" rows="10" placeholder="리뷰를 입력하세요"></textarea>
-                    <div><button type="submit" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button></div>
+                    <div><button type="button" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button></div>
                 </form>
             </div>
             <div class="review-list"></div>

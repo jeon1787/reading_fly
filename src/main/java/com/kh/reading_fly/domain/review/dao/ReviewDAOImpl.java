@@ -96,9 +96,9 @@ public class ReviewDAOImpl implements ReviewDAO{
   public ReviewDTO create(ReviewDTO reviewDTO) {
     StringBuffer sql = new StringBuffer();
     sql.append(" INSERT INTO ");
-    sql.append("   review (rnum, rcontent, risbn, rid) ");
+    sql.append("   review (rnum, rcontent, risbn, rid, rstar) ");
     sql.append(" VALUES ");
-    sql.append("   (review_rnum_seq.nextval, ?, ?, ?) ");
+    sql.append("   (review_rnum_seq.nextval, ?, ?, ?, ?) ");
 
 
     KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -113,6 +113,7 @@ public class ReviewDAOImpl implements ReviewDAO{
         pstmt.setString(1, reviewDTO.getRcontent());
         pstmt.setString(2, reviewDTO.getRisbn());
         pstmt.setString(3, reviewDTO.getRid());
+        pstmt.setString(4, String.valueOf(reviewDTO.getRstar()));
 
         return pstmt;
       }
