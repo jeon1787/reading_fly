@@ -41,13 +41,26 @@ function list(){
 }
 //도서 목록 화면 출력
 function displaylist(books){
-    let content = `<img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">`;
+    let content = `<img class="empty-Img" id="emptyImg">`;
 
     books.forEach(ele => {
-      content += `<div class="bookshelf-list">
-                      <img class="book-Img" id="bookImg" src="${ele.thumbnail}" width="130px" height="150px" data-isbn="${ele.isbn}">
-                      <div class="book-title">${ele.title}</div>
-                  </div>`
+//        if(ele%4 == 0){
+//      content += `<div class="bookshelf-list">
+//                      <img class="book-Img" id="bookImg" src="${ele.thumbnail}" data-isbn="${ele.isbn}">
+//                      <div class="book-title">${ele.title}</div>
+//                  </div>
+//                  <hr class="book-bar">`
+//                  }
+//          }else{
+//                content += `<div class="bookshelf-list">
+//                                <img class="book-Img" id="bookImg" src="${ele.thumbnail}" data-isbn="${ele.isbn}">
+//                                <div class="book-title">${ele.title}</div>
+//                            </div>`
+//        }
+        content += `<div class="bookshelf-list">
+                        <img class="book-Img" id="bookImg" src="${ele.thumbnail}" data-isbn="${ele.isbn}">
+                        <div class="book-title">${ele.title}</div>
+                    </div>`
     })
 
     $shelfWrap.innerHTML = content;

@@ -2,6 +2,27 @@
 .wrap{
   padding: 42px;
 }
+.info-wrap{
+    display: flex;
+    flex-direction: column;
+}
+.info-upper{
+    display: flex;
+    flex-direction: row;
+}
+.info-content{
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.info-form{
+    display: none;
+}
+.info-link{
+    display: flex;
+    flex-direction: column;
+}
+
 /*
 .star{
   display: none;
