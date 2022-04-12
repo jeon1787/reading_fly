@@ -26,6 +26,16 @@ public class BookSVCImpl implements BookSVC{
     }
 
     /**
+     * 도서 등록 여부
+     * @param isbn
+     * @return
+     */
+    @Override
+    public int count(String isbn) {
+        return bookDAO.count(isbn);
+    }
+
+    /**
      * 책장 등록
      * @param book
      * @return

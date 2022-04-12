@@ -2,8 +2,11 @@ package com.kh.reading_fly.domain.calendar.dto;
 
 
 import lombok.*;
+import org.apache.tomcat.jni.Local;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -11,7 +14,12 @@ import java.sql.Date;
 @NoArgsConstructor
 @ToString
 public class CalendarDTO {
-  Date startDate;
-  Date endDate;
+  LocalDate startDate;
+  LocalDate endDate;
   String sid;
+  String thumbnail;
+  String title;
+  LocalDate ddate;
+
+  String dnum;
 }
