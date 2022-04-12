@@ -56,9 +56,7 @@ let $end = document.querySelector('.end-page').value;
 
 //렌지바를 움직이면 그 값이 startpage에 들어가기
 $rangeBar.addEventListener('input', event => {
-    console.log("$range:" + $range);
     $startPage.value = $rangeBar.value;
-    console.log("$start:" + $start);
 });
 
 //startpage를 입력하고 엔터를 치면 렌지바의 값이 바뀌기

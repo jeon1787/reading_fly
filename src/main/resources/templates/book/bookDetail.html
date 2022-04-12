@@ -23,17 +23,26 @@
 <body>
 <div class="form">
     <div class="wrap">
-
         <h3>독서기록추가</h3>
+        <br>
+        <hr>
+        <br>
+        <h3>독서기록</h3>
         <form class="detail-form" id="detailForm" action="" th:action th:method="post" th:object="${detailForm}" th:data-isbn="${detailForm.isbn}" th:data-dsnum="${detailForm.dsnum}">
-            <div><label for="">얼마나 읽었나요?</label></div>
-            <div><input class="range-bar" id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}" th:step="1"></div>
+            <div class="detail-img"><img class="book-img" th:src="${detailForm.thumbnail}"></div>
+            <div class="detail-right" >
+                <div><strong>얼마나 읽었나요?</strong></div>
+                <div><input class="range-bar" id="rangeBar" type="range" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}" th:step="1"></div>
 
-            <div><label for="">날짜는?</label></div>
-            <div><input class="date" id="date" type="date" th:field="*{ddate}"></div>
+                <div><strong>날짜는?</strong></div>
+                <div><input class="date" id="date" type="date" th:field="*{ddate}"></div>
 
-            <div><label for="">페이지는?</label></div>
-            <div><input class="start-page" id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}">/<input class="end-page" id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>
+                <div><strong>읽은 페이지</strong></div>
+                <div><input class="start-page" id="startPage" type="text" th:field="*{dpage}" th:value="*{dpage}" th:max="*{spage}"></div>
+
+                <div><strong>총 페이지</strong></div>
+                <div><input class="end-page" id="endPage" type="text" th:value="*{spage}" th:field="*{spage}"></div>
+            </div>
         </form>
         <div class="detail-btngrp">
             <button type="button" class="detail-btn" id="detailBtn">기록추가하기</button>

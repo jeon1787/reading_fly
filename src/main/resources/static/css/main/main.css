@@ -37,7 +37,8 @@ padding : 0;
 
         body{
         color: #fff;
-        background: linear-gradient(-45deg, #ee7752,#e73c7e, #23a6d5, #23d5ab);
+        //background: linear-gradient(-45deg, #ee7752,#e73c7e, #23a6d5, #23d5ab);
+        background: linear-gradient(-45deg, #ada996,#f2f2f2, #dbdbdb, #eaeaea);
         background-size: 400% 400%;
         animation: AnimationName 15s ease infinite;
         width: 100%;
@@ -89,10 +90,15 @@ padding : 0;
         }
         .upper-right{
             width: 300px;
+            font-weight: bolder;
             display: flex;
             justify-content: space-between;
         }
 
+       .uname{
+            color: darkgray;
+            line-height: 35px;
+       }
 
         main{
             display: flex;
@@ -102,7 +108,7 @@ padding : 0;
         }
 
         span{
-            font-weight: bolder;
+            font-weight: bold;
             color: white;
             line-height: 35px;
         }
@@ -147,7 +153,7 @@ padding : 0;
 
         i{
             position: absolute;
-            color: bisque;
+            color: darkgrey;
             transition-duration: 1s;
         }
 
@@ -156,7 +162,7 @@ padding : 0;
             font-size: 3em;
             font-weight: bold;
             line-height : 3em;
-            color: white;
+            color: darkgray;
             z-index: 1;
         }
 
@@ -177,7 +183,7 @@ padding : 0;
         }
 
         .dropdown .dropbtn{
-            color: white;
+            color: darkgray;
             margin-left: 10px;
         }
 
@@ -188,17 +194,17 @@ padding : 0;
         }
 
         .dropdown-content > a{
-            color:white;
+            color:darkgray;
             text-decoration-line: none;
             display : inline-block;
             text-align : center;
         }
 
         .dropdown-content a:hover{
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(90, 83, 83, 0.726);
             border-radius : 10px;
             padding : 10px;
-            color : white;
+            color : whitesmoke;
         }
 
         .dropdown:hover .dropdown-content {
@@ -210,10 +216,10 @@ padding : 0;
             bottom: 0;
             width: 100%;
             height: 35px;
-            background-color: rgba(189, 215, 238, 0.5);
+            background-color: rgb(105,105,105);
         }
 
         .upper-right>span>a{
-            color: white;
+            color: darkgray;
             text-decoration: none;
         }

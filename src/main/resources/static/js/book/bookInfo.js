@@ -3,6 +3,24 @@ const $infoForm = document.querySelector('.info-form');
 saveBtn.addEventListener('click', btn_check);
 prevBtn.addEventListener('click', btn_check);
 
+const $infoLink = document.querySelector('.info-link');
+$infoLink.addEventListener('click', e=>{
+    const isbn = e.target.dataset.isbn;
+    if(e.target.className == 'younpung'){
+         const url = "https://www.ypbooks.co.kr/book.yp?bookcd=" + isbn;
+         window.open(url, '_blank');
+    }else if(e.target.className == 'gyobo'){
+        const url = "http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=" + isbn;
+        window.open(url, '_blank');
+    }else if(e.target.className == 'yes'){
+        const url = "http://www.yes24.com/Product/Goods/" + isbn;
+        window.open(url, '_blank');
+    }else if(e.target.className == 'alladin'){
+        const url = "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=" + isbn;
+        window.open(url, '_blank');
+    }
+})
+
 //도서 버튼
 function btn_check(e){
     if(e.target.id === "saveBtn")

@@ -29,37 +29,41 @@
 }
 .bar1{
   position: absolute;
-  border: solid 1px burlywood;
+  //border: solid 1px burlywood;
   width: 1030px;
-  height: 25px;
-  background-color: burlywood;
+  height: 20px;
+  background-color: darkgray;
+  opacity: 0.5;
   left: 20px;
   top: 255px;
 }
 .bar2{
   position: absolute;
-  border: solid 1px burlywood;
+  //border: solid 1px burlywood;
   width: 1030px;
-  height: 25px;
-  background-color: burlywood;
+  height: 20px;
+  background-color: darkgray;
+  opacity: 0.5;
   left: 20px;
   top: 485px;
 }
 .bar3{
   position: absolute;
-  border: solid 1px burlywood;
+  //border: solid 1px burlywood;
   width: 1030px;
-  height: 25px;
-  background-color: burlywood;
+  height: 20px;
+  background-color: darkgray;
+  opacity: 0.5;
   left: 20px;
   top: 715px;
 }
 .bar4{
   position: absolute;
-  border: solid 1px burlywood;
+  //border: solid 1px burlywood;
   width: 1030px;
-  height: 25px;
-  background-color: burlywood;
+  height: 20px;
+  background-color: darkgray;
+  opacity: 0.5;
   left: 20px;
   top: 945px;
 }
