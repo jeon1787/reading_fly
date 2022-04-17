@@ -20,6 +20,7 @@
     margin-left: 20px;
     display: flex;
     flex-direction: column;
+    width : 500px;
 }
 
 .info-content > div{
@@ -51,8 +52,43 @@
 }
 .book-img{
     width: 230px;
-    heigth: 250px;
+    height: 270px;
 }
+.info-page{
+    display:flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.younpung>span {
+    display: inline-block;
+    background-image: url(/img/youngpung.png);
+    width: 27px;
+    height: 27px;
+}
+
+.gyobo>span {
+    display: inline-block;
+    background-image: url(/img/gyobo.png);
+    width: 27px;
+    height: 27px;
+}
+
+.yes>span {
+    display: inline-block;
+    background-image: url(/img/yes.png);
+    width: 27px;
+    height: 27px;
+}
+
+.alladin>span {
+    display: inline-block;
+    background-image: url(/img/alladin.png);
+    width: 27px;
+    height: 27px;
+}
+
+
 
 /*리뷰 작성창 헤더*/
 .review-header{

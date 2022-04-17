@@ -55,8 +55,8 @@ alter table member add constraint member_leave_fl_ck check (leave_fl in (0,1)); 
 
 --회원 샘플데이터 등록 / id 한글 제외, 비밀번호 특수문자 포함 8~15, 이름 한글만 입력, email 형식 확인, 닉네임 유니크 확인
 insert into member (id, pw, name, email, nickname, admin_fl) values ('admin', 'Qwert12!', '관리자', 'admin@test.com', '관리자1', 2); 
-insert into member (id, pw, name, email, nickname) values ('user1', 'Qwert12!', '전은우', 'user1@test.com', 'ora-01002-error'); 
-insert into member (id, pw, name, email, nickname) values ('user2', 'Qwert12!', '유기상', 'user2@test.com', '잠안와');
+insert into member (id, pw, name, email, nickname) values ('user1', 'Qwert12!', '전은우', 'user1@test.com', '회원1'); 
+insert into member (id, pw, name, email, nickname) values ('user2', 'Qwert12!', '유기상', 'user2@test.com', '회원2');
 insert into member (id, pw, name, email, nickname) values ('user3', 'Qwert12!', '최재훈', 'user3@test.com', '회원3');
 insert into member (id, pw, name, email, nickname) values ('user4', 'Qwert12!', '최수빈', 'user4@test.com', '회원4');
 insert into member (id, pw, name, email, nickname) values ('user5', 'Qwert12!', '박현근', 'user5@test.com', '회원5');

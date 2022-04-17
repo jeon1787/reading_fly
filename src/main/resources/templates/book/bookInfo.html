@@ -29,29 +29,25 @@
         <!--제목-->
         <h3>도서상세</h3>
         <div class="info-wrap">
-            <br>
-            <hr>
-            <br>
-            <h3>도서설명</h3>
             <div class="info-upper">
                 <div class="info-img"><img class="book-img" th:src="${bookRequest.thumbnail}"></div>
-                <div class="info-right">
-                    <div class="info-content">
-                        <div><strong><p th:text="${bookRequest.title}">도서제목</p></strong></div>
-                        <div th:text="${bookRequest.authors}">저자</div>
-                        <div th:text="${bookRequest.publisher}">출판사</div>
-                        <div th:text="${bookRequest.translators}">번역</div>
-                        <div th:text="${bookRequest.publisher_dt}">출판날짜</div>
-                    </div>
-                    <div class="info-link">
-                        <a class="younpung" target="_blank"><img src="../../static/img/youngpung.png">영풍문고</a>
-                        <a class="gyobo" target="_blank"><img src="../../static/img/gyobo.png">교보문고</a>
-                        <a class="yes" target="_blank"><img src="../../static/img/yes.png">예스24</a>
-                        <a class="alladin" target="_blank"><img src="../../static/img/alladin.png">알라딘</a>
-                        <div><strong>총페이지:</strong></div>
-                        <div><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
-                    </div>
+                <div class="info-content">
+                    <div><h5 th:text="${bookRequest.title}">도서제목</h5></div>
+                    <div th:text="${bookRequest.authors}">저자</div>
+                    <div th:text="${bookRequest.publisher}">출판사</div>
+                    <div th:text="${bookRequest.translators}">번역</div>
+                    <div th:text="${bookRequest.publisher_dt}">출판날짜</div>
                 </div>
+                <div class="info-link">
+                    <a class="younpung"><span></span>영풍문고</a>
+                    <a class="gyobo"><span></span>교보문고</a>
+                    <a class="yes"><span></span>예스24</a>
+                    <a class="alladin"><span></span>알라딘</a>
+                </div>
+            </div>
+            <div class="info-page">
+                <div><strong>총페이지:</strong></div>
+                <div><input class="push-spage" type="number" placeholder="숫자만 입력해주세요.(기본값:0)"></div>
             </div>
             <div class="info-body">
                 <div th:text="${bookRequest.bcontents}">설명</div>
@@ -78,12 +74,12 @@
             <!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
             <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
         </div>
-        <!--<div th:text="${bookRequest.title}">-->
         <br>
+        <!--<div th:text="${bookRequest.title}">-->
 
         <!--리뷰-->
         <div class="review-area">
-            <div>리뷰</div>
+            <div><strong>리뷰</strong></div>
             <hr>
             <div class="reviewWriter">
                 <form action="">

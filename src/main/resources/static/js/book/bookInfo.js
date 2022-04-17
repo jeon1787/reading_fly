@@ -6,19 +6,25 @@ prevBtn.addEventListener('click', btn_check);
 const $infoLink = document.querySelector('.info-link');
 $infoLink.addEventListener('click', e=>{
     const isbn = e.target.dataset.isbn;
+    const cisbn = isbn.split("");
     if(e.target.className == 'younpung'){
-         const url = "https://www.ypbooks.co.kr/book.yp?bookcd=" + isbn;
+         const url = "https://www.ypbooks.co.kr/book.yp?bookcd=" + cisbn[0];
          window.open(url, '_blank');
     }else if(e.target.className == 'gyobo'){
-        const url = "http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=" + isbn;
+        const url = "http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&ejkGb=KOR&barcode=" + cisbn[0];
         window.open(url, '_blank');
     }else if(e.target.className == 'yes'){
-        const url = "http://www.yes24.com/Product/Goods/" + isbn;
+        const url = "http://www.yes24.com/Product/Goods/" + cisbn[0];
         window.open(url, '_blank');
     }else if(e.target.className == 'alladin'){
-        const url = "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=" + isbn;
+        const url = "https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=" + cisbn[0];
         window.open(url, '_blank');
     }
+})
+
+const $pushSpage = document.querySelector('.push-spage');
+$pushSpage.addEventListener('change', e=>{
+    document.querySelector('.input-spage').value = $pushSpage.value;
 })
 
 //도서 버튼
@@ -146,7 +152,7 @@ function displayreviews_f(reviews){
             star = ele.value;
         }
     })
-    console.log(star);
+    console.log(별);
 
     if(star == 0){
         alert("평점을 선택해주세요.");
