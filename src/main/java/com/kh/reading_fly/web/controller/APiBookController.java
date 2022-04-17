@@ -27,7 +27,7 @@ public class APiBookController {
 
     //도서등록
     @PostMapping
-    public ApiResult<Book> save(@RequestBody Book book){
+    public ApiResult<Book> save(@ModelAttribute Book book){
         Book savedBook = bookSVC.saveBook(book);
         ApiResult<Book> result = new ApiResult<>("00", "성공", savedBook);
         return result;
@@ -68,7 +68,7 @@ public class APiBookController {
     }
 
     //기록 목록 조회
-    @GetMapping("/{id}/{isbn}")
+    @GetMapping("/{isbn}/list")
     public ApiResult<List<Book>> listDoc(@PathVariable String isbn,
                                          HttpSession session){
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
@@ -84,55 +84,36 @@ public class APiBookController {
     }
 
     //기록 등록
-    @PostMapping("/{id}/save")
-    public ApiResult<Book> insertDoc(String isbn,
-                                     @RequestBody InsertForm insertForm,
+    @PostMapping("/save")
+    public ApiResult<Book> insertDoc(@RequestBody InsertForm insertForm,
                                      HttpSession session){
+        log.info("insertForm={}",insertForm);
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
         Book book = new Book();
         BeanUtils.copyProperties(insertForm, book);
-        Long dnum = bookSVC.insertDoc(id, isbn,book);
-        Book insertDoc = null;
-        if(dnum > 0){
-            insertDoc = bookSVC.detailDoc(id, isbn);
-            BeanUtils.copyProperties(insertDoc, book);
-        }
+        book.setDid(id);
+        book.setSid(id);
+
+        Long dnum = bookSVC.insertDoc(book);
+        int num = bookSVC.editDoc(book);
+        Book insertDoc = new Book();
+        insertDoc.setDnum(dnum);
+//        if(dnum > 0){
+//            insertDoc = bookSVC.detailDoc(id, isbn);
+//            BeanUtils.copyProperties(insertDoc, book);
+//        }
         ApiResult<Book> result = new ApiResult<>("00", "기록등록", book);
         return result;
     }
 
-    //총페이지 수정
-    @PatchMapping("/{isbn}/{spage}")
-    public ApiResult<Book> editDoc(@PathVariable String isbn,
-                                   @PathVariable Long spage,
-                                   @RequestBody EditForm editForm,
-                                   HttpSession session){
-
+    //독서기록 단건 삭제
+    @DeleteMapping("/{dnum}/delete")
+    public ApiResult<Boolean> removeDoc(@PathVariable Long dnum,
+                                        HttpSession session){
         LoginMember loginMember = (LoginMember)session.getAttribute(SessionConst.LOGIN_MEMBER);
         String id = loginMember.getId();
-
-        Book book = new Book();
-        BeanUtils.copyProperties(editForm, book);
-        int editPage = bookSVC.editDoc(id, isbn, spage, book);
-
-        Book editDoc = null;
-        ApiResult<Book> result = null;
-
-        if(editPage == 1){
-            editDoc = bookSVC.detailDoc(id, isbn);
-            BeanUtils.copyProperties(editDoc, book);
-            result = new ApiResult<>("00", "총페이지 수정", book);
-        }else{
-            result = new ApiResult<>("99", "fail", book);
-        }
-        return result;
-    }
-
-    //독서기록 단건 삭제
-    @DeleteMapping("/{dnum}")
-    public ApiResult<Boolean> removeDoc(@PathVariable Long dnum){
-        int removeDoc = bookSVC.removeDoc(dnum);
+        int removeDoc = bookSVC.removeDoc(id, dnum);
         ApiResult<Boolean> result = null;
         if(removeDoc == 1){
             result = new ApiResult<>("00", "기록 단건 삭제", true);

@@ -55,8 +55,8 @@ alter table member add constraint member_leave_fl_ck check (leave_fl in (0,1)); 
 
 --회원 샘플데이터 등록 / id 한글 제외, 비밀번호 특수문자 포함 8~15, 이름 한글만 입력, email 형식 확인, 닉네임 유니크 확인
 insert into member (id, pw, name, email, nickname, admin_fl) values ('admin', 'Qwert12!', '관리자', 'admin@test.com', '관리자1', 2); 
-insert into member (id, pw, name, email, nickname) values ('user1', 'Qwert12!', '전은우', 'user1@test.com', 'ora-01002-error'); 
-insert into member (id, pw, name, email, nickname) values ('user2', 'Qwert12!', '유기상', 'user2@test.com', '잠안와');
+insert into member (id, pw, name, email, nickname) values ('user1', 'Qwert12!', '전은우', 'user1@test.com', '회원1'); 
+insert into member (id, pw, name, email, nickname) values ('user2', 'Qwert12!', '유기상', 'user2@test.com', '회원2');
 insert into member (id, pw, name, email, nickname) values ('user3', 'Qwert12!', '최재훈', 'user3@test.com', '회원3');
 insert into member (id, pw, name, email, nickname) values ('user4', 'Qwert12!', '최수빈', 'user4@test.com', '회원4');
 insert into member (id, pw, name, email, nickname) values ('user5', 'Qwert12!', '박현근', 'user5@test.com', '회원5');
@@ -116,16 +116,16 @@ nocache --시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미
 nocycle; --순환하지않음
 
 --책장 샘플데이터 등록 / sgroup 독서상태(도서번호 1=예정, 2=읽는중, 3=완독)
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 500, '1158360959 9791158360955', 'user1');
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 400, '894331177X 9788943311773', 'user1');
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 300, '8936455303 9788936455309', 'user1');
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 200, '8970940561 9788970940564', 'user1');
-
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 100, '129201833X 9781292018331', 'user2');
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 200, '8970505458 9788970505459', 'user2');
-
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 400, '8943311281 9788943311285', 'user3');
-insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 500, '1168410797 9791168410794', 'user3');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 500, '1158360959 9791158360955', 'user1');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 400, '894331177X 9788943311773', 'user1');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 300, '8936455303 9788936455309', 'user1');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 200, '8970940561 9788970940564', 'user1');
+--
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 100, '129201833X 9781292018331', 'user2');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 200, '8970505458 9788970505459', 'user2');
+--
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 400, '8943311281 9788943311285', 'user3');
+--insert into book_shelf (snum, spage, sisbn, sid) values (book_shelf_snum_seq.nextval, 500, '1168410797 9791168410794', 'user3');
 
 select * from book_shelf;
 
@@ -154,41 +154,41 @@ nocache --시퀀스 순차 증가 오류에 대응을 하지만 메모리에 미
 nocycle; --순환하지않음
 
 --도서기록 샘플데이터 등록
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-01', 20, 1, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-08', 34, 1, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-20', 50, 1, 'user1');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-21', 20, 2, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-22', 25, 2, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-22', 34, 2, 'user1');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-01', 20, 3, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-04', 25, 3, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-27', 34, 3, 'user1');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-06', 20, 4, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-12', 25, 4, 'user1');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-13', 34, 4, 'user1');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-05', 20, 1, 'user2');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-12', 25, 1, 'user2');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-13', 34, 1, 'user2');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-18', 20, 2, 'user2');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-19', 25, 2, 'user2');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-22', 34, 2, 'user2');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-01', 20, 1, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-06', 25, 1, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-22', 34, 1, 'user3');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-01', 20, 2, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-05', 25, 2, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-06', 34, 2, 'user3');
-
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-02', 20, 3, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-03', 25, 3, 'user3');  
-insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-09', 34, 3, 'user3');
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-01', 20, 1, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-08', 34, 1, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-20', 50, 1, 'user1');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-21', 20, 2, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-22', 25, 2, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-22', 34, 2, 'user1');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-01', 20, 3, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-04', 25, 3, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-27', 34, 3, 'user1');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-06', 20, 4, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-12', 25, 4, 'user1');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-13', 34, 4, 'user1');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-05', 20, 1, 'user2');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-12', 25, 1, 'user2');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-13', 34, 1, 'user2');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-18', 20, 2, 'user2');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-19', 25, 2, 'user2');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-22', 34, 2, 'user2');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-01', 20, 1, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-06', 25, 1, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-01-22', 34, 1, 'user3');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-01', 20, 2, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-05', 25, 2, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-06', 34, 2, 'user3');
+--
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-02-02', 20, 3, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-03', 25, 3, 'user3');  
+--insert into document (dnum, ddate, dpage, dsnum, did) values (document_dnum_seq.nextval, '2022-03-09', 34, 3, 'user3');
 
 select * from document;
 
@@ -208,7 +208,7 @@ create table review(
 alter table review add Constraint review_rnum_pk primary key (rnum);                                             -- 기본키 생성
 alter table review add constraint review_rstar_ck check (rstar in(0,1,2,3,4,5));                                 -- 체크키 생성
 alter table review add constraint review_uk unique(risbn, rid);                                                  -- 복합 유니크키 생성(2개의 값이 동일한 경우에 한하여 오류 확인)
-alter table review add constraint reviewr_risbn_fk foreign key(risbn) references book(isbn) on delete cascade;   -- risbn 의 외래키 = 도서의 기본키(isbn)
+--리뷰작성에 에러를 발생시켜 삭제alter table review add constraint reviewr_risbn_fk foreign key(risbn) references book(isbn) on delete cascade;   -- risbn 의 외래키 = 도서의 기본키(isbn)
 alter table review add constraint review_rid_fk foreign key(rid) references member(id) on delete cascade;        -- rid의 외래키 = 회원의 기본키(id)
 
 --리뷰 시퀀스 생성

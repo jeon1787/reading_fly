@@ -282,6 +282,7 @@ $delBtn?.addEventListener('click', e=>{
     .catch(err => console.error('Err:',err));
   }
 
+  //댓글 삭제
   function deleteReply_f($comment){
     console.log("deleteReply_f() 실행");
 

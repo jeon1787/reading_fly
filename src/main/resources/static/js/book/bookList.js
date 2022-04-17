@@ -41,7 +41,7 @@ function list(){
 }
 //도서 목록 화면 출력
 function displaylist(books){
-    let content = `<img class="empty-Img" id="emptyImg" src="" width="130px" height="150px">`;
+    let content = `<img class="empty-Img" id="emptyImg" width="130px" height="150px">`;
 
     books.forEach(ele => {
       content += `<div class="bookshelf-list">

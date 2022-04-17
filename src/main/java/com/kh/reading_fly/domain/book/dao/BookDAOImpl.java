@@ -55,6 +55,21 @@ public class BookDAOImpl implements BookDAO{
         return book;
     }
 
+    @Override
+    public int count(String isbn) {
+        //sql문 작성
+        StringBuffer sql = new StringBuffer();
+        sql.append(" select count(*) ");
+        sql.append("   from book  ");
+        sql.append("  where isbn = ? ");
+
+        //sql문 실행
+//        Integer cnt = jdbcTemplate.queryForObject(sql.toString(), Integer.class, isbn);
+        int cnt = jdbcTemplate.update(sql.toString(), isbn);
+
+        return cnt;
+    }
+
     /**
      * 책장 등록
      * @param book
@@ -178,7 +193,7 @@ public class BookDAOImpl implements BookDAO{
     @Override
     public Book detailDoc(String id, String isbn) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select ddate, dpage, spage, thumbnail, title, isbn ");
+        sql.append("select dsnum, ddate, dpage, spage, thumbnail, title, isbn ");
         sql.append("from (select document.dsnum, document.dnum, document.ddate, document.dpage, book_shelf.spage, book.thumbnail, book.title, book.isbn ");
         sql.append("from document, book_shelf, book ");
         sql.append("where book_shelf.snum = document.dsnum and book_shelf.sisbn = book.isbn ");
@@ -200,11 +215,12 @@ public class BookDAOImpl implements BookDAO{
     @Override
     public List<Book> listDoc(String id, String isbn) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select document.dnum, document.ddate, document.dpage, book_shelf.spage");
+        sql.append("select document.dnum, document.ddate, document.dpage, book_shelf.spage ");
         sql.append("from document, book_shelf ");
         sql.append("where book_shelf.snum = document.dsnum ");
         sql.append("and book_shelf.sid = ? ");
         sql.append("and book_shelf.sisbn = ? ");
+        sql.append("order by document.ddate desc, document.dpage desc ");
         List<Book> detailBook = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Book.class), id, isbn);
         log.info("detailBook={}", detailBook);
         return detailBook;
@@ -212,24 +228,35 @@ public class BookDAOImpl implements BookDAO{
 
     /**
      * 기록 등록
-     * @param id
-     * @param isbn
      * @param book
      * @return
      */
     @Override
-    public Long insertDoc(String id, String isbn, Book book) {
+    public Long insertDoc(Book book) {
         StringBuffer sql = new StringBuffer();
-        sql.append("insert into document (dsnum, dnum, ddate, dpage, did) ");
-        sql.append("select snum , document_dnum_seq.nextval, systimestamp, dpage, ? ");
-        sql.append("from book_shelf, document ");
-        sql.append("where book_shelf.sid = ? ");
-        sql.append("and book_shelf.sisbn = ? ");
-
+        sql.append("insert into document (dnum, ddate, dsnum, dpage, did) ");
+        sql.append("values (document_dnum_seq.nextval, ?, ?, ?, ?) ");
+//        sql.append("select document_dnum_seq.nextval, ?, ?, ?, ? ");
+//        sql.append("from book_shelf, document ");
+//        sql.append("where book_shelf.sid = ? ");
+//        sql.append("and book_shelf.sisbn = ? ");
+//        log.info("book1={}", book);
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(sql.toString(), new String[]{"dnum"},id, isbn, id);
+        jdbcTemplate.update(new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+                PreparedStatement pstmt = con.prepareStatement(sql.toString(),new String[]{"dnum"});  // keyHolder에 담을 테이블의 컬럼명을 지정
 
+                pstmt.setDate(1, Date.valueOf(book.getDdate()));
+                pstmt.setLong(2,book.getDsnum());
+                pstmt.setLong(3,book.getDpage());
+                pstmt.setString(4,book.getDid());
+//                pstmt.setString(5,book.getSid());
+//                pstmt.setString(6,book.getSisbn());
+                return pstmt;
+            }
+        },keyHolder);
         Long dnum = Long.valueOf(keyHolder.getKeys().get("dnum").toString());
         log.info("dnum={}", dnum);
         return dnum;
@@ -237,21 +264,18 @@ public class BookDAOImpl implements BookDAO{
 
     /**
      * 총페이지 수정
-     * @param id
-     * @param isbn
-     * @param spage
      * @param book
      * @return
      */
     @Override
-    public int editDoc(String id, String isbn, Long spage, Book book) {
+    public int editDoc(Book book) {
         StringBuffer sql = new StringBuffer();
-        sql.append("uupdate book_shelf ");
+        sql.append("update book_shelf ");
         sql.append("set spage = ? ");
         sql.append("where sid = ? ");
         sql.append("and sisbn = ? ");
 
-        int editRow = jdbcTemplate.update(sql.toString(), spage, id, isbn);
+        int editRow = jdbcTemplate.update(sql.toString(), book.getSpage(), book.getSid(), book.getSisbn());
         log.info("editRow={}", editRow);
         return editRow;
     }
@@ -262,9 +286,9 @@ public class BookDAOImpl implements BookDAO{
      * @return
      */
     @Override
-    public int removeDoc(Long dnum) {
+    public int removeDoc(String id, Long dnum) {
         String sql = "delete from document where did = ? and dnum = ? ";
-        int removeRow = jdbcTemplate.update(sql.toString(), dnum);
+        int removeRow = jdbcTemplate.update(sql.toString(), id, dnum);
         log.info("removeRow={}", removeRow);
         return removeRow;
     }

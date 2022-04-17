@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ReviewItemForm {
+public class ReviewItemForm {//리뷰 목록용
 
   private Long rnum;
   private String rid;

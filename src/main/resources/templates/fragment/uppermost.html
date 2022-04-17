@@ -23,14 +23,14 @@
 
   <!--비로그인-->
   <div class="upper-right" th:fragment="beforeLoginUpm">
-    <span>환영합니다!</span>
+    <span class="uname">환영합니다!</span>
     <span><a th:href="@{/signup}">SIGN-UP</a></span>
     <span class="log"><a th:href="@{/login}">LOG-IN</a></span>
   </div>
 
   <!--로그인-->
   <div class="upper-right" th:fragment="afterLoginUpm">
-    <span th:text="${session?.loginMember?.nickname}">닉네임</span>
+    <span class="uname" th:text="${session?.loginMember?.nickname}">닉네임</span>
     <div class="dropdown">
       <span class="dropbtn">MY PAGE</span>
       <div class="dropdown-content">
@@ -44,7 +44,7 @@
 
   <!--관리자 계정 로그인-->
   <div class="upper-right" th:fragment="adminLoginUpm">
-    <span th:text="|${session?.loginMember?.nickname} 님|">닉네임</span>
+    <span class="uname" th:text="|${session?.loginMember?.nickname} 님|">닉네임</span>
     <div class="dropdown">
       <span class="dropbtn">ADMIN PAGE</span>
       <div class="dropdown-content">

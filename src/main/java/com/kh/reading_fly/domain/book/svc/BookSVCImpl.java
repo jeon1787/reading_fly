@@ -26,6 +26,16 @@ public class BookSVCImpl implements BookSVC{
     }
 
     /**
+     * 도서 등록 여부
+     * @param isbn
+     * @return
+     */
+    @Override
+    public int count(String isbn) {
+        return bookDAO.count(isbn);
+    }
+
+    /**
      * 책장 등록
      * @param book
      * @return
@@ -107,8 +117,8 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public Long insertDoc(String id, String isbn, Book book) {
-        return bookDAO.insertDoc(id, isbn, book);
+    public Long insertDoc(Book book) {
+        return bookDAO.insertDoc(book);
     }
 
     /**
@@ -120,8 +130,8 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public int editDoc(String id, String isbn, Long spage, Book book) {
-        return bookDAO.editDoc(id, isbn, spage, book);
+    public int editDoc(Book book) {
+        return bookDAO.editDoc(book);
     }
 
     /**
@@ -130,7 +140,7 @@ public class BookSVCImpl implements BookSVC{
      * @return
      */
     @Override
-    public int removeDoc(Long dnum) {
-        return bookDAO.removeDoc(dnum);
+    public int removeDoc(String id, Long dnum) {
+        return bookDAO.removeDoc(id, dnum);
     }
 }

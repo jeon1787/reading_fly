@@ -21,26 +21,92 @@
     <script defer th:src="@{/js/book/bookInfo.js}"></script>
 </head>
 <body>
-<div class="form">
-    <h3>도서상세</h3>
-    <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
-        <input class="input-word" type="text" th:field="*{searchWord}">검색단어
-        <input class="input-isbn" type="text" th:field="*{isbn}" >도서번호
-        <input class="input-title" type="text" th:field="*{title}" >도서제목
-        <input class="input-contents" type="text" th:field="*{bcontents}" >설명
-        <input class="input-authors" type="text" th:field="*{authors}" >저자
-        <input class="input-publisher" type="text" th:field="*{publisher}" >출판사
-        <input class="input-translators" type="text" th:field="*{translators}" >번역
-        <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
-        <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
-        <div><span>총페이지:</span><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
-    </form>
-    <div class="info-bntgrp">
-        <button class="saveBtn" id="saveBtn" type="button">등록하기</button>
-<!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
-        <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
+<!--form-->
+<div class="form" th:data-login-chk="${!session?.isEmpty()}" th:data-id="${session?.loginMember?.id}">
+
+    <div class="wrap">
+
+        <!--제목-->
+        <h3>도서상세</h3>
+        <div class="info-wrap">
+            <div class="info-upper">
+                <div class="info-img"><img class="book-img" th:src="${bookRequest.thumbnail}"></div>
+                <div class="info-content">
+                    <div><h5 th:text="${bookRequest.title}">도서제목</h5></div>
+                    <div th:text="${bookRequest.authors}">저자</div>
+                    <div th:text="${bookRequest.publisher}">출판사</div>
+                    <div th:text="${bookRequest.translators}">번역</div>
+                    <div th:text="${bookRequest.publisher_dt}">출판날짜</div>
+                </div>
+                <div class="info-link">
+                    <a class="younpung"><span></span>영풍문고</a>
+                    <a class="gyobo"><span></span>교보문고</a>
+                    <a class="yes"><span></span>예스24</a>
+                    <a class="alladin"><span></span>알라딘</a>
+                </div>
+            </div>
+            <div class="info-page">
+                <div><strong>총페이지:</strong></div>
+                <div><input class="push-spage" type="number" placeholder="숫자만 입력해주세요.(기본값:0)"></div>
+            </div>
+            <div class="info-body">
+                <div th:text="${bookRequest.bcontents}">설명</div>
+            </div>
+        </div>
+
+        <!--도서 정보-->
+        <form class="info-form" id="info-form" action="" th:method="post" th:object="${bookRequest}">
+            <input class="input-word" type="text" th:field="*{searchWord}">검색단어
+            <input class="input-isbn" type="text" th:field="*{isbn}" >도서번호
+            <input class="input-title" type="text" th:field="*{title}" >도서제목
+            <input class="input-contents" type="text" th:field="*{bcontents}" >설명
+            <input class="input-authors" type="text" th:field="*{authors}" >저자
+            <input class="input-publisher" type="text" th:field="*{publisher}" >출판사
+            <input class="input-translators" type="text" th:field="*{translators}" >번역
+            <input class="input-thumbnail" type="text" th:field="*{thumbnail}" >이미지
+            <input class="input-publisher_dt" type="text" th:field="*{publisher_dt}">출판날짜
+            <div><span>총페이지:</span><input class="input-spage" type="number" th:field="*{spage}" placeholder="숫자만 입력해주세요.(기본값:0)">총페이지</div>
+        </form>
+
+        <!--버튼-->
+        <div class="info-bntgrp">
+            <button class="saveBtn" id="saveBtn" type="button">등록하기</button>
+            <!--        <button class="reviewBtn" id="reviewBtn" type="button">리뷰</button>-->
+            <button class="prevBtn" id="prevBtn" th:data-word="${bookRequest.searchWord}">검색으로</button>
+        </div>
+        <br>
+        <!--<div th:text="${bookRequest.title}">-->
+
+        <!--리뷰-->
+        <div class="review-area">
+            <div><strong>리뷰</strong></div>
+            <hr>
+            <div class="reviewWriter">
+                <form action="">
+                    <div class="review-header">
+                        <span th:text="${!session.isEmpty()} ? ${session?.loginMember?.nickname} : '로그인 후 이용해주세요'">닉네임</span>
+                        <div class="radioBtn">
+                            <input type="radio" name="star" class="star" id="fiveStar" value="5">
+                            <label for="fiveStar"><div class="star-div one-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="fourStar" value="4">
+                            <label for="fourStar"><div class="star-div two-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="threeStar" value="3">
+                            <label for="threeStar"><div class="star-div three-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="twoStar" value="2">
+                            <label for="twoStar"><div class="star-div four-star-div">★</div></label>
+                            <input type="radio" name="star" class="star" id="oneStar" value="1">
+                            <label for="oneStar"><div class="star-div five-star-div">★</div></label>
+                        </div>
+                    </div>
+                    <textarea class="review-textarea" name="" cols="104" rows="10" placeholder="리뷰를 입력하세요"></textarea>
+                    <div><button type="button" id="addBtn" th:data-session="${session?.isEmpty()}">등록</button></div>
+                </form>
+            </div>
+            <div class="review-list"></div>
+        </div>
+
     </div>
-<!--<div th:text="${bookRequest.title}">-->
+
 </div>
 </body>
 </html>

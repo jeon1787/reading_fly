@@ -5,17 +5,14 @@ import com.kh.reading_fly.domain.book.dto.BookRequest;
 import com.kh.reading_fly.domain.book.svc.BookSVC;
 import com.kh.reading_fly.web.form.book.DetailForm;
 import com.kh.reading_fly.web.form.book.SaveForm;
-import com.kh.reading_fly.web.form.book.UpdateForm;
 import com.kh.reading_fly.web.form.member.SessionConst;
 import com.kh.reading_fly.web.form.member.login.LoginMember;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -66,7 +63,11 @@ public class BookController {
         book.setSid(loginMember.getId());
 //        book.setSisbn(saveForm.getIsbn());
         book.setDid(loginMember.getId());
-        bookSVC.saveBook(book);
+
+//        if(bookSVC.count(saveForm.getIsbn()) == 0 ){
+            bookSVC.saveBook(book);
+//        }
+
 //        book.setSpage(saveForm.getSpage());
         book.setDpage(0L);
         log.info("book.getSpage()={}", book.getSpage());

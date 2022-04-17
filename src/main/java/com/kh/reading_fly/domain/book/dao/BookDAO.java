@@ -8,6 +8,9 @@ public interface BookDAO {
 
     //도서 등록
     Book saveBook(Book book);
+    
+    //도서 등록 여부
+    int count(String isbn);
 
     //책장 등록
     Long saveShelf(Book book);
@@ -31,11 +34,11 @@ public interface BookDAO {
     List<Book> listDoc(String id, String isbn);
 
     //기록 등록
-    Long insertDoc(String id, String isbn, Book book);
+    Long insertDoc(Book book);
 
     //총페이지 수정
-    int editDoc(String id, String isbn, Long spage, Book book);
+    int editDoc(Book book);
 
     //독서기록 단건 삭제
-    int removeDoc(Long dnum);
+    int removeDoc(String id, Long dnum);
 }
