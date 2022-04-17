@@ -78,6 +78,8 @@
   text-align: right;
   border-bottom: 1px solid #333333;
   border-left: 1px solid #333333;
+
+  background-size: cover;/*썸네일 크기 맞춤*/
 }
 
 .day:nth-child(7n + 1),
