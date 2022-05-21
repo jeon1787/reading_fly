@@ -1,5 +1,5 @@
 'use strict';
-//textArea => ck_editor 대체
+//* textArea => ck_editor 대체
 ClassicEditor
 		.create( document.querySelector( '#bcontent' ), {
 		 plugin:['ListStyle','Markdown','MediaEmbed','MediaEmbedToolbar'],
