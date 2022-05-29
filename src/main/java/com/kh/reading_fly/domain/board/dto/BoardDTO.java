@@ -18,4 +18,5 @@ public class BoardDTO {
   private String bstatus;       //게시글 상태(E:exist, D:delete)
   private String bid;           //작성자
   private String nickname;      //닉네임
+  private int cnt;              //게시글별 댓글 개수
 }

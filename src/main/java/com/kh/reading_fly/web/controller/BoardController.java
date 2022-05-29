@@ -99,19 +99,8 @@ public class BoardController {
       items.add(item);
     }
 
-    //게시판별 댓글 개수
-    List<numberOfComment> cntList = new ArrayList<>();
-    for(BoardDTO boardDTO : list){
-       numberOfComment count = new numberOfComment();
-       count.setCbnum(boardDTO.getBnum());//게시글 번호
-       count.setCount(commentSVC.eachCount(boardDTO.getBnum()));//해당 게시글 댓글 개수
-       cntList.add(count);
-       log.info("count",commentSVC.eachCount(boardDTO.getBnum()));
-    }
-
     model.addAttribute("items", items);
     model.addAttribute("fc",fc);
-    model.addAttribute("cntList", cntList);
 
     return "board/listForm";
   }

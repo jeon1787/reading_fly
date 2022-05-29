@@ -52,7 +52,7 @@
             <td th:text="${itemStat.size - itemStat.index}" class="num">NO</td>
             <td class="title">
               <a th:href="@{|/board/${item.bnum}/detail|}" th:text="${item.btitle}">제목</a>
-              <block th:each="count : ${cntList}"><span class="numberOfComment" th:if="${item.bnum} eq ${count.cbnum}" th:text="${count.count eq 0} ? '' : |[${count.count}]|"></span></block>
+              <span class="numberOfComment" th:text="${item.cnt eq 0} ? '' : |[${item.cnt}]|"></span>
             </td>
             <td th:text="${item.nickname}" class="nickname">작성자</td>
             <td th:text="${item.budate}" class="date">작성일</td>

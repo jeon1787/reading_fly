@@ -69,6 +69,7 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append(" SELECT ");
     sql.append("   t1.* ");
     sql.append(" FROM( ");
+
     sql.append("     SELECT ");
     sql.append("       ROW_NUMBER() OVER (ORDER BY bcdate DESC) AS num, ");
     sql.append("       bnum, ");
@@ -76,12 +77,28 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append("       bcdate, ");
     sql.append("       budate, ");
     sql.append("       bhit, ");
-    sql.append("       nickname ");
+    sql.append("       nickname, ");
+    sql.append("       NVL(cnt, 0) AS cnt ");
     sql.append("     FROM ");
-    sql.append("       Board, ");
+    sql.append("       Board ");
+    sql.append("     INNER JOIN ");
     sql.append("       Member ");
-    sql.append("     WHERE ");
-    sql.append("       board.bid = member.id) t1 ");
+    sql.append("     ON ");
+    sql.append("       board.bid = member.id ");
+
+    sql.append("     LEFT OUTER JOIN ( ");
+    sql.append("       SELECT ");
+    sql.append("         cbnum, ");
+    sql.append("         count(*) AS cnt ");
+    sql.append("       FROM ");
+    sql.append("         Comments ");
+    sql.append("       GROUP BY ");
+    sql.append("         cbnum ");
+    sql.append("     ) t2 ");
+    sql.append("     ON ");
+    sql.append("       board.bnum = t2.cbnum ");
+    sql.append("   ) t1 ");
+
     sql.append(" WHERE t1.num BETWEEN ? AND ? ");
 
     //sql 실행
@@ -107,6 +124,7 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append(" SELECT ");
     sql.append("   t1.* ");
     sql.append(" FROM( ");
+
     sql.append("     SELECT ");
     sql.append("       ROW_NUMBER() OVER (ORDER BY bcdate DESC) AS num, ");
     sql.append("       bnum, ");
@@ -114,13 +132,26 @@ public class BoardDAOImpl implements BoardDAO{
     sql.append("       bcdate, ");
     sql.append("       budate, ");
     sql.append("       bhit, ");
-    sql.append("       nickname ");
+    sql.append("       nickname, ");
+    sql.append("       NVL(cnt, 0) AS cnt ");
     sql.append("     FROM ");
     sql.append("       Board ");
     sql.append("     INNER JOIN ");
     sql.append("       Member ");
     sql.append("     ON ");
     sql.append("       Board.bid = Member.id ");
+
+    sql.append("     LEFT OUTER JOIN ( ");
+    sql.append("       SELECT ");
+    sql.append("         cbnum, ");
+    sql.append("         count(*) AS cnt ");
+    sql.append("       FROM ");
+    sql.append("         Comments ");
+    sql.append("       GROUP BY ");
+    sql.append("         cbnum ");
+    sql.append("     ) t2 ");
+    sql.append("     ON ");
+    sql.append("       board.bnum = t2.cbnum ");
 
     //검색유형,검색어 존재시
     if(!StringUtils.isEmpty(filterCondition.getSearchType()) &&
@@ -129,7 +160,7 @@ public class BoardDAOImpl implements BoardDAO{
       sql = dynamicQuery(filterCondition, sql);
     }
 
-    sql.append("     )t1 ");
+    sql.append("   ) t1 ");
     sql.append(" WHERE t1.num BETWEEN ? AND ? ");
 
     //sql 실행
