@@ -1,13 +1,19 @@
 # 리ː플(readingːfly)
 
-<br>
-※주의) 작성 중인 문서입니다.
-<br><br>
-
 >도서 검색 및 독서 기록 서비스
 ><br>데모 영상 : [https://youtu.be/nhItIg3HmSg](https://youtu.be/nhItIg3HmSg){:target="_blank"}
 ><br>프로젝트 전체 개요를 보고 싶다면 [프로젝트 개요.pdf](https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf){:target="_blank"}
-><br><br>해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 했습니다.
+><br><br>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
+
+## 목차
+1. [제작 기간 & 제작 인원](#1.-제작-기간-&-제작-인원)
+2. [담당 파트](#2.-담당-파트)
+3. [사용 기술](#3.-사용-기술)
+4. [아키텍처](#4.-아키텍처)
+5. [게시판 ERD 설계](#5.-게시판-ERD-설계)
+6. [주요 Query](#6.-주요-Query)
+7. [주요 Javascript](#7.-주요-Javascript)
+8. [테스트](#8.-테스트))
 
 <br><br><br>
 
@@ -52,7 +58,7 @@ GitHub<br>
 ## 4. 아키텍처
 
 <details>
-<summary>접기/펼치기</summary>
+<summary>아키텍처 보기</summary>
 
 <img src="./src/main/resources/static/img/readme/board_architecture.png">
 
@@ -66,8 +72,6 @@ GitHub<br>
 <br><br><br>
 
 ## 6. 주요 Query
-<details>
-<summary>게시판 Query 접기/펼치기</summary>
 
 <br>
 
@@ -154,6 +158,8 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 이벤트 버블링(Bubbling) 단계에서는 게시글 등록 버튼(`addBtn.addEventListener('click', e=>{})`)과
 게시판 목록 이동 버튼(`listBtn.addEventListener('click', e=>{})`)이 기능하도록 작성하였습니다.
 
+<br><br><br>
+
 ## 8. 테스트
 
 <br>
@@ -161,8 +167,11 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 ### 8.1 Postman
 <img src="./src/main/resources/static/img/readme/postman_댓글목록조회.png">
 
+<br>
+댓글과 리뷰는 rest API로 제작하였습니다.
+<br>
 <details>
-<summary>기타 postman 테스트</summary>
+<summary>기타 postman 테스트 보기</summary>
 
 <img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글단건조회.png">
 <img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글등록.png">
