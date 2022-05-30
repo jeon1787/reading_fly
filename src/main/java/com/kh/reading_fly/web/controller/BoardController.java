@@ -87,12 +87,17 @@ public class BoardController {
       ItemForm item = new ItemForm();
       //copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
       BeanUtils.copyProperties(boardDTO, item);
-      //날짜 포맷
+
+      //게시글 작성일
       LocalDate boardDate = boardDTO.getBudate().toLocalDate();
+      //금일
       LocalDate today = LocalDate.now();
-      if(boardDate.equals(today)){//오늘 작성된 글이면
+
+      //금일 작성글 -> HH:mm 포맷으로 출력
+      if(boardDate.equals(today)){
         item.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
-      }else{//오늘 이전에 작성된 글이면
+      //금일 이전 작성글 -> YYYY-MM-DD 포맷으로 출력
+      }else{
         item.setBudate(boardDTO.getBudate().toLocalDate().toString());
       }
 
@@ -115,12 +120,16 @@ public class BoardController {
     DetailForm detailForm = new DetailForm();
     //copyProperties 의 경우 필드명이 같아도 타입이 다르면 복사되지 않는다(budate=null)
     BeanUtils.copyProperties(boardDTO, detailForm);
-    //날짜 포맷
+    
+    //게시글 작성일
     LocalDate boardDate = boardDTO.getBudate().toLocalDate();
+    //금일
     LocalDate today = LocalDate.now();
-    if(boardDate.equals(today)){//오늘 작성된 글이면
+    //금일 작성글 -> HH:mm 포맷으로 출력
+    if(boardDate.equals(today)){
       detailForm.setBudate(boardDTO.getBudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
-    }else{//오늘 이전에 작성된 글이면
+    //금일 이전 작성글 -> YYYY-MM-DD 포맷으로 출력
+    }else{
       detailForm.setBudate(boardDTO.getBudate().toLocalDate().toString());
     }
 

@@ -24,7 +24,6 @@ public class CommentDAOImpl implements CommentDAO {
 
   /**
    * 게시글번호로 댓글 전체 조회
-   *
    * @param cbnum 게시글번호
    * @return 전체 댓글
    */
@@ -46,7 +45,6 @@ public class CommentDAOImpl implements CommentDAO {
 
   /**
    * 댓글번호로 댓글 단건 조회
-   *
    * @param cnum 댓글번호
    * @return 단건 댓글
    */
@@ -70,14 +68,11 @@ public class CommentDAOImpl implements CommentDAO {
 
   /**
    * 댓글등록
-   *
    * @param comment 댓글
    * @return 댓글
    */
   @Override
   public CommentDTO create(CommentDTO comment) {
-    log.info("1번");
-
     //sql 작성
     StringBuffer sql = new StringBuffer();
     sql.append(" insert into comments (cnum, ccontent, cid, cbnum) ");
@@ -93,7 +88,6 @@ public class CommentDAOImpl implements CommentDAO {
 //
 //    return (query.size() == 1)? query.get(0) : null;
 
-    log.info("2번");
     //sql 실행
     KeyHolder keyHolder = new GeneratedKeyHolder();
     jdbcTemplate.update(new PreparedStatementCreator() {
@@ -112,15 +106,12 @@ public class CommentDAOImpl implements CommentDAO {
       }
     }, keyHolder);//notice_id 를 keyHolder 에 담아 반환(Map<>인가?)
 
-    log.info("3번");
     Long cnum = Long.valueOf(keyHolder.getKeys().get("cnum").toString());
-    log.info("4번");
     return selectOne(cnum);
   }//end of create
 
   /**
    * 댓글수정
-   *
    * @param comment 댓글
    * @return 댓글
    */

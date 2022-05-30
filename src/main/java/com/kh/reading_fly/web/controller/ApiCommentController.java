@@ -29,31 +29,33 @@ public class ApiCommentController {
     log.info("list() 호출됨!");
 
     List<CommentDTO> list = commentSVC.findAll(cbnum);
-    List<ItemForm> items = new ArrayList<>();
 
+    List<ItemForm> items = new ArrayList<>();
     for (CommentDTO commentDTO : list) {
       ItemForm item = new ItemForm();
-//      item.setCnum(commentDTO.getCnum());
-//      item.setCid(commentDTO.getCid());
-//      item.setNickname(commentDTO.getNickname());
-//      item.setCcontent(commentDTO.getCcontent());
       BeanUtils.copyProperties(commentDTO, item);
 
+      //댓글 작성일
       LocalDate commentDate = commentDTO.getCudate().toLocalDate();
-//      log.info("boardDate={}", boardDate);
+      //금일
       LocalDate today = LocalDate.now();
-//      log.info("today={}", today);
 
-      if (commentDate.equals(today)) {//오늘 작성된 글이면
+      //금일 작성글 -> HH:mm 포맷으로 출력
+      if (commentDate.equals(today)) {
         item.setCudate(commentDTO.getCudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
-      } else {//오늘 이전에 작성된 글이면
+      //금일 이전 작성글 -> YYYY-MM-DD 포맷으로 출력
+      } else {
         item.setCudate(commentDTO.getCudate().toLocalDate().toString());
       }
 
       items.add(item);
     }
 
-    return new ApiResult<>("00", "success", items);
+    if(items.size() != 0){
+      return new ApiResult<>("00", "댓글 전체 조회 성공", items);
+    }else{
+      return new ApiResult<>("99", "등록된 댓글이 없습니다.", items);
+    }
   }//end of list
 
   //댓글 단건 조회
@@ -63,22 +65,23 @@ public class ApiCommentController {
     
     CommentDTO commentDTO = commentSVC.findByCnum(cnum);
     DetailForm detailForm = new DetailForm();
-
     BeanUtils.copyProperties(commentDTO, detailForm);
 
+    //댓글 작성일
     LocalDate commentDate = commentDTO.getCudate().toLocalDate();
-//      log.info("boardDate={}", boardDate);
+    //금일
     LocalDate today = LocalDate.now();
-//      log.info("today={}", today);
 
-    if (commentDate.equals(today)) {//오늘 작성된 글이면
+    //금일 작성글 -> HH:mm 포맷으로 출력
+    if (commentDate.equals(today)) {
       detailForm.setCudate(commentDTO.getCudate().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm")).toString());
-    } else {//오늘 이전에 작성된 글이면
+    //금일 이전 작성글 -> YYYY-MM-DD 포맷으로 출력
+    } else {
       detailForm.setCudate(commentDTO.getCudate().toLocalDate().toString());
     }
 
-    return new ApiResult<>("00", "success", detailForm);
-  }
+    return new ApiResult<>("00", "댓글 단건 조회 성공", detailForm);
+  }//end of detail
 
   //댓글 등록
   @PostMapping("/{cbnum}")
@@ -95,7 +98,7 @@ public class ApiCommentController {
 
     CommentDTO savedComment = commentSVC.write(commentDTO);
 
-    return new ApiResult<>("00", "success", savedComment);
+    return new ApiResult<>("00", "댓글 등록 성공", savedComment);
   }//end of add
 
   //댓글 수정
@@ -118,24 +121,24 @@ public class ApiCommentController {
 
     CommentDTO modifiedComment = commentSVC.modify(commentDTO);
 
-    return new ApiResult<>("00", "success", modifiedComment);
+    return new ApiResult<>("00", "댓글 수정 성공", modifiedComment);
   }//end of edit
 
   //댓글 삭제
   @DeleteMapping("/{cnum}")
-  public ApiResult<Object> delete(@PathVariable Long cnum,
+  public ApiResult<Integer> delete(@PathVariable Long cnum,
                                   HttpSession session){
     log.info("delete() 호출됨!");
 
     LoginMember loginMember = (LoginMember)session.getAttribute("loginMember");
     int result = commentSVC.remove(cnum, loginMember.getId());
-    ApiResult<Object> apiResult = null;
+    ApiResult<Integer> apiResult = null;
 
     if(result == 1){
-      apiResult = new ApiResult<>("00", "success", "댓글 삭제를 성공했습니다.");
+      apiResult = new ApiResult<>("00", "댓글 삭제 성공", result);
       log.info("apiResult = {}", apiResult);
     }else{
-      apiResult = new ApiResult<>("01", "fail", "댓글 삭제를 실패했습니다.");
+      apiResult = new ApiResult<>("99", "댓글 삭제 실패", result);
       log.info("apiResult = {}", apiResult);
     }
 
