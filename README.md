@@ -1,8 +1,8 @@
 # 리ː플(readingːfly)
 
 >도서 검색 및 독서 기록 서비스
-><br>데모 영상 : [https://youtu.be/nhItIg3HmSg](https://youtu.be/nhItIg3HmSg){:target="_blank"}
-><br>프로젝트 전체 개요를 보고 싶다면 [프로젝트 개요.pdf](https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf){:target="_blank"}
+><br>데모 영상 : [https://youtu.be/nhItIg3HmSg](https://youtu.be/nhItIg3HmSg) {:target="_blank"}
+><br>프로젝트 전체 개요를 보고 싶다면 [프로젝트 개요.pdf](https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf) {:target="_blank"}
 ><br><br>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
 
 <br>
@@ -165,7 +165,7 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 <br>
 
 ### 8.1 Postman
-<img src="./src/main/resources/static/img/readme/postman_댓글목록조회.png">
+<img src="./src/main/resources/static/img/readme/postman_1.png">
 
 <br>
 댓글과 리뷰는 rest API로 제작하였습니다.
@@ -173,12 +173,12 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 <details>
 <summary>기타 postman 테스트 보기</summary>
 
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글단건조회.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글등록.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글수정.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_댓글삭제.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_리뷰등록.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_리뷰목록조회.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_2.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_3.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_4.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_5.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_6.png">
+<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_7.png">
 
 </details>
 
