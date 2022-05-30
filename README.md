@@ -173,12 +173,12 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 <details>
 <summary>기타 postman 테스트 보기</summary>
 
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_2.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_3.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_4.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_5.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_6.png">
-<img width="190" height="100" src="./src/main/resources/static/img/readme/postman_7.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_2.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_3.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_4.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_5.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_6.png">
+<img width="380" height="200" src="./src/main/resources/static/img/readme/postman_7.png">
 
 </details>
 
