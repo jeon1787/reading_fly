@@ -1,10 +1,10 @@
 # 리ː플(readingːfly)
 
 >도서 검색 및 독서 기록 서비스<br>
->!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
+><a href="https://youtu.be/nhItIg3HmSg" target="_blank" rel="noopener noreferrer">데모 영상</a> 보러가기<br>
+>프로젝트 전체 개요를 보고 싶다면 <a href="https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf" target="_blank" rel="noopener noreferrer">프로젝트 개요.pdf</a><br>
+><br>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
 
-<br><a href="https://youtu.be/nhItIg3HmSg" target="_blank">데모 영상</a> 보러가기
-<br>프로젝트 전체 개요를 보고 싶다면 <a href="https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf" target="_blank">프로젝트 개요.pdf</a>
 
 <br>
 
