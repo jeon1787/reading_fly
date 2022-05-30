@@ -1,9 +1,10 @@
 # 리ː플(readingːfly)
 
->도서 검색 및 독서 기록 서비스
-><br><a href="https://youtu.be/nhItIg3HmSg" target="_blank">데모 영상</a> 보러가기
-><br>프로젝트 전체 개요를 보고 싶다면 <a href="https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf" target="_blank">프로젝트 개요.pdf</a>
-><br><br>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
+>도서 검색 및 독서 기록 서비스<br>
+>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
+
+<br><a href="https://youtu.be/nhItIg3HmSg" target="_blank">데모 영상</a> 보러가기
+<br>프로젝트 전체 개요를 보고 싶다면 <a href="https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf" target="_blank">프로젝트 개요.pdf</a>
 
 <br>
 
@@ -101,7 +102,10 @@ where t1.num between ?1 and ?2
 ※?1 : select 결과 중 목록으로 보여줄 row의 첫 행
   ?2 : select 결과 중 목록으로 보여줄 row의 마지막 행
 ```
->게시판테이블, 회원테이블, 게시글별 댓글 개수 집계함수(count(*)) 테이블(이하 댓글수테이블)을 join했습니다.
+
+<br>
+
+>게시판테이블, 회원테이블, 게시글별 댓글 개수 집계함수 테이블(이하 댓글수테이블)을 join했습니다.
 회원아이디가 필수인 게시판테이블과 회원테이블은 inner join, 댓글수테이블은 left outer join으로 join했습니다.
 group by와 count(*)로 게시글별 댓글 개수를 집계 후 nvl(cnt, 0)로 댓글이 없어 null인 cnt 값은 0으로 변환하였습니다.
 <br><br>
