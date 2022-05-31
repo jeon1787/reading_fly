@@ -3,7 +3,6 @@
 >도서 검색 및 독서 기록 서비스
 ><br>[데모영상](https://youtu.be/nhItIg3HmSg) 보러가기
 ><br>전체 프로젝트 개요를 보고 싶다면 [프로젝트 개요.pdf](https://jeon1787.github.io/assets/220413%202%EC%A1%B0_%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8_%EB%B0%9C%ED%91%9C.pdf)
-><br><br>!해당 README.md 문서는 전체 프로젝트 설명 목적이 아닌 담당 파트 설명을 목적으로 작성했습니다.
 
 
 <br>
@@ -32,7 +31,7 @@
 - 게시판 : 게시글 CRUD, 파일 첨부, CKEditor
 - 댓글 : 댓글 CRUD
 - 도서 리뷰 : 리뷰 등록, 별점 등록
-- 기타 구현 총괄 : 지도, 책장, 독서기록, 달력에 관여
+- 기타 : 지도, 책장, 독서기록, 달력에 관여
 
 <br><br><br>
 
@@ -43,13 +42,14 @@ Spring Boot 2.6.3<br>
 Spring Framework 5.3<br>
 Gradle<br>
 oracle 18c XE<br>
+Thymeleaf<br>
 
 >**`Front-end`**<br>
 CKEditor<br>
 Font-Awesome
 
 >**`test`**<br>
-Junit5<br>
+JUnit5<br>
 Postman
 
 >**`형상관리`**<br>
@@ -164,7 +164,7 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 
 <br><br><br>
 
-## 8. 테스트
+## 8. 단위 테스트
 
 <br>
 
@@ -190,4 +190,4 @@ https://github.com/jeon1787/reading_fly/blob/ebc0ea843746bf7d55bb098cca317f10df9
 
 <br>
 
-### 8.2 Junit
+### 8.2 JUnit
